@@ -269,12 +269,12 @@ const BinaryTreeGenerator = () => {
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
-                  <StyledTypography variant="body2">
+                  {timeTaken && <p>Time taken: {timeTaken}</p>}
+                  <StyledTypography variant="body2" my={2}>
                     {generatedTree
                       ? values.join(", ")
                       : "No tree generated yet"}
                   </StyledTypography>
-                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                 </Grid>
               </Grid>
             </StyledCardContent>
