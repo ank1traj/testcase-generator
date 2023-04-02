@@ -86,6 +86,8 @@ const BinaryTreeGenerator = () => {
   const [maxValue, setMaxValue] = useState(100);
   const [generatedTree, setGeneratedTree] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [timeTaken, setTimeTaken] = useState("Click the button to generate values");
+
 
   const TreeNode = function (val, left = null, right = null) {
     this.val = val;
@@ -117,9 +119,14 @@ const BinaryTreeGenerator = () => {
   };
 
   const handleGenerateTree = () => {
+    const startTime = performance.now();
     const tree = generateTreeHelper(height, numNodes, minValue, maxValue);
     setGeneratedTree(tree);
     setCopied(false);
+    const endTime = performance.now();
+    const timeDiff = endTime - startTime;
+    const formattedTime = timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+    setTimeTaken(formattedTime);
   };
 
   const generateJSONTree = (node) => {
@@ -168,6 +175,7 @@ const BinaryTreeGenerator = () => {
     setMaxValue(100);
     setGeneratedTree(null);
     setCopied(false);
+    setTimeTaken(null)
   };
 
   return (
@@ -266,6 +274,7 @@ const BinaryTreeGenerator = () => {
                       ? values.join(", ")
                       : "No tree generated yet"}
                   </StyledTypography>
+                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                 </Grid>
               </Grid>
             </StyledCardContent>

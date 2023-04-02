@@ -84,12 +84,18 @@ const GenerateInteger = () => {
   const [numValues, setNumValues] = useState(10);
   const [generatedValues, setGeneratedValues] = useState([]);
   const [copied, setCopied] = useState(false);
+  const [timeTaken, setTimeTaken] = useState("Click the button to generate values");
 
   const handleGenerateValues = () => {
+    const startTime = performance.now();
     const newValues = Array.from(
       { length: numValues },
       () => Math.floor(Math.random() * (max - min + 1)) + min
-    );
+    )
+    const endTime = performance.now();
+    const timeDiff = endTime - startTime;
+    const formattedTime = timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+    setTimeTaken(formattedTime);
     setGeneratedValues(newValues);
     setCopied(false);
   };
@@ -106,6 +112,7 @@ const GenerateInteger = () => {
     setNumValues(10);
     setGeneratedValues([]);
     setCopied(false);
+    setTimeTaken(null)
   };
 
   return (
@@ -194,7 +201,8 @@ const GenerateInteger = () => {
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
-                  <StyledTypography variant="body2">
+                  {timeTaken && <p>Time taken: {timeTaken}</p>}
+                  <StyledTypography variant="body2" my={2}>
                     {generatedValues.length > 0
                       ? generatedValues.join(", ")
                       : "No Integer generated yet"}

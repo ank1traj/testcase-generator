@@ -89,8 +89,10 @@ const GenerateArray = () => {
   const [isFloat, setIsFloat] = useState(false);
   const [isChar, setIsChar] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [timeTaken, setTimeTaken] = useState("Click the button to generate values");
 
   const handleGenerateValues = () => {
+    const startTime = performance.now();
     let newValues = Array.from({ length: numArrays }, () =>
       Array.from({ length: arraySize }, () => {
         if (isFloat) {
@@ -102,6 +104,10 @@ const GenerateArray = () => {
         }
       })
     );
+    const endTime = performance.now();
+    const timeDiff = endTime - startTime;
+    const formattedTime = timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+    setTimeTaken(formattedTime);
     setGeneratedValues(newValues);
     setCopied(false);
   };
@@ -120,6 +126,7 @@ const GenerateArray = () => {
     setNumArrays(1);
     setGeneratedValues([]);
     setCopied(false);
+    setTimeTaken(null)
   };
 
   return (
@@ -219,8 +226,9 @@ const GenerateArray = () => {
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
                 <Grid item xs={6}>
                   <StyledTypography variant="h6">
-                    Generated Array
+                    Generated Array 
                   </StyledTypography>
+                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                 </Grid>
                 <Grid item xs={12}>
                   <StyledTypography variant="body2">

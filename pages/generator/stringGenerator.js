@@ -87,8 +87,10 @@ const GenerateString = () => {
   const [excludedChars, setExcludedChars] = useState("");
   const [generatedStrings, setGeneratedStrings] = useState([]);
   const [copied, setCopied] = useState(false);
+  const [timeTaken, setTimeTaken] = useState("Click the button to generate values");
 
   const handleGenerateStrings = () => {
+    const startTime = performance.now();
     let newStrings = [];
     for (let i = 0; i < numStrings; i++) {
       let newString = "";
@@ -100,6 +102,10 @@ const GenerateString = () => {
       }
       newStrings.push(newString);
     }
+    const endTime = performance.now();
+    const timeDiff = endTime - startTime;
+    const formattedTime = timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+    setTimeTaken(formattedTime);
     setGeneratedStrings(newStrings);
     setCopied(false);
   };
@@ -116,6 +122,7 @@ const GenerateString = () => {
     setExcludedChars("");
     setGeneratedStrings([]);
     setCopied(false);
+    setTimeTaken(null)
   };
 
   return (
@@ -209,7 +216,8 @@ const GenerateString = () => {
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
-                  <StyledTypography variant="body2">
+                  {timeTaken && <p>Time taken: {timeTaken}</p>}
+                  <StyledTypography variant="body2" my={2}>
                     {generatedStrings.length > 0
                       ? generatedStrings.join(", ")
                       : "No String generated yet"}
