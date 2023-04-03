@@ -191,7 +191,7 @@ const GenerateArray = () => {
                     />
                   </Tooltip>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Tooltip title="Check to generate float values">
                     <FormControlLabel
                       control={
@@ -205,7 +205,7 @@ const GenerateArray = () => {
                     />
                   </Tooltip>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <FormControlLabel
                     control={
                       <Checkbox
