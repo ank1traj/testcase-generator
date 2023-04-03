@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+import crypto from "crypto";
 
 import {
   Grid,
@@ -87,24 +88,35 @@ const GenerateString = () => {
   const [excludedChars, setExcludedChars] = useState("");
   const [generatedStrings, setGeneratedStrings] = useState([]);
   const [copied, setCopied] = useState(false);
-  const [timeTaken, setTimeTaken] = useState("Click the button to generate values");
+  const [timeTaken, setTimeTaken] = useState(
+    "Click the button to generate values"
+  );
 
   const handleGenerateStrings = () => {
     const startTime = performance.now();
+
+    // Generate an array of 100 random characters
+    const chars = new Array(100)
+      .fill(null)
+      .map(() => String.fromCharCode(Math.floor(Math.random() * 94) + 33))
+      .filter((char) => !excludedChars.includes(char));
+
     let newStrings = [];
     for (let i = 0; i < numStrings; i++) {
       let newString = "";
       while (newString.length < stringLength) {
-        const char = String.fromCharCode(Math.floor(Math.random() * 94) + 33);
-        if (!excludedChars.includes(char)) {
-          newString += char;
-        }
+        // Use one of the pre-generated random characters
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        newString += char;
       }
       newStrings.push(newString);
     }
+
     const endTime = performance.now();
     const timeDiff = endTime - startTime;
-    const formattedTime = timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+    const formattedTime =
+      timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+
     setTimeTaken(formattedTime);
     setGeneratedStrings(newStrings);
     setCopied(false);
@@ -122,7 +134,7 @@ const GenerateString = () => {
     setExcludedChars("");
     setGeneratedStrings([]);
     setCopied(false);
-    setTimeTaken(null)
+    setTimeTaken(null);
   };
 
   return (
@@ -211,16 +223,16 @@ const GenerateString = () => {
               </Grid>
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
                 <Grid item xs={6}>
+                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                   <StyledTypography variant="h6">
                     Generated String
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
-                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                   <StyledTypography variant="body2" my={2}>
                     {generatedStrings.length > 0
-                      ? generatedStrings.join(", ")
-                      : "No String generated yet"}
+                      ? generatedStrings.map((str) => <div key={str}>{str}</div>)
+                      : "No strings generated yet"}
                   </StyledTypography>
                 </Grid>
               </Grid>

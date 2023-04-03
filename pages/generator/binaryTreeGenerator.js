@@ -264,12 +264,12 @@ const BinaryTreeGenerator = () => {
               </Grid>
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
                 <Grid item xs={6}>
+                {timeTaken && <p>Time taken: {timeTaken}</p>}
                   <StyledTypography variant="h6">
                     Generated Tree
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
-                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                   <StyledTypography variant="body2" my={2}>
                     {generatedTree
                       ? values.join(", ")

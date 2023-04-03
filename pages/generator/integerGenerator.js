@@ -86,19 +86,19 @@ const GenerateInteger = () => {
   const [copied, setCopied] = useState(false);
   const [timeTaken, setTimeTaken] = useState("Click the button to generate values");
 
-  const handleGenerateValues = () => {
-    const startTime = performance.now();
-    const newValues = Array.from(
-      { length: numValues },
-      () => Math.floor(Math.random() * (max - min + 1)) + min
-    )
-    const endTime = performance.now();
-    const timeDiff = endTime - startTime;
-    const formattedTime = timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
-    setTimeTaken(formattedTime);
-    setGeneratedValues(newValues);
-    setCopied(false);
-  };
+const handleGenerateValues = () => {
+  const startTime = performance.now();
+  const newValues = Array.from(
+    { length: numValues },
+    () => Math.floor(Math.random() * (parseInt(max) - parseInt(min) + 1)) + parseInt(min)
+  )
+  const endTime = performance.now();
+  const timeDiff = endTime - startTime;
+  const formattedTime = timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+  setTimeTaken(formattedTime);
+  setGeneratedValues(newValues);
+  setCopied(false);
+};
 
   const handleCopyValues = () => {
     const valuesString = generatedValues.join(", ");
@@ -196,15 +196,15 @@ const GenerateInteger = () => {
               </Grid>
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
                 <Grid item xs={6}>
+                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                   <StyledTypography variant="h6">
                     Generated Integer
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
-                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                   <StyledTypography variant="body2" my={2}>
                     {generatedValues.length > 0
-                      ? generatedValues.join(", ")
+                      ? generatedValues.map((value, index) => <div key={index}>{value}</div>)
                       : "No Integer generated yet"}
                   </StyledTypography>
                 </Grid>

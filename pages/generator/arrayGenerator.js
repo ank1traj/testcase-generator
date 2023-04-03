@@ -225,21 +225,24 @@ const GenerateArray = () => {
               </Grid>
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
                 <Grid item xs={6}>
+                {timeTaken && <p>Time taken: {timeTaken}</p>}
                   <StyledTypography variant="h6">
-                    Generated Array 
+                    Generated Array
                   </StyledTypography>
-                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                 </Grid>
                 <Grid item xs={12}>
                   <StyledTypography variant="body2">
-                    {generatedValues.length > 0
-                      ? generatedValues.map(
-                          (array, index) =>
-                            `[${array.join(", ")}]${
-                              index < generatedValues.length - 1 ? "\n" : ""
-                            }`
-                        )
-                      : "No values generated"}
+                    {generatedValues.length > 0 && (
+                      <>
+                        <Typography variant="subtitle1">
+                          {generatedValues.map((array, index) =>
+                          <div key={index}>
+                            <div>{generatedValues[index].length}</div>
+                            {array.join(", ")}</div>
+                          )}
+                        </Typography>
+                      </>
+                    )}
                   </StyledTypography>
                 </Grid>
               </Grid>
