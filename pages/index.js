@@ -94,6 +94,19 @@ export default function Home() {
               Generate random binary tree of integer values.
             </p>
           </Link>
+
+          <Link
+            href="/generator/linkedListGenerator"
+            className={styles.card}
+            rel="noopener noreferrer"
+          >
+            <h2 className={inter.className}>
+              Linked List <span>-&gt;</span>
+            </h2>
+            <p className={inter.className}>
+              Generate random linked list of integer values.
+            </p>
+          </Link>
         </div>
       </main>
     </>

@@ -32,6 +32,12 @@ const Navbar = () => {
             <a>Binary Tree</a>
           </Link>
         </li>
+
+        <li>
+          <Link href="/generator/binaryTreeGenerator" passHref legacyBehavior>
+            <a>Linked List</a>
+          </Link>
+        </li>
       </ul>
     </nav>
   );

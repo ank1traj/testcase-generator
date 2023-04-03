@@ -80,62 +80,65 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: "#fff",
 }));
 
-const GenerateArray = () => {
+const GenerateLinkedList = () => {
+  const [headValue, setHeadValue] = useState(0);
+  const [listSize, setListSize] = useState(10);
   const [minValue, setMinValue] = useState(-100);
   const [maxValue, setMaxValue] = useState(100);
-  const [arraySize, setArraySize] = useState(10);
-  const [numArrays, setNumArrays] = useState(1);
-  const [generatedValues, setGeneratedValues] = useState([]);
-  const [isFloat, setIsFloat] = useState(false);
-  const [randomSize, setRandomSize] = useState(false);
+  const [numLists, setNumLists] = useState(1);
+  const [generatedLists, setGeneratedLists] = useState([]);
   const [copied, setCopied] = useState(false);
   const [timeTaken, setTimeTaken] = useState(
-    "Click the button to generate values"
+    "Click the button to generate linked lists"
   );
 
-  const handleGenerateValues = () => {
+  const generateLinkedList = (head, size, min, max) => {
+    const randomNum = () => Math.floor(Math.random() * (max - min + 1) + min);
+    const nodes = [];
+    let currentNode = { value: head, next: null };
+    for (let i = 1; i < size; i++) {
+      currentNode.next = { value: randomNum(), next: null };
+      currentNode = currentNode.next;
+      nodes.push(currentNode.value);
+    }
+    return nodes;
+  };
+
+  const handleGenerate = () => {
     const startTime = performance.now();
-    let newValues = Array.from({ length: numArrays }, (_, index) => {
-      const size = randomSize
-        ? Math.floor(Math.random() * arraySize) + 1
-        : arraySize;
-      return Array.from({ length: size }, () => {
-        if (isFloat) {
-          return (Math.random() * (maxValue - minValue) + minValue).toFixed(2);
-        } else {
-          return (
-            Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue
-          );
-        }
-      });
-    });
+    const generatedLists = [];
+    for (let i = 0; i < numLists; i++) {
+      generatedLists.push(
+        generateLinkedList(headValue, listSize, minValue, maxValue)
+      );
+    }
+    setGeneratedLists(generatedLists);
     const endTime = performance.now();
     const timeDiff = endTime - startTime;
+
     const formattedTime =
       timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
     setTimeTaken(formattedTime);
-    setGeneratedValues(newValues);
     setCopied(false);
   };
 
   const handleCopyValues = () => {
-    const valuesString = generatedValues.map(
-      (array) => "[" + array.join(", ") + "]"
-    );
-    navigator.clipboard.writeText(valuesString.join("\n"));
+    const text = generatedLists
+      .map((list) => `[${list.join(", ")}]`)
+      .join(", ");
+    navigator.clipboard.writeText(text);
     setCopied(true);
   };
 
   const handleResetValues = () => {
+    setHeadValue(0);
+    setListSize(10);
     setMinValue(-100);
     setMaxValue(100);
-    setArraySize(10);
-    setNumArrays(1);
-    setGeneratedValues([]);
+    setNumLists(1);
+    setGeneratedLists([]);
+    setTimeTaken("Click the button to generate linked lists");
     setCopied(false);
-    setTimeTaken(null);
-    setIsFloat(false);
-    setRandomSize(false);
   };
 
   return (
@@ -144,78 +147,63 @@ const GenerateArray = () => {
       <StyledGrid container>
         <Grid item xs={12} sm={8} md={6} sx={{ margin: "auto" }}>
           <StyledCard>
-            <StyledCardHeader title="Generate Array" />
+            <StyledCardHeader title="Linked List Generator" />
             <StyledCardContent>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Tooltip title="Enter the minimum value for the array">
+                  <Tooltip title="Enter the value of the head node.">
+                    <StyledTextField
+                      label="Head Value"
+                      type="number"
+                      value={headValue}
+                      onChange={(e) => setHeadValue(parseInt(e.target.value))}
+                      fullWidth
+                    />
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={12}>
+                  <Tooltip title="Enter the number of nodes in the linked list.">
+                    <StyledTextField
+                      label="List Size"
+                      type="number"
+                      value={listSize}
+                      onChange={(e) => setListSize(parseInt(e.target.value))}
+                      fullWidth
+                    />
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={12}>
+                  <Tooltip title="Enter the minimum value of the nodes in the linked list.">
                     <StyledTextField
                       label="Min Value"
                       type="number"
                       value={minValue}
-                      onChange={(e) => setMinValue(e.target.value)}
+                      onChange={(e) => setMinValue(parseInt(e.target.value))}
                       fullWidth
                     />
                   </Tooltip>
                 </Grid>
                 <Grid item xs={12}>
-                  <Tooltip title="Enter the maximum value for the array">
+                  <Tooltip title="Enter the maximum value of the nodes in the linked list.">
                     <StyledTextField
                       label="Max Value"
                       type="number"
                       value={maxValue}
-                      onChange={(e) => setMaxValue(e.target.value)}
+                      onChange={(e) => setMaxValue(parseInt(e.target.value))}
                       fullWidth
                     />
                   </Tooltip>
                 </Grid>
                 <Grid item xs={12}>
-                  <Tooltip title="Enter the size of the array">
+                  <Tooltip title="Enter the number of linked lists to generate.">
                     <StyledTextField
-                      label="Array Size"
+                      label="Number of Lists"
                       type="number"
-                      value={arraySize}
-                      onChange={(e) => setArraySize(e.target.value)}
+                      value={numLists}
+                      onChange={(e) => setNumLists(parseInt(e.target.value))}
                       fullWidth
                     />
                   </Tooltip>
-                </Grid>
-                <Grid item xs={12}>
-                  <Tooltip title="Enter the number of arrays to generate">
-                    <StyledTextField
-                      label="Number of Arrays"
-                      type="number"
-                      value={numArrays}
-                      onChange={(e) => setNumArrays(e.target.value)}
-                      fullWidth
-                    />
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={12}>
-                  <Tooltip title="Check to generate float values">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isFloat}
-                          onChange={(e) => setIsFloat(e.target.checked)}
-                          name="isFloat"
-                        />
-                      }
-                      label="Generate Float Arrays"
-                    />
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={randomSize}
-                        onChange={(e) => setRandomSize(e.target.checked)}
-                        color="primary"
-                      />
-                    }
-                    label="Random Size"
-                  />
                 </Grid>
               </Grid>
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
@@ -224,14 +212,14 @@ const GenerateArray = () => {
                     variant="contained"
                     fullWidth
                     startIcon={<GenerateIcon />}
-                    onClick={handleGenerateValues}
+                    onClick={handleGenerate}
                   >
-                    Generate Array
+                    Generate Linked Lists
                   </StyledButton>
                 </Grid>
                 <Grid item xs={6}>
                   <CopyToClipboard
-                    text={generatedValues.join(", ")}
+                    text={generatedLists.join(", ")}
                     onCopy={handleCopyValues}
                   >
                     <StyledButton
@@ -258,18 +246,18 @@ const GenerateArray = () => {
                 <Grid item xs={6}>
                   {timeTaken && <p>Time taken: {timeTaken}</p>}
                   <StyledTypography variant="h6">
-                    Generated Array
+                    Generated Linked Lists
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
                   <StyledTypography variant="body2">
-                    {generatedValues.length > 0 && (
+                    {generatedLists.length > 0 && (
                       <>
                         <Typography variant="subtitle1">
-                          {numArrays}
-                          {generatedValues.map((array, index) => (
+                          {numLists}
+                          {generatedLists.map((array, index) => (
                             <div key={index}>
-                              <div>{generatedValues[index].length}</div>
+                              <div>{generatedLists[index].length}</div>
                               {array.join(", ")}
                             </div>
                           ))}
@@ -286,5 +274,4 @@ const GenerateArray = () => {
     </>
   );
 };
-
-export default GenerateArray;
+export default GenerateLinkedList;
