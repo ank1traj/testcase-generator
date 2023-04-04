@@ -320,9 +320,15 @@ const GenerateArray = () => {
   };
 
   const handleCopyValues = () => {
-    const valuesString = generatedValues.map(
-      (array) => "[" + array.join(", ") + "]"
-    );
+    {
+      advanceOptions.includes("Show Total Cases")
+        ? (valuesString =
+            `${numArrays}\n` +
+            generatedValues
+              .map((array) => array.length + "\n" + array.join(", "))
+              .join("\n"))
+        : null;
+    }
     navigator.clipboard.writeText(valuesString.join("\n"));
     setCopied(true);
   };
