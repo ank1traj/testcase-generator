@@ -11,14 +11,18 @@ import {
   Tooltip,
   FormControlLabel,
   Checkbox,
+  Radio,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import GenerateIcon from "@mui/icons-material/PlayArrow";
+import DownloadIcon from "@mui/icons-material/GetApp";
 import { styled } from "@mui/material/styles";
-
-import NavigationBar from "@/component/navigation";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -80,6 +84,50 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: "#fff",
 }));
 
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  minWidth: "300px",
+  "& .MuiSelect-select": {
+    paddingRight: theme.spacing(4),
+  },
+  "& .MuiSelect-icon": {
+    right: 0,
+  },
+}));
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  color: theme.palette.secondary.main,
+  backgroundColor: theme.palette.background.paper,
+  "&:hover": {
+    backgroundColor: theme.palette.secondary.light,
+  },
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+  "&.Mui-selected:hover": {
+    backgroundColor: theme.palette.primary.light,
+  },
+}));
+
+const StyledSelect = styled(Select)(({ theme }) => ({
+  "&.MuiSelect-select": {
+    paddingRight: theme.spacing(2),
+    "&:focus": {
+      backgroundColor: "transparent",
+    },
+  },
+  "& .MuiSelect-icon": {
+    color: theme.palette.secondary.main,
+  },
+}));
+
+const options = [
+  "Negative Outputs",
+  "Hide Total Counts",
+  "Distinct Elements",
+  "Show Total Cases",
+];
+
 const GenerateArray = () => {
   const [minValue, setMinValue] = useState(-100);
   const [maxValue, setMaxValue] = useState(100);
@@ -93,22 +141,175 @@ const GenerateArray = () => {
     "Click the button to generate values"
   );
 
+  const [any, setAny] = useState(true);
+  const [odd, setOdd] = useState(false);
+  const [even, setEven] = useState(false);
+  const [prime, setPrime] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("any");
+
+  const [increasing, setIncreasing] = useState(false); // for sorting in increasing order
+  const [decreasing, setDecreasing] = useState(false); // for sorting in decreasing order
+  const [random, setRandom] = useState(true); // for random order
+
+  const [advanceOptions, setAdvanceOptions] = useState(["Show Total Cases"]);
+
+  const handleAdvanceOptionChange = (event) => {
+    const { value } = event.target;
+    setAdvanceOptions(value);
+  };
+
+  const handleSortChange = (event) => {
+    switch (event.target.value) {
+      case "increasing":
+        setIncreasing(true);
+        setDecreasing(false);
+        setRandom(false);
+        break;
+      case "decreasing":
+        setIncreasing(false);
+        setDecreasing(true);
+        setRandom(false);
+        break;
+      case "random":
+        setIncreasing(false);
+        setDecreasing(false);
+        setRandom(true);
+        break;
+      default:
+        setIncreasing(false);
+        setDecreasing(false);
+        setRandom(false);
+        break;
+    }
+  };
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    switch (event.target.value) {
+      case "even":
+        setEven(true);
+        setOdd(false);
+        setPrime(false);
+        setAny(false);
+        break;
+      case "odd":
+        setEven(false);
+        setOdd(true);
+        setPrime(false);
+        setAny(false);
+        break;
+      case "prime":
+        setEven(false);
+        setOdd(false);
+        setPrime(true);
+        setAny(false);
+        break;
+      default:
+        setEven(false);
+        setOdd(false);
+        setPrime(false);
+        setAny(true);
+        break;
+    }
+  };
+
+  function isPrime(n) {
+    if (n <= 1) {
+      return false;
+    }
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+      if (n % i === 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   const handleGenerateValues = () => {
     const startTime = performance.now();
+    console.log(maxValue, minValue, arraySize, numArrays);
     let newValues = Array.from({ length: numArrays }, (_, index) => {
       const size = randomSize
         ? Math.floor(Math.random() * arraySize) + 1
         : arraySize;
       return Array.from({ length: size }, () => {
-        if (isFloat) {
+        if (odd) {
+          let num = Math.floor(Math.random() * (maxValue - minValue + 1));
+          if (num % 2 === 0) {
+            num += 1;
+          }
+          return num + parseInt(minValue);
+        } else if (even) {
+          let num = Math.floor(Math.random() * (maxValue - minValue + 1));
+          if (num % 2 !== 0) {
+            num += 1;
+          }
+          return num + parseInt(minValue);
+        } else if (prime) {
+          let num = 0;
+          while (true) {
+            num =
+              2 * Math.floor(Math.random() * ((maxValue - minValue + 1) / 2)) +
+              parseInt(minValue) +
+              1;
+            let isPrime = true;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+              if (num % i === 0) {
+                isPrime = false;
+                break;
+              }
+            }
+            if (isPrime) {
+              break;
+            }
+          }
+          return num;
+        } else if (isFloat) {
           return (Math.random() * (maxValue - minValue) + minValue).toFixed(2);
         } else {
           return (
-            Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue
+            Math.floor(Math.random() * (maxValue - minValue + 1)) +
+            parseInt(minValue)
           );
         }
       });
     });
+
+    if (advanceOptions.includes("Negative Outputs")) {
+      newValues = newValues.map((array) => {
+        array.forEach((element, index) => {
+          if (element > 0) {
+            array[index] = -element;
+          }
+        });
+        return array;
+      });
+    }
+
+    if (advanceOptions.includes("Distinct Elements") && randomSize) {
+      newValues = newValues.map((array) => {
+        const set = new Set(array);
+        return Array.from(set);
+      });
+    } else if (advanceOptions.includes("Distinct Elements")) {
+      alert("Distinct Elements option is only available for Random Size");
+      return;
+    }
+
+    if (increasing) {
+      newValues = newValues.map((array) => array.sort((a, b) => a - b));
+    } else if (decreasing) {
+      newValues = newValues.map((array) => array.sort((a, b) => b - a));
+    } else if (random) {
+      newValues = newValues.map((array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      });
+    }
+
     const endTime = performance.now();
     const timeDiff = endTime - startTime;
     const formattedTime =
@@ -126,6 +327,23 @@ const GenerateArray = () => {
     setCopied(true);
   };
 
+  const handleDownloadValues = () => {
+    const numArrays = generatedValues.length;
+    const valuesString =
+      `${numArrays}\n` +
+      generatedValues
+        .map((array) => array.length + "\n" + array.join(", "))
+        .join("\n");
+
+    const element = document.createElement("a");
+    const file = new Blob([valuesString], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = "generated_values.txt";
+    document.body.appendChild(element); // Required for this to work in Firefox
+    element.click();
+    document.body.removeChild(element);
+  };
+
   const handleResetValues = () => {
     setMinValue(-100);
     setMaxValue(100);
@@ -136,13 +354,13 @@ const GenerateArray = () => {
     setTimeTaken(null);
     setIsFloat(false);
     setRandomSize(false);
+    setAdvanceOptions(["Show Total Cases"]);
   };
 
   return (
     <>
-      <NavigationBar />
       <StyledGrid container>
-        <Grid item xs={12} sm={8} md={6} sx={{ margin: "auto" }}>
+        <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
           <StyledCard>
             <StyledCardHeader title="Generate Array" />
             <StyledCardContent>
@@ -191,7 +409,9 @@ const GenerateArray = () => {
                     />
                   </Tooltip>
                 </Grid>
-                <Grid item xs={6}>
+              </Grid>
+              <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+                <Grid item xs={3}>
                   <Tooltip title="Check to generate float values">
                     <FormControlLabel
                       control={
@@ -205,7 +425,7 @@ const GenerateArray = () => {
                     />
                   </Tooltip>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={2}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -216,6 +436,140 @@ const GenerateArray = () => {
                     }
                     label="Random Size"
                   />
+                </Grid>
+                <Grid item xs={4}>
+                  <Tooltip title="Advanced options">
+                    <StyledFormControl>
+                      <InputLabel>Advanced Options</InputLabel>
+                      <StyledSelect
+                        value={advanceOptions}
+                        onChange={handleAdvanceOptionChange}
+                        multiple
+                      >
+                        {options.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </StyledSelect>
+                    </StyledFormControl>
+                  </Tooltip>
+                </Grid>
+              </Grid>
+              <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+                <Grid item xs={2}>
+                  <Tooltip title="Check to generate any values">
+                    <FormControlLabel
+                      control={
+                        <Radio
+                          checked={any}
+                          onChange={handleOptionChange}
+                          value="any"
+                          name="radio-button-demo"
+                          inputProps={{ "aria-label": "any" }}
+                        />
+                      }
+                      label="any"
+                    />
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={2}>
+                  <Tooltip title="Check to generate even values">
+                    <FormControlLabel
+                      control={
+                        <Radio
+                          checked={even}
+                          onChange={handleOptionChange}
+                          value="even"
+                          name="radio-button-demo"
+                          inputProps={{ "aria-label": "even" }}
+                        />
+                      }
+                      label="Even"
+                    />
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={2}>
+                  <Tooltip title="Check to generate odd values">
+                    <FormControlLabel
+                      control={
+                        <Radio
+                          checked={odd}
+                          onChange={handleOptionChange}
+                          value="odd"
+                          name="radio-button-demo"
+                          inputProps={{ "aria-label": "odd" }}
+                        />
+                      }
+                      label="Odd"
+                    />
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={2}>
+                  <Tooltip title="Check to generate prime values">
+                    <FormControlLabel
+                      control={
+                        <Radio
+                          checked={prime}
+                          onChange={handleOptionChange}
+                          value="prime"
+                          name="radio-button-demo"
+                          inputProps={{ "aria-label": "prime" }}
+                        />
+                      }
+                      label="Prime"
+                    />
+                  </Tooltip>
+                </Grid>
+              </Grid>
+              <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+                <Grid item xs={4}>
+                  <Tooltip title="Check to generate increasing values">
+                    <FormControlLabel
+                      control={
+                        <Radio
+                          checked={increasing}
+                          onChange={handleSortChange}
+                          value="increasing"
+                          name="radio-button-demo"
+                          inputProps={{ "aria-label": "increasing" }}
+                        />
+                      }
+                      label="Increasing"
+                    />
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={4}>
+                  <Tooltip title="Check to generate decreasing values">
+                    <FormControlLabel
+                      control={
+                        <Radio
+                          checked={decreasing}
+                          onChange={handleSortChange}
+                          value="decreasing"
+                          name="radio-button-demo"
+                          inputProps={{ "aria-label": "decreasing" }}
+                        />
+                      }
+                      label="Decreasing"
+                    />
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={4}>
+                  <Tooltip title="Check to generate random values">
+                    <FormControlLabel
+                      control={
+                        <Radio
+                          checked={random}
+                          onChange={handleSortChange}
+                          value="random"
+                          name="radio-button-demo"
+                          inputProps={{ "aria-label": "random" }}
+                        />
+                      }
+                      label="Random"
+                    />
+                  </Tooltip>
                 </Grid>
               </Grid>
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
@@ -253,6 +607,16 @@ const GenerateArray = () => {
                     Reset
                   </StyledButton>
                 </Grid>
+                <Grid item xs={12}>
+                  <StyledButton
+                    variant="contained"
+                    fullWidth
+                    startIcon={<DownloadIcon />}
+                    onClick={handleDownloadValues}
+                  >
+                    Download
+                  </StyledButton>
+                </Grid>
               </Grid>
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
                 <Grid item xs={6}>
@@ -266,13 +630,19 @@ const GenerateArray = () => {
                     {generatedValues.length > 0 && (
                       <>
                         <Typography variant="subtitle1">
-                          {numArrays}
-                          {generatedValues.map((array, index) => (
-                            <div key={index}>
-                              <div>{generatedValues[index].length}</div>
-                              {array.join(", ")}
-                            </div>
-                          ))}
+                          {advanceOptions.includes("Show Total Cases")
+                            ? `${generatedValues.length}`
+                            : null}
+                          {advanceOptions.includes("Hide Total Counts")
+                            ? generatedValues.map((array, index) => (
+                                <div key={index}>{array.join(", ")}</div>
+                              ))
+                            : generatedValues.map((array, index) => (
+                                <div key={index}>
+                                  <div>{generatedValues[index].length}</div>
+                                  {array.join(", ")}
+                                </div>
+                              ))}
                         </Typography>
                       </>
                     )}
