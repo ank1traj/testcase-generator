@@ -123,7 +123,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 
 const options = [
   "Negative Outputs",
-  "Hide Total Counts",
+  "Hide Array Size",
   "Distinct Elements",
   "Show Total Cases",
 ];
@@ -227,7 +227,6 @@ const GenerateArray = () => {
 
   const handleGenerateValues = () => {
     const startTime = performance.now();
-    console.log(maxValue, minValue, arraySize, numArrays);
     let newValues = Array.from({ length: numArrays }, (_, index) => {
       const size = randomSize
         ? Math.floor(Math.random() * arraySize) + 1
@@ -320,27 +319,85 @@ const GenerateArray = () => {
   };
 
   const handleCopyValues = () => {
-    {
-      advanceOptions.includes("Show Total Cases")
-        ? (valuesString =
-            `${numArrays}\n` +
-            generatedValues
-              .map((array) => array.length + "\n" + array.join(", "))
-              .join("\n"))
-        : null;
+    if (!generatedValues.length) {
+      alert("Please generate values first");
+      return;
     }
-    navigator.clipboard.writeText(valuesString.join("\n"));
-    setCopied(true);
-  };
 
-  const handleDownloadValues = () => {
-    const numArrays = generatedValues.length;
-    const valuesString =
-      `${numArrays}\n` +
-      generatedValues
+    if (
+      advanceOptions.includes("Show Total Cases") &&
+      advanceOptions.includes("Hide Array Size")
+    ) {
+      const totalCases = numArrays;
+      const valuesString = generatedValues
+        .map((array) => array.join(", "))
+        .join("\n");
+      navigator.clipboard.writeText(
+        totalCases.toString() + "\n" + valuesString
+      );
+    }
+
+    if (
+      advanceOptions.includes("Show Total Cases") &&
+      !advanceOptions.includes("Hide Array Size")
+    ) {
+      const valuesString =
+        `${numArrays}\n` +
+        generatedValues
+          .map((array) => array.length + "\n" + array.join(", "))
+          .join("\n");
+
+      navigator.clipboard.writeText(valuesString + "\n");
+    }
+
+    if (
+      !advanceOptions.includes("Show Total Cases") &&
+      !advanceOptions.includes("Hide Array Size")
+    ) {
+      const valuesString = generatedValues
         .map((array) => array.length + "\n" + array.join(", "))
         .join("\n");
 
+      navigator.clipboard.writeText(valuesString + "\n");
+    }
+  };
+
+  const handleDownloadValues = () => {
+    if (!generatedValues.length) {
+      alert("Please generate values first");
+      return;
+    }
+    let valuesString = "";
+    let totalCases = 0;
+    if (
+      advanceOptions.includes("Show Total Cases") &&
+      advanceOptions.includes("Hide Array Size")
+    ) {
+      totalCases = numArrays;
+      valuesString =
+        `${totalCases} \n` +
+        generatedValues.map((array) => array.join(", ")).join("\n");
+    }
+
+    if (
+      advanceOptions.includes("Show Total Cases") &&
+      !advanceOptions.includes("Hide Array Size")
+    ) {
+      valuesString =
+        `${numArrays}\n` +
+        generatedValues
+          .map((array) => array.length + "\n" + array.join(", "))
+          .join("\n");
+    }
+
+    if (
+      !advanceOptions.includes("Show Total Cases") &&
+      !advanceOptions.includes("Hide Array Size")
+    ) {
+      valuesString = generatedValues
+        .map((array) => array.length + "\n" + array.join(", "))
+        .join("\n");
+    }
     const element = document.createElement("a");
     const file = new Blob([valuesString], { type: "text/plain" });
     element.href = URL.createObjectURL(file);
@@ -639,7 +696,7 @@ const GenerateArray = () => {
                           {advanceOptions.includes("Show Total Cases")
                             ? `${generatedValues.length}`
                             : null}
-                          {advanceOptions.includes("Hide Total Counts")
+                          {advanceOptions.includes("Hide Array Size")
                             ? generatedValues.map((array, index) => (
                                 <div key={index}>{array.join(", ")}</div>
                               ))
