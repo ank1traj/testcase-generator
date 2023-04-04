@@ -239,7 +239,7 @@ const GenerateArray = () => {
                       fullWidth
                       startIcon={<FileCopyIcon />}
                     >
-                      {copied ? "Copied!" : "Copy Tree"}
+                      {copied ? "Copied!" : "Copy Array"}
                     </StyledButton>
                   </CopyToClipboard>
                 </Grid>
