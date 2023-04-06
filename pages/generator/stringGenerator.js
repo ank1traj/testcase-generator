@@ -185,6 +185,19 @@ const GenerateString = () => {
   };
 
   const handleGenerateStrings = () => {
+    if (
+      smallAlphabets === false &&
+      capitalAlphabets === false &&
+      numbers === false &&
+      specialChars === false &&
+      includedChars === ""
+    ) {
+      alert(
+        "Please select at least one character set from a-z or A-Z or special characters or numbers or included characters"
+      );
+      return;
+    }
+
     const startTime = performance.now();
 
     // Define the character sets to include in the generated strings
