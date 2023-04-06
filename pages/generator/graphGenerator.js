@@ -765,7 +765,6 @@ const GenerateGraph = () => {
                       generatedGraph &&
                       generatedGraph.map((s, i) => (
                         <div key={i}>
-                          {numEdges} {numVertices}
                           {s.nodes.map((n) => (
                             <div key={n.id}>{n.label}</div>
                           ))}
