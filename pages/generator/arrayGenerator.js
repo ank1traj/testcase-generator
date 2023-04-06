@@ -324,42 +324,20 @@ const GenerateArray = () => {
       return;
     }
 
-    if (
-      advanceOptions.includes("Show Total Cases") &&
-      advanceOptions.includes("Hide Array Size")
-    ) {
-      const totalCases = numArrays;
-      const valuesString = generatedValues
-        .map((array) => array.join(", "))
-        .join("\n");
-      navigator.clipboard.writeText(
-        totalCases.toString() + "\n" + valuesString
-      );
-    }
+    const totalCases = advanceOptions.includes("Show Total Cases")
+      ? numArrays
+      : "";
+    const valuesString = generatedValues
+      .map((array) => {
+        const lengthString = advanceOptions.includes("Hide Array Size")
+          ? ""
+          : `${array.length}\n`;
+        return lengthString + array.join(", ");
+      })
+      .join("\n");
 
-    if (
-      advanceOptions.includes("Show Total Cases") &&
-      !advanceOptions.includes("Hide Array Size")
-    ) {
-      const valuesString =
-        `${numArrays}\n` +
-        generatedValues
-          .map((array) => array.length + "\n" + array.join(", "))
-          .join("\n");
-
-      navigator.clipboard.writeText(valuesString + "\n");
-    }
-
-    if (
-      !advanceOptions.includes("Show Total Cases") &&
-      !advanceOptions.includes("Hide Array Size")
-    ) {
-      const valuesString = generatedValues
-        .map((array) => array.length + "\n" + array.join(", "))
-        .join("\n");
-
-      navigator.clipboard.writeText(valuesString + "\n");
-    }
+    navigator.clipboard.writeText(`${totalCases}\n${valuesString}\n`);
+    setCopied(true);
   };
 
   const handleDownloadValues = () => {
@@ -428,7 +406,7 @@ const GenerateArray = () => {
             <StyledCardHeader title="Generate Array" />
             <StyledCardContent>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Tooltip title="Enter the minimum value for the array">
                     <StyledTextField
                       label="Min Value"
@@ -439,7 +417,7 @@ const GenerateArray = () => {
                     />
                   </Tooltip>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Tooltip title="Enter the maximum value for the array">
                     <StyledTextField
                       label="Max Value"
@@ -450,7 +428,7 @@ const GenerateArray = () => {
                     />
                   </Tooltip>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Tooltip title="Enter the size of the array">
                     <StyledTextField
                       label="Array Size"
@@ -468,7 +446,7 @@ const GenerateArray = () => {
                     />
                   </Tooltip>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Tooltip title="Enter the number of arrays to generate">
                     <StyledTextField
                       label="Number of Arrays"
@@ -661,10 +639,7 @@ const GenerateArray = () => {
                   </StyledButton>
                 </Grid>
                 <Grid item xs={6}>
-                  <CopyToClipboard
-                    text={generatedValues.join(", ")}
-                    onCopy={handleCopyValues}
-                  >
+                  <CopyToClipboard onCopy={handleCopyValues}>
                     <StyledButton
                       variant="contained"
                       fullWidth
@@ -707,19 +682,16 @@ const GenerateArray = () => {
                     {generatedValues.length > 0 && (
                       <>
                         <Typography variant="subtitle1">
-                          {advanceOptions.includes("Show Total Cases")
-                            ? `${generatedValues.length}`
-                            : null}
-                          {advanceOptions.includes("Hide Array Size")
-                            ? generatedValues.map((array, index) => (
-                                <div key={index}>{array.join(", ")}</div>
-                              ))
-                            : generatedValues.map((array, index) => (
-                                <div key={index}>
-                                  <div>{generatedValues[index].length}</div>
-                                  {array.join(", ")}
-                                </div>
-                              ))}
+                          {advanceOptions.includes("Show Total Cases") &&
+                            generatedValues.length}
+                          {generatedValues.map((array, index) => (
+                            <div key={index}>
+                              {!advanceOptions.includes("Hide Array Size") && (
+                                <div>{array.length}</div>
+                              )}
+                              {array.join(", ")}
+                            </div>
+                          ))}
                         </Typography>
                       </>
                     )}

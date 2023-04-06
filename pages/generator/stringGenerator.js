@@ -289,48 +289,28 @@ const GenerateString = () => {
       return;
     }
 
-    if (
-      advanceOptions.includes("Hide Length") &&
-      advanceOptions.includes("Hide Number of Strings")
-    ) {
-      const valuesString = generatedStrings.join("\n");
-      navigator.clipboard.writeText(valuesString);
-    }
+    let valuesString = "";
+    let totalCases = 0;
 
-    if (
-      advanceOptions.includes("Hide Length") &&
-      !advanceOptions.includes("Hide Number of Strings")
-    ) {
-      const totalCases = numStrings;
-      const valuesString = generatedStrings.join("\n");
-      navigator.clipboard.writeText(
-        totalCases.toString() + "\n" + valuesString
-      );
-    }
-
-    if (
-      !advanceOptions.includes("Hide Length") &&
-      advanceOptions.includes("Hide Number of Strings")
-    ) {
-      const valuesString = generatedStrings
-        .map((str) => str.length + "\n" + str + "\n")
+    if (advanceOptions.includes("Hide Length")) {
+      valuesString = generatedStrings.join("\n");
+      if (!advanceOptions.includes("Hide Number of Strings")) {
+        totalCases = numStrings;
+        valuesString = `${totalCases}\n${valuesString}`;
+      }
+    } else if (advanceOptions.includes("Hide Number of Strings")) {
+      valuesString = generatedStrings
+        .map((str) => `${str.length}\n${str}`)
         .join("\n");
-      navigator.clipboard.writeText(valuesString + "\n");
-    }
-
-    if (
-      !advanceOptions.includes("Hide Length") &&
-      !advanceOptions.includes("Hide Number of Strings")
-    ) {
-      const totalCases = numStrings;
-      const valuesString = generatedStrings
-        .map((str) => str.length + "\n" + str + ",")
+    } else {
+      totalCases = numStrings;
+      valuesString = generatedStrings
+        .map((str) => `${str.length}\n${str},`)
         .join("\n");
-      navigator.clipboard.writeText(
-        totalCases.toString() + "\n" + valuesString + "\n"
-      );
+      valuesString = `${totalCases}\n${valuesString}`;
     }
 
+    navigator.clipboard.writeText(valuesString);
     setCopied(true);
   };
 
@@ -343,54 +323,29 @@ const GenerateString = () => {
     let valuesString = "";
     let totalCases = 0;
 
-    if (
-      advanceOptions.includes("Hide Length") &&
-      advanceOptions.includes("Hide Number of Strings")
-    ) {
-      valuesString = generatedStrings.join(", ");
-    }
-
-    if (
-      advanceOptions.includes("Hide Length") &&
-      !advanceOptions.includes("Hide Number of Strings")
-    ) {
-      totalCases = numStrings;
-      valuesString = generatedStrings.join("\n");
-    }
-
-    if (
-      advanceOptions.includes("Hide Length") &&
-      !advanceOptions.includes("Hide Number of Strings")
-    ) {
-      valuesString = `${numStrings} \n` + `${generatedStrings.join("\n")}`;
-    }
-
-    if (
-      !advanceOptions.includes("Hide Length") &&
-      advanceOptions.includes("Hide Number of Strings")
-    ) {
+    if (advanceOptions.includes("Hide Length")) {
+      if (advanceOptions.includes("Hide Number of Strings")) {
+        valuesString = generatedStrings.join(", ");
+      } else {
+        totalCases = numStrings;
+        valuesString = `${numStrings}\n${generatedStrings.join("\n")}`;
+      }
+    } else if (advanceOptions.includes("Hide Number of Strings")) {
       valuesString = generatedStrings
-        .map((str) => str.length + "\n" + str + ",")
+        .map((str) => `${str.length}\n${str}`)
         .join("\n");
-    }
-
-    if (
-      !advanceOptions.includes("Hide Length") &&
-      !advanceOptions.includes("Hide Number of Strings")
-    ) {
+    } else {
       totalCases = numStrings;
-      valuesString =
-        `${numStrings} \n` +
-        generatedStrings.map((str) => str.length + "\n" + str + ",").join("\n");
+      valuesString = `${numStrings}\n${generatedStrings
+        .map((str) => `${str.length}\n${str}`)
+        .join("\n")}`;
     }
 
     const element = document.createElement("a");
     const file = new Blob([valuesString], { type: "text/plain" });
     element.href = URL.createObjectURL(file);
     element.download = "generated_values.txt";
-    document.body.appendChild(element); // Required for this to work in Firefox
     element.click();
-    document.body.removeChild(element);
   };
 
   const handleResetValues = () => {
@@ -417,7 +372,7 @@ const GenerateString = () => {
             <StyledCardHeader title="Random String Generator" />
             <StyledCardContent>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Tooltip title="Enter the number of string">
                     <StyledTextField
                       label="Number of Strings"
@@ -435,7 +390,7 @@ const GenerateString = () => {
                     />
                   </Tooltip>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Tooltip title="Enter the length of the string">
                     <StyledTextField
                       label="string length"
@@ -571,7 +526,7 @@ const GenerateString = () => {
               </Grid>
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
                 <Grid item xs={4}>
-                  <Tooltip title="Check to generate increasing values">
+                  <Tooltip title="Check to generate increasing values(Only work with multiple strings)">
                     <FormControlLabel
                       control={
                         <Radio
@@ -580,6 +535,7 @@ const GenerateString = () => {
                           value="increasing"
                           name="radio-button-demo"
                           inputProps={{ "aria-label": "increasing" }}
+                          disabled={numStrings <= 1}
                         />
                       }
                       label="Increasing"
@@ -587,7 +543,7 @@ const GenerateString = () => {
                   </Tooltip>
                 </Grid>
                 <Grid item xs={4}>
-                  <Tooltip title="Check to generate decreasing values">
+                  <Tooltip title="Check to generate decreasing values(Only work with multiple strings)">
                     <FormControlLabel
                       control={
                         <Radio
@@ -596,6 +552,7 @@ const GenerateString = () => {
                           value="decreasing"
                           name="radio-button-demo"
                           inputProps={{ "aria-label": "decreasing" }}
+                          disabled={numStrings <= 1}
                         />
                       }
                       label="Decreasing"
@@ -603,7 +560,7 @@ const GenerateString = () => {
                   </Tooltip>
                 </Grid>
                 <Grid item xs={4}>
-                  <Tooltip title="Check to generate random values">
+                  <Tooltip title="Check to generate random values(Only work with multiple strings)">
                     <FormControlLabel
                       control={
                         <Radio
@@ -612,6 +569,7 @@ const GenerateString = () => {
                           value="random"
                           name="radio-button-demo"
                           inputProps={{ "aria-label": "random" }}
+                          disabled={numStrings <= 1}
                         />
                       }
                       label="Random"
@@ -636,10 +594,7 @@ const GenerateString = () => {
                     onClick={handleCopyStrings}
                     fullWidth
                     startIcon={
-                      <CopyToClipboard
-                        text={generatedStrings.join(", ")}
-                        onCopy={handleCopyStrings}
-                      >
+                      <CopyToClipboard onCopy={handleCopyStrings}>
                         <FileCopyIcon />
                       </CopyToClipboard>
                     }
@@ -680,19 +635,16 @@ const GenerateString = () => {
                     {generatedStrings.length > 0 && (
                       <>
                         <Typography variant="subtitle1">
-                          {!advanceOptions.includes("Hide Number of Strings")
-                            ? `${generatedStrings.length}`
-                            : null}
-                          {advanceOptions.includes("Hide Length")
-                            ? generatedStrings.map((str, index) => (
-                                <div key={index}>{str}</div>
-                              ))
-                            : generatedStrings.map((str, index) => (
-                                <div key={index}>
-                                  <div>{generatedStrings[index].length}</div>
-                                  {str}
-                                </div>
-                              ))}
+                          {!advanceOptions.includes("Hide Number of Strings") &&
+                            generatedStrings.length}
+                          {generatedStrings.map((str, index) => (
+                            <div key={index}>
+                              {!advanceOptions.includes("Hide Length") && (
+                                <div>{str.length}</div>
+                              )}
+                              {str}
+                            </div>
+                          ))}
                         </Typography>
                       </>
                     )}

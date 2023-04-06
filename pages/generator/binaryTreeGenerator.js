@@ -85,8 +85,9 @@ const BinaryTreeGenerator = () => {
   const [maxValue, setMaxValue] = useState(100);
   const [generatedTree, setGeneratedTree] = useState(null);
   const [copied, setCopied] = useState(false);
-  const [timeTaken, setTimeTaken] = useState("Click the button to generate values");
-
+  const [timeTaken, setTimeTaken] = useState(
+    "Click the button to generate values"
+  );
 
   const TreeNode = function (val, left = null, right = null) {
     this.val = val;
@@ -124,7 +125,8 @@ const BinaryTreeGenerator = () => {
     setCopied(false);
     const endTime = performance.now();
     const timeDiff = endTime - startTime;
-    const formattedTime = timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+    const formattedTime =
+      timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
     setTimeTaken(formattedTime);
   };
 
@@ -174,12 +176,11 @@ const BinaryTreeGenerator = () => {
     setMaxValue(100);
     setGeneratedTree(null);
     setCopied(false);
-    setTimeTaken(null)
+    setTimeTaken(null);
   };
 
   return (
     <>
-      <NavigationBar />
       <StyledGrid container>
         <Grid item xs={12} sm={8} md={6} sx={{ margin: "auto" }}>
           <StyledCard>
@@ -263,7 +264,7 @@ const BinaryTreeGenerator = () => {
               </Grid>
               <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
                 <Grid item xs={6}>
-                {timeTaken && <p>Time taken: {timeTaken}</p>}
+                  {timeTaken && <p>Time taken: {timeTaken}</p>}
                   <StyledTypography variant="h6">
                     Generated Tree
                   </StyledTypography>

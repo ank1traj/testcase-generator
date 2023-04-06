@@ -112,6 +112,19 @@ export default function Home() {
               Generate random linked list of integer values.
             </p>
           </Link>
+
+          <Link
+            href="/generator/graphGenerator"
+            className={styles.card}
+            rel="noopener noreferrer"
+          >
+            <h2 className={inter.className}>
+              Graph <span>-&gt;</span>
+            </h2>
+            <p className={inter.className}>
+              Generate random graph of integer/char values.
+            </p>
+          </Link>
         </div>
       </main>
     </>
