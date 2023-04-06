@@ -150,7 +150,7 @@ const GenerateString = () => {
 
   const [increasing, setIncreasing] = useState(false); // for sorting in increasing order
   const [decreasing, setDecreasing] = useState(false); // for sorting in decreasing order
-  const [random, setRandom] = useState(true); // for random order
+  const [random, setRandom] = useState(false); // for random order
 
   const [advanceOptions, setAdvanceOptions] = useState(["Hide Length"]);
 
@@ -160,6 +160,15 @@ const GenerateString = () => {
   };
 
   const handleSortChange = (event) => {
+    if (
+      (event.target.value === "increasing" ||
+        event.target.value === "decreasing" ||
+        event.target.value === "random") &&
+      numStrings === 1
+    ) {
+      alert("Please generate more than one string to sort");
+      return;
+    }
     switch (event.target.value) {
       case "increasing":
         setIncreasing(true);
