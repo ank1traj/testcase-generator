@@ -456,7 +456,14 @@ const GenerateArray = () => {
                       label="Array Size"
                       type="number"
                       value={arraySize}
-                      onChange={(e) => setArraySize(e.target.value)}
+                      onChange={(e) => {
+                        if (e.target.value < 0) {
+                          alert("Please enter a positive number");
+                          setArraySize(10);
+                        } else {
+                          setArraySize(e.target.value);
+                        }
+                      }}
                       fullWidth
                     />
                   </Tooltip>
@@ -467,7 +474,14 @@ const GenerateArray = () => {
                       label="Number of Arrays"
                       type="number"
                       value={numArrays}
-                      onChange={(e) => setNumArrays(e.target.value)}
+                      onChange={(e) => {
+                        if (e.target.value < 0) {
+                          alert("Please enter a positive number");
+                          setNumArrays(1);
+                        } else {
+                          setNumArrays(e.target.value);
+                        }
+                      }}
                       fullWidth
                     />
                   </Tooltip>

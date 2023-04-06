@@ -207,6 +207,21 @@ const GenerateString = () => {
       return;
     }
 
+    // Check if any character is included in both includeChars and excludedChars
+    const commonChars = [
+      ...new Set(
+        [...includedChars].filter((char) => excludedChars.includes(char))
+      ),
+    ];
+    if (commonChars.length > 0) {
+      alert(
+        `Please do not include the same characters (${commonChars.join(
+          ", "
+        )}) in both include and exclude fields.`
+      );
+      return;
+    }
+
     const startTime = performance.now();
 
     // Define the character sets to include in the generated strings
@@ -410,7 +425,14 @@ const GenerateString = () => {
                       label="Number of Strings"
                       type="number"
                       value={numStrings}
-                      onChange={(e) => setNumStrings(e.target.value)}
+                      onChange={(e) => {
+                        if (e.target.value < 0) {
+                          alert("Please enter a positive number");
+                          setNumStrings(1);
+                        } else {
+                          setNumStrings(e.target.value);
+                        }
+                      }}
                       fullWidth
                     />
                   </Tooltip>
@@ -421,7 +443,14 @@ const GenerateString = () => {
                       label="string length"
                       type="number"
                       value={stringLength}
-                      onChange={(e) => setStringLength(e.target.value)}
+                      onChange={(e) => {
+                        if (e.target.value < 0) {
+                          alert("Please enter a positive number");
+                          setStringLength(10);
+                        } else {
+                          setStringLength(e.target.value);
+                        }
+                      }}
                       fullWidth
                     />
                   </Tooltip>
