@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
-import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,18 +18,23 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <p>
-            Get started by Clicking&nbsp;
-            <code className={styles.code}>any generate file</code>
-          </p>
-          <div>
             <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+              href="https://github.com/ank1traj/testcase-generator"
               target="_blank"
               rel="noopener noreferrer"
             >
-              By Ankit Raj
+              {" "}
+              Wanna Contribute &hearts;
+              <code className={styles.code}>write and send it on GitHub</code>
             </a>
-          </div>
+          </p>
+          <div>By Ankit Raj</div>
+        </div>
+        <div className={styles.description}>
+          <p>
+            Get started by Clicking&nbsp;
+            <code className={styles.code}>any generate file</code>
+          </p>
         </div>
 
         <div className={styles.center}>
@@ -110,7 +114,6 @@ export default function Home() {
           </Link>
         </div>
       </main>
-      <Analytics />
     </>
   );
 }
