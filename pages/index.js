@@ -4,6 +4,10 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import ErrorIcon from "@mui/icons-material/Error";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -28,15 +32,11 @@ export default function Home() {
               <code className={styles.code}>write and send it on GitHub</code>
             </a>
           </p>
-          <div>By Ankit Raj</div>
+          <div className={styles.author}>
+            By Ankit Raj
+            <div className={styles.glow}></div>
+          </div>
         </div>
-        <div className={styles.description}>
-          <p>
-            Get started by Clicking&nbsp;
-            <code className={styles.code}>any generate file</code>
-          </p>
-        </div>
-
         <div className={styles.center}>
           <div className={styles.thirteen}>
             <Image
@@ -56,7 +56,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Integer <span>-&gt;</span>
+              Integer <HourglassEmptyIcon style={{ color: "blue" }} />{" "}
+              <span>-&gt;</span>
             </h2>
             <p className={inter.className}>Generate random array</p>
           </Link>
@@ -67,7 +68,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              String <span>-&gt;</span>
+              String <CheckCircleIcon style={{ color: "green" }} />{" "}
+              <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Generate random string of characters.
@@ -80,7 +82,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Array <span>-&gt;</span>
+              Array
+              <CheckCircleIcon style={{ color: "green" }} /> <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Generate random array of integer & float values.
@@ -93,7 +96,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Binary Tree <span>-&gt;</span>
+              Binary Tree <ErrorIcon style={{ color: "red" }} />{" "}
+              <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Generate random binary tree of integer values.
@@ -106,7 +110,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Linked List <span>-&gt;</span>
+              Linked List
+              <ErrorIcon style={{ color: "red" }} /> <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Generate random linked list of integer values.
@@ -119,10 +124,36 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Graph <span>-&gt;</span>
+              Graph <CheckCircleIcon style={{ color: "green" }} />{" "}
+              <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Generate random graph of integer/char values.
+            </p>
+          </Link>
+          <Link
+            href="/generator/matrixGenerator"
+            className={styles.card}
+            rel="noopener noreferrer"
+          >
+            <h2 className={inter.className}>
+              Matrix <ErrorIcon style={{ color: "red" }} /> <span>-&gt;</span>
+            </h2>
+            <p className={inter.className}>
+              Generate random Matrix of integer/char values.
+            </p>
+          </Link>
+          <Link
+            href="/generator/palindromeGenerator"
+            className={styles.card}
+            rel="noopener noreferrer"
+          >
+            <h2 className={inter.className}>
+              Palindromes <CheckCircleIcon style={{ color: "green" }} />{" "}
+              <span>-&gt;</span>
+            </h2>
+            <p className={inter.className}>
+              Generate random Palindromes of integer/char values.
             </p>
           </Link>
         </div>

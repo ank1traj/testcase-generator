@@ -678,10 +678,10 @@ const GenerateArray = () => {
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
-                  <StyledTypography variant="body2">
+                  <StyledTypography variant="subtitle">
                     {generatedValues.length > 0 && (
                       <>
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle">
                           {advanceOptions.includes("Show Total Cases") &&
                             generatedValues.length}
                           {generatedValues.map((array, index) => (

@@ -631,10 +631,10 @@ const GenerateString = () => {
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
-                  <StyledTypography variant="body2">
+                  <StyledTypography variant="subtitle">
                     {generatedStrings.length > 0 && (
                       <>
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle">
                           {!advanceOptions.includes("Hide Number of Strings") &&
                             generatedStrings.length}
                           {generatedStrings.map((str, index) => (

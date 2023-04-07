@@ -172,7 +172,7 @@ const GenerateGraph = () => {
     setAdvanceOptions(value);
   };
 
-  const generateGraphs = (numGraphs) => {
+  const handleGenerateValues = (numGraphs) => {
     if (numVertices <= 1) {
       alert("Number of vertices must be greater than 0");
       return;
@@ -682,7 +682,7 @@ const GenerateGraph = () => {
                     variant="contained"
                     fullWidth
                     startIcon={<GenerateIcon />}
-                    onClick={() => generateGraphs(numGraph)}
+                    onClick={() => handleGenerateValues(numGraph)}
                   >
                     Generate Graph
                   </StyledButton>
@@ -730,7 +730,7 @@ const GenerateGraph = () => {
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
-                  <StyledTypography variant="body2" my={2}>
+                  <StyledTypography variant="subtitle" my={2}>
                     {advanceOptions.includes("Show Total Cases") &&
                     generatedGraph
                       ? `${numGraph}`

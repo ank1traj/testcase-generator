@@ -16,8 +16,6 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import GenerateIcon from "@mui/icons-material/PlayArrow";
 import { styled } from "@mui/material/styles";
 
-import NavigationBar from "@/component/navigation";
-
 const StyledCard = styled(Card)(({ theme }) => ({
   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -84,21 +82,26 @@ const GenerateInteger = () => {
   const [numValues, setNumValues] = useState(10);
   const [generatedValues, setGeneratedValues] = useState([]);
   const [copied, setCopied] = useState(false);
-  const [timeTaken, setTimeTaken] = useState("Click the button to generate values");
+  const [timeTaken, setTimeTaken] = useState(
+    "Click the button to generate values"
+  );
 
-const handleGenerateValues = () => {
-  const startTime = performance.now();
-  const newValues = Array.from(
-    { length: numValues },
-    () => Math.floor(Math.random() * (parseInt(max) - parseInt(min) + 1)) + parseInt(min)
-  )
-  const endTime = performance.now();
-  const timeDiff = endTime - startTime;
-  const formattedTime = timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
-  setTimeTaken(formattedTime);
-  setGeneratedValues(newValues);
-  setCopied(false);
-};
+  const handleGenerateValues = () => {
+    const startTime = performance.now();
+    const newValues = Array.from(
+      { length: numValues },
+      () =>
+        Math.floor(Math.random() * (parseInt(max) - parseInt(min) + 1)) +
+        parseInt(min)
+    );
+    const endTime = performance.now();
+    const timeDiff = endTime - startTime;
+    const formattedTime =
+      timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+    setTimeTaken(formattedTime);
+    setGeneratedValues(newValues);
+    setCopied(false);
+  };
 
   const handleCopyValues = () => {
     const valuesString = generatedValues.join(", ");
@@ -112,12 +115,11 @@ const handleGenerateValues = () => {
     setNumValues(10);
     setGeneratedValues([]);
     setCopied(false);
-    setTimeTaken(null)
+    setTimeTaken(null);
   };
 
   return (
     <>
-      <NavigationBar />
       <StyledGrid container>
         <Grid item xs={12} sm={8} md={6} sx={{ margin: "auto" }}>
           <StyledCard>
@@ -204,7 +206,9 @@ const handleGenerateValues = () => {
                 <Grid item xs={12}>
                   <StyledTypography variant="body2" my={2}>
                     {generatedValues.length > 0
-                      ? generatedValues.map((value, index) => <div key={index}>{value}</div>)
+                      ? generatedValues.map((value, index) => (
+                          <div key={index}>{value}</div>
+                        ))
                       : "No Integer generated yet"}
                   </StyledTypography>
                 </Grid>
