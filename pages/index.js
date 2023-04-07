@@ -82,8 +82,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Array
-              <CheckCircleIcon style={{ color: "green" }} /> <span>-&gt;</span>
+              Array <CheckCircleIcon style={{ color: "green" }} />{" "}
+              <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Generate random array of integer & float values.
@@ -110,8 +110,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Linked List
-              <ErrorIcon style={{ color: "red" }} /> <span>-&gt;</span>
+              Linked List <ErrorIcon style={{ color: "red" }} />{" "}
+              <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Generate random linked list of integer values.
@@ -137,7 +137,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Matrix <ErrorIcon style={{ color: "red" }} /> <span>-&gt;</span>
+              Matrix <HourglassEmptyIcon style={{ color: "Blue" }} />{" "}
+              <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
               Generate random Matrix of integer/char values.
