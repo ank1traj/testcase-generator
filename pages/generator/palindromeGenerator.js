@@ -260,7 +260,11 @@ const PalindromeGenerator = () => {
         values.push(palindrome);
       }
     } else if (arrayPalindrome) {
-      if (length === 1 && min > 9) {
+      if (length !== ("" + max).length) {
+        alert(
+          `The maximum value should be of ${length} digit(s) when the length is ${length}.`
+        );
+      } else if (length === 1 && min > 9) {
         alert(
           "It's impossible to create palindromes with length 1 and a minimum value greater than 9."
         );
@@ -269,11 +273,6 @@ const PalindromeGenerator = () => {
       } else if (min >= 10 ** length || max < 10 ** (length - 1)) {
         alert(
           `It's impossible to create palindromes with length ${length}, minimum value ${min}, and maximum value ${max}.`
-        );
-      } else if (length !== String(max).length.toString()) {
-        console.log(typeof length, typeof String(max).length);
-        alert(
-          `The maximum value should be of ${length} digit(s) when the length is ${length}.`
         );
       } else {
         while (values.length < numPalindromes) {
@@ -436,7 +435,8 @@ const PalindromeGenerator = () => {
                         alert("Please enter a number greater than 1");
                         setLength(1);
                       } else {
-                        setLength(e.target.value);
+                        const value = Number(e.target.value);
+                        setLength(value);
                       }
                     }}
                     fullWidth
@@ -658,15 +658,28 @@ const PalindromeGenerator = () => {
                       : null}
                   </StyledTypography>
                 </Grid>
+                <StyledTypography variant="subtitle">
+                  {generatedValues.length > 0 &&
+                  !advanceOptions.includes("Show Length") &&
+                  arrayPalindrome
+                    ? generatedValues.map((palindrome) => (
+                        <>
+                          <div key={palindrome}>
+                            {Array.isArray(palindrome) &&
+                              `[${palindrome.join(", ")}]`}
+                          </div>
+                        </>
+                      ))
+                    : null}
+                </StyledTypography>
 
                 <StyledTypography variant="subtitle">
                   {generatedValues.length > 0 &&
-                  !advanceOptions.includes("Show Length")
+                  !advanceOptions.includes("Show Length") &&
+                  stringPalindrome
                     ? generatedValues.map((palindrome) => (
                         <>
-                          <div key={palindrome}>{`[${palindrome.join(
-                            ", "
-                          )}]`}</div>
+                          <div key={palindrome}>{palindrome}</div>
                         </>
                       ))
                     : null}
