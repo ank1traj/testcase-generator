@@ -127,7 +127,7 @@ const PalindromeGenerator = () => {
   const [length, setLength] = useState(2);
   const [numPalindromes, setNumPalindromes] = useState(1);
   const [min, setMin] = useState(0);
-  const [max, setMax] = useState(100);
+  const [max, setMax] = useState(99);
   const [generatedValues, setGeneratedValues] = useState([]);
   const [copied, setCopied] = useState(false);
   const [timeTaken, setTimeTaken] = useState(
@@ -135,7 +135,7 @@ const PalindromeGenerator = () => {
   );
 
   const [stringPalindrome, setStringPalindrome] = useState(true);
-  const [integerPalindrome, setIntegerPalindrome] = useState(false);
+  const [arrayPalindrome, setArrayPalindrome] = useState(false);
 
   const [advanceOptions, setAdvanceOptions] = useState(["Show Total Cases"]);
 
@@ -259,7 +259,7 @@ const PalindromeGenerator = () => {
           .substr(length % 2 === 0 ? 0 : 1);
         values.push(palindrome);
       }
-    } else if (integerPalindrome) {
+    } else if (arrayPalindrome) {
       if (length === 1 && min > 9) {
         alert(
           "It's impossible to create palindromes with length 1 and a minimum value greater than 9."
@@ -270,16 +270,21 @@ const PalindromeGenerator = () => {
         alert(
           `It's impossible to create palindromes with length ${length}, minimum value ${min}, and maximum value ${max}.`
         );
+      } else if (length !== String(max).length.toString()) {
+        console.log(typeof length, typeof String(max).length);
+        alert(
+          `The maximum value should be of ${length} digit(s) when the length is ${length}.`
+        );
       } else {
         while (values.length < numPalindromes) {
           let palindromeArr = [];
-          const numDigits = integerPalindrome
+          const numDigits = arrayPalindrome
             ? length / 2
             : Math.floor(length / 2) + 1;
 
           for (let j = 0; j < numDigits; j++) {
             const minDigit = j === 0 && min === 0 ? 1 : 0;
-            const maxDigit = j === numDigits - 1 && !integerPalindrome ? 9 : 10;
+            const maxDigit = j === numDigits - 1 && !arrayPalindrome ? 9 : 10;
             const digit = Math.floor(
               Math.random() * (maxDigit - minDigit) + minDigit
             );
@@ -324,7 +329,7 @@ const PalindromeGenerator = () => {
       values += generatedValues
         .map((value) => {
           return `${value.length}\n${
-            integerPalindrome ? value.join("") : value
+            arrayPalindrome ? value.join("") : value
           }\n`;
         })
         .join("");
@@ -332,7 +337,7 @@ const PalindromeGenerator = () => {
       values = generatedValues
         .map((value) => {
           return `${value.length}\n${
-            integerPalindrome ? value.join("") : value
+            arrayPalindrome ? value.join("") : value
           }\n`;
         })
         .join("");
@@ -340,13 +345,13 @@ const PalindromeGenerator = () => {
       values = `${generatedValues.length}\n`;
       values += generatedValues
         .map((value) => {
-          return `${integerPalindrome ? value.join("") : value}\n`;
+          return `${arrayPalindrome ? value.join("") : value}\n`;
         })
         .join("");
     } else {
       values = generatedValues
         .map((value) => {
-          return `${integerPalindrome ? value.join("") : value}\n`;
+          return `${arrayPalindrome ? value.join("") : value}\n`;
         })
         .join("");
     }
@@ -371,24 +376,24 @@ const PalindromeGenerator = () => {
       values += generatedValues
         .map(
           (value) =>
-            `${value.length}\n${integerPalindrome ? value.join("") : value}\n`
+            `${value.length}\n${arrayPalindrome ? value.join("") : value}\n`
         )
         .join("");
     } else if (advanceOptions.includes("Show Length")) {
       values = generatedValues
         .map(
           (value) =>
-            `${value.length}\n${integerPalindrome ? value.join("") : value}\n`
+            `${value.length}\n${arrayPalindrome ? value.join("") : value}\n`
         )
         .join("");
     } else if (advanceOptions.includes("Show Total Cases")) {
       values += `${generatedValues.length}\n`;
       values += generatedValues
-        .map((value) => `${integerPalindrome ? value.join("") : value}\n`)
+        .map((value) => `${arrayPalindrome ? value.join("") : value}\n`)
         .join("");
     } else {
       values = generatedValues
-        .map((value) => `${integerPalindrome ? value.join("") : value}\n`)
+        .map((value) => `${arrayPalindrome ? value.join("") : value}\n`)
         .join("");
     }
 
@@ -404,12 +409,12 @@ const PalindromeGenerator = () => {
     setLength(2);
     setNumPalindromes(1);
     setMin(0);
-    setMax(100);
+    setMax(99);
     setGeneratedValues([]);
     setCopied(false);
     setSelectedOptions(["lowercase"]);
     setStringPalindrome(true);
-    setIntegerPalindrome(false);
+    setArrayPalindrome(false);
     setAdvanceOptions(["Show Total Cases"]);
   };
 
@@ -460,23 +465,23 @@ const PalindromeGenerator = () => {
 
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
               <Grid item xs={2}>
-                <Tooltip title="Click to generate integer palindromes">
+                <Tooltip title="Click to generate array palindromes">
                   <FormControlLabel
                     control={
                       <Radio
-                        checked={integerPalindrome}
+                        checked={arrayPalindrome}
                         onChange={(e) => {
-                          setIntegerPalindrome(true);
+                          setArrayPalindrome(true);
                           setStringPalindrome(false);
                         }}
-                        value="integer"
+                        value="array"
                         name="radio-button-demo"
                         inputProps={{
-                          "aria-label": "integer",
+                          "aria-label": "array",
                         }}
                       />
                     }
-                    label="Integer"
+                    label="Array"
                   />
                 </Tooltip>
               </Grid>
@@ -488,7 +493,7 @@ const PalindromeGenerator = () => {
                         checked={stringPalindrome}
                         onChange={(e) => {
                           setStringPalindrome(true);
-                          setIntegerPalindrome(false);
+                          setArrayPalindrome(false);
                         }}
                         value="string"
                         name="radio-button-demo"
@@ -569,7 +574,7 @@ const PalindromeGenerator = () => {
                         onChange={(e) => {
                           if (e.target.value < 0) {
                             alert("Please enter a positive number");
-                            setMax(100);
+                            setMax(99);
                           } else {
                             setMax(e.target.value);
                           }
@@ -659,7 +664,9 @@ const PalindromeGenerator = () => {
                   !advanceOptions.includes("Show Length")
                     ? generatedValues.map((palindrome) => (
                         <>
-                          <div key={palindrome}>{palindrome}</div>
+                          <div key={palindrome}>{`[${palindrome.join(
+                            ", "
+                          )}]`}</div>
                         </>
                       ))
                     : null}

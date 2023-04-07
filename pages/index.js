@@ -150,11 +150,11 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Palindromes <CheckCircleIcon style={{ color: "green" }} />{" "}
+              Palindrome <CheckCircleIcon style={{ color: "green" }} />{" "}
               <span>-&gt;</span>
             </h2>
             <p className={inter.className}>
-              Generate random Palindromes of integer/char values.
+              Generate random Palindrome of integer/char values.
             </p>
           </Link>
         </div>
