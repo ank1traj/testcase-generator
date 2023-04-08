@@ -479,7 +479,7 @@ const GenerateGraph = () => {
 
   return (
     <StyledGrid container>
-      <Toaster reverseOrder={true} />
+      <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
         <StyledCard>
           <StyledCardHeader title="Graph Generator" />
