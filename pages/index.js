@@ -33,7 +33,13 @@ export default function Home() {
             </a>
           </p>
           <div className={styles.author}>
-            By Ankit Raj
+            <a
+              href="https://www.linkedin.com/in/ank1traj/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              By Ankit Raj
+            </a>
             <div className={styles.glow}></div>
           </div>
         </div>
