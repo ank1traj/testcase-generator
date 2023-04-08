@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DataSet } from "vis-data";
-import { Network } from "vis-network";
+// import { Network } from "vis-network";
 import {
   Grid,
   Card,
@@ -9,11 +9,9 @@ import {
   TextField,
   Button,
   Typography,
-  IconButton,
   Tooltip,
   FormControlLabel,
   Checkbox,
-  Radio,
   MenuItem,
   Select,
   InputLabel,
@@ -85,10 +83,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: "#fff",
-}));
-
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
   minWidth: "300px",
   "& .MuiSelect-select": {
@@ -96,21 +90,6 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
   },
   "& .MuiSelect-icon": {
     right: 0,
-  },
-}));
-
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.secondary.main,
-  backgroundColor: theme.palette.background.paper,
-  "&:hover": {
-    backgroundColor: theme.palette.secondary.light,
-  },
-  "&.Mui-selected": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-  },
-  "&.Mui-selected:hover": {
-    backgroundColor: theme.palette.primary.light,
   },
 }));
 
@@ -309,14 +288,14 @@ const GenerateGraph = () => {
               //   container.id = `graph-${i + 1}`;
               //   document.body.appendChild(container);
 
-              const data = { nodes, edges };
-              const options = {
-                edges: {
-                  font: {
-                    size: 16,
-                  },
-                },
-              };
+              // const data = { nodes, edges };
+              // const options = {
+              //   edges: {
+              //     font: {
+              //       size: 16,
+              //     },
+              //   },
+              // };
 
               //   const network = new Network(container, data, options);
 
@@ -365,7 +344,7 @@ const GenerateGraph = () => {
       const edges = graph.edges.map((edge) => {
         const from = edge.from;
         const to = edge.to;
-        const type = edge.type;
+        // const type = edge.type;
         const label = edge.label;
         let edgeString = isDirected ? `${from} -> ${to}` : `${from} ${to}`;
         edgeString = isArrow ? `${from} -> ${to}` : `${from} ${to}`;

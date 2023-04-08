@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Card,
@@ -7,7 +7,6 @@ import {
   TextField,
   Button,
   Typography,
-  IconButton,
   Tooltip,
 } from "@mui/material";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -70,10 +69,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
     background: "#FF8E53",
     color: "#fff",
   },
-}));
-
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: "#fff",
 }));
 
 const BinaryTreeGenerator = () => {

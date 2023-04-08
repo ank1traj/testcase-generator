@@ -82,10 +82,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: "#fff",
-}));
-
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
   minWidth: "300px",
   "& .MuiSelect-select": {
@@ -93,21 +89,6 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
   },
   "& .MuiSelect-icon": {
     right: 0,
-  },
-}));
-
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.secondary.main,
-  backgroundColor: theme.palette.background.paper,
-  "&:hover": {
-    backgroundColor: theme.palette.secondary.light,
-  },
-  "&.Mui-selected": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-  },
-  "&.Mui-selected:hover": {
-    backgroundColor: theme.palette.primary.light,
   },
 }));
 
@@ -305,24 +286,28 @@ const PalindromeGenerator = () => {
                     }.`
                   )
                 );
+                return;
               } else if (length === 1 && min > 9) {
                 reject(
                   new Error(
                     "It's impossible to create palindromes with length 1 and a minimum value greater than 9."
                   )
                 );
+                return;
               } else if (min >= max) {
                 reject(
                   new Error(
                     "The minimum value must be less than the maximum value."
                   )
                 );
+                return;
               } else if (min >= 10 ** length || max < 10 ** (length - 1)) {
                 reject(
                   new Error(
                     `It's impossible to create palindromes with length ${length}, minimum value ${min}, and maximum value ${max}.`
                   )
                 );
+                return;
               } else {
                 while (values.length < numPalindromes) {
                   let palindromeArr = [];

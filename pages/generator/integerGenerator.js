@@ -72,10 +72,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: "#fff",
-}));
-
 const GenerateInteger = () => {
   const [min, setMin] = useState(-100);
   const [max, setMax] = useState(100);

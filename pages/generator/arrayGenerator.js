@@ -82,10 +82,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: "#fff",
-}));
-
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
   minWidth: "300px",
   "& .MuiSelect-select": {
@@ -93,21 +89,6 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
   },
   "& .MuiSelect-icon": {
     right: 0,
-  },
-}));
-
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.secondary.main,
-  backgroundColor: theme.palette.background.paper,
-  "&:hover": {
-    backgroundColor: theme.palette.secondary.light,
-  },
-  "&.Mui-selected": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-  },
-  "&.Mui-selected:hover": {
-    backgroundColor: theme.palette.primary.light,
   },
 }));
 
@@ -216,18 +197,6 @@ const GenerateArray = () => {
         break;
     }
   };
-
-  function isPrime(n) {
-    if (n <= 1) {
-      return false;
-    }
-    for (let i = 2; i <= Math.sqrt(n); i++) {
-      if (n % i === 0) {
-        return false;
-      }
-    }
-    return true;
-  }
 
   const handleGenerateValues = async () => {
     setIsLoading(true); // set isLoading to true

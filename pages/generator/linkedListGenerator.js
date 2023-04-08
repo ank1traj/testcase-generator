@@ -9,8 +9,6 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  FormControlLabel,
-  Checkbox,
 } from "@mui/material";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FileCopyIcon from "@mui/icons-material/FileCopy";

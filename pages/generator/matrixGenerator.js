@@ -10,18 +10,16 @@ import {
   IconButton,
   Tooltip,
   FormControlLabel,
-  Checkbox,
   Radio,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
+  // MenuItem,
+  // Select,
+  // FormControl,
 } from "@mui/material";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import RefreshIcon from "@mui/icons-material/Refresh";
+// import { CopyToClipboard } from "react-copy-to-clipboard";
+// import FileCopyIcon from "@mui/icons-material/FileCopy";
+// import RefreshIcon from "@mui/icons-material/Refresh";
 import GenerateIcon from "@mui/icons-material/PlayArrow";
-import DownloadIcon from "@mui/icons-material/GetApp";
+// import DownloadIcon from "@mui/icons-material/GetApp";
 import { styled } from "@mui/material/styles";
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -84,42 +82,42 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: "#fff",
 }));
 
-const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  minWidth: "300px",
-  "& .MuiSelect-select": {
-    paddingRight: theme.spacing(4),
-  },
-  "& .MuiSelect-icon": {
-    right: 0,
-  },
-}));
+// const StyledFormControl = styled(FormControl)(({ theme }) => ({
+//   minWidth: "300px",
+//   "& .MuiSelect-select": {
+//     paddingRight: theme.spacing(4),
+//   },
+//   "& .MuiSelect-icon": {
+//     right: 0,
+//   },
+// }));
 
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.secondary.main,
-  backgroundColor: theme.palette.background.paper,
-  "&:hover": {
-    backgroundColor: theme.palette.secondary.light,
-  },
-  "&.Mui-selected": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-  },
-  "&.Mui-selected:hover": {
-    backgroundColor: theme.palette.primary.light,
-  },
-}));
+// const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+//   color: theme.palette.secondary.main,
+//   backgroundColor: theme.palette.background.paper,
+//   "&:hover": {
+//     backgroundColor: theme.palette.secondary.light,
+//   },
+//   "&.Mui-selected": {
+//     backgroundColor: theme.palette.primary.main,
+//     color: theme.palette.primary.contrastText,
+//   },
+//   "&.Mui-selected:hover": {
+//     backgroundColor: theme.palette.primary.light,
+//   },
+// }));
 
-const StyledSelect = styled(Select)(({ theme }) => ({
-  "&.MuiSelect-select": {
-    paddingRight: theme.spacing(2),
-    "&:focus": {
-      backgroundColor: "transparent",
-    },
-  },
-  "& .MuiSelect-icon": {
-    color: theme.palette.secondary.main,
-  },
-}));
+// const StyledSelect = styled(Select)(({ theme }) => ({
+//   "&.MuiSelect-select": {
+//     paddingRight: theme.spacing(2),
+//     "&:focus": {
+//       backgroundColor: "transparent",
+//     },
+//   },
+//   "& .MuiSelect-icon": {
+//     color: theme.palette.secondary.main,
+//   },
+// }));
 
 const GenerateMatrix = () => {
   const [numMatrix, setNumMatrix] = useState(1);

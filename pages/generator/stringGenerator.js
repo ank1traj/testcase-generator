@@ -83,10 +83,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: "#fff",
-}));
-
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
   minWidth: "300px",
   "& .MuiSelect-select": {
@@ -94,21 +90,6 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
   },
   "& .MuiSelect-icon": {
     right: 0,
-  },
-}));
-
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.secondary.main,
-  backgroundColor: theme.palette.background.paper,
-  "&:hover": {
-    backgroundColor: theme.palette.secondary.light,
-  },
-  "&.Mui-selected": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-  },
-  "&.Mui-selected:hover": {
-    backgroundColor: theme.palette.primary.light,
   },
 }));
 
@@ -246,7 +227,7 @@ const GenerateString = () => {
             if (capitalAlphabets) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             if (numbers) chars += "0123456789";
             if (specialChars) chars += '!@#$%^&*()_+-={}[]|:;"<>,.?/~`';
-            if (includedChars) chars += includedChars;
+            // if (includedChars) chars += includedChars;
 
             // Exclude any characters specified by the user
             if (excludedChars) {
@@ -379,13 +360,11 @@ const GenerateString = () => {
     setIsLoading(true); // set isLoading to true
 
     let valuesString = "";
-    let totalCases = 0;
 
     if (advanceOptions.includes("Hide Length")) {
       if (advanceOptions.includes("Hide Number of Strings")) {
         valuesString = generatedStrings.join(", ");
       } else {
-        totalCases = numStrings;
         valuesString = `${numStrings}\n${generatedStrings.join("\n")}`;
       }
     } else if (advanceOptions.includes("Hide Number of Strings")) {
@@ -393,7 +372,6 @@ const GenerateString = () => {
         .map((str) => `${str.length}\n${str}`)
         .join("\n");
     } else {
-      totalCases = numStrings;
       valuesString = `${numStrings}\n${generatedStrings
         .map((str) => `${str.length}\n${str}`)
         .join("\n")}`;
@@ -706,20 +684,18 @@ const GenerateString = () => {
               <Grid item xs={12}>
                 <StyledTypography variant="subtitle">
                   {generatedStrings.length > 0 && (
-                    <>
-                      <Typography variant="subtitle">
-                        {!advanceOptions.includes("Hide Number of Strings") &&
-                          generatedStrings.length}
-                        {generatedStrings.map((str, index) => (
-                          <div key={index}>
-                            {!advanceOptions.includes("Hide Length") && (
-                              <div>{str.length}</div>
-                            )}
-                            {str}
-                          </div>
-                        ))}
-                      </Typography>
-                    </>
+                    <Typography variant="subtitle">
+                      {!advanceOptions.includes("Hide Number of Strings") &&
+                        generatedStrings.length}
+                      {generatedStrings.map((str, index) => (
+                        <div key={index}>
+                          {!advanceOptions.includes("Hide Length") && (
+                            <div>{str.length}</div>
+                          )}
+                          {str}
+                        </div>
+                      ))}
+                    </Typography>
                   )}
                 </StyledTypography>
               </Grid>
