@@ -24,6 +24,8 @@ import GenerateIcon from "@mui/icons-material/PlayArrow";
 import DownloadIcon from "@mui/icons-material/GetApp";
 import { styled } from "@mui/material/styles";
 
+import toast, { Toaster } from "react-hot-toast";
+
 const StyledCard = styled(Card)(({ theme }) => ({
   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -139,6 +141,8 @@ const PalindromeGenerator = () => {
 
   const [advanceOptions, setAdvanceOptions] = useState(["Show Total Cases"]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   // Define options for string type
   const stringOptions = [
     { value: "lowercase", label: "a-z" },
@@ -163,160 +167,225 @@ const PalindromeGenerator = () => {
     setAdvanceOptions(value);
   };
 
-  const handleGenerateValues = () => {
-    let values = [];
+  const handleGenerateValues = async () => {
+    setIsLoading(true); // set isLoading to true
+    let errorOccurred = false; // add this flag variable
 
-    const startTime = performance.now();
+    try {
+      await toast.promise(
+        new Promise((resolve, reject) => {
+          // add reject parameter to the promise
+          setTimeout(() => {
+            let values = [];
 
-    if (stringPalindrome) {
-      const allowedChars =
-        selectedOptions.length > 0
-          ? selectedOptions
-              .map((option) => {
-                switch (option) {
-                  case "lowercase":
-                    return "abcdefghijklmnopqrstuvwxyz";
-                  case "uppercase":
-                    return "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                  case "numbers":
-                    return "0123456789";
-                  default:
-                    return "";
+            const startTime = performance.now();
+
+            if (stringPalindrome) {
+              const allowedChars =
+                selectedOptions.length > 0
+                  ? selectedOptions
+                      .map((option) => {
+                        switch (option) {
+                          case "lowercase":
+                            return "abcdefghijklmnopqrstuvwxyz";
+                          case "uppercase":
+                            return "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                          case "numbers":
+                            return "0123456789";
+                          default:
+                            return "";
+                        }
+                      })
+                      .join("")
+                  : "";
+              if (
+                allowedChars === "" ||
+                isNaN(length) ||
+                isNaN(numPalindromes) ||
+                length < 2
+              ) {
+                setGeneratedValues([]);
+                if (allowedChars === "") {
+                  reject(
+                    new Error("Please select at least one character type")
+                  );
+                } else if (isNaN(length)) {
+                  reject(new Error("Please enter a valid palindrome length"));
+                } else if (length < 2) {
+                  reject(new Error("Palindrome length must be at least 2"));
+                } else if (isNaN(numPalindromes)) {
+                  reject(
+                    new Error(
+                      "Please enter a valid number of palindromes to generate"
+                    )
+                  );
                 }
-              })
-              .join("")
-          : "";
-      if (
-        allowedChars === "" ||
-        isNaN(length) ||
-        isNaN(numPalindromes) ||
-        length < 2
-      ) {
-        setGeneratedValues([]);
-        if (allowedChars === "") {
-          alert("Please select at least one character type");
-        } else if (isNaN(length)) {
-          alert("Please enter a valid palindrome length");
-        } else if (length < 2) {
-          alert("Palindrome length must be at least 2");
-        } else if (isNaN(numPalindromes)) {
-          alert("Please enter a valid number of palindromes to generate");
+                return;
+              }
+              if (
+                selectedOptions.includes("numbers") &&
+                selectedOptions.includes("uppercase") &&
+                length === 2
+              ) {
+                setLength(3);
+                reject(
+                  new Error(
+                    "Cannot generate palindromes of length 2 with selected options"
+                  )
+                );
+                return;
+              }
+
+              if (
+                selectedOptions.includes("numbers") &&
+                selectedOptions.includes("lowercase") &&
+                length === 2
+              ) {
+                setLength(3);
+                reject(
+                  new Error(
+                    "Cannot generate palindromes of length 2 with selected options"
+                  )
+                );
+                return;
+              }
+
+              if (
+                selectedOptions.includes("uppercase") &&
+                selectedOptions.includes("lowercase") &&
+                length === 2
+              ) {
+                setLength(3);
+                reject(
+                  new Error(
+                    "Cannot generate palindromes of length 2 with selected options"
+                  )
+                );
+                return;
+              }
+
+              if (
+                selectedOptions.includes("numbers") &&
+                selectedOptions.includes("uppercase") &&
+                selectedOptions.includes("lowercase") &&
+                length === 3
+              ) {
+                setLength(4);
+                reject(
+                  new Error(
+                    "Cannot generate palindromes of length 3 with selected options"
+                  )
+                );
+                return;
+              }
+
+              for (let i = 0; i < numPalindromes; i++) {
+                let palindrome = "";
+                const numChars =
+                  length % 2 === 0 ? length / 2 : (length - 1) / 2 + 1;
+                for (let j = 0; j < numChars; j++) {
+                  const char =
+                    allowedChars[
+                      Math.floor(Math.random() * allowedChars.length)
+                    ];
+                  palindrome += char;
+                }
+                palindrome += [...palindrome]
+                  .reverse()
+                  .join("")
+                  .substr(length % 2 === 0 ? 0 : 1);
+                values.push(palindrome);
+              }
+            } else if (arrayPalindrome) {
+              if (length !== ("" + max).length) {
+                reject(
+                  new Error(
+                    `The maximum value should be of ${length} digit(s) when the length is ${length}.`
+                  )
+                );
+              } else if (length === 1 && min > 9) {
+                reject(
+                  new Error(
+                    "It's impossible to create palindromes with length 1 and a minimum value greater than 9."
+                  )
+                );
+              } else if (min >= max) {
+                reject(
+                  new Error(
+                    "The minimum value must be less than the maximum value."
+                  )
+                );
+              } else if (min >= 10 ** length || max < 10 ** (length - 1)) {
+                reject(
+                  new Error(
+                    `It's impossible to create palindromes with length ${length}, minimum value ${min}, and maximum value ${max}.`
+                  )
+                );
+              } else {
+                while (values.length < numPalindromes) {
+                  let palindromeArr = [];
+                  const numDigits = arrayPalindrome
+                    ? length / 2
+                    : Math.floor(length / 2) + 1;
+
+                  for (let j = 0; j < numDigits; j++) {
+                    const minDigit = j === 0 && min === 0 ? 1 : 0;
+                    const maxDigit =
+                      j === numDigits - 1 && !arrayPalindrome ? 9 : 10;
+                    const digit = Math.floor(
+                      Math.random() * (maxDigit - minDigit) + minDigit
+                    );
+                    palindromeArr.push(digit);
+                  }
+
+                  let secondHalf = palindromeArr
+                    .slice(0, Math.floor(length / 2))
+                    .reverse();
+                  palindromeArr = [...palindromeArr, ...secondHalf];
+
+                  const num = parseInt(palindromeArr.join(""));
+                  if (num >= min && num <= max) {
+                    values.push(palindromeArr);
+                  }
+                }
+              }
+            }
+            const endTime = performance.now();
+            const timeDiff = endTime - startTime;
+            const formattedTime =
+              timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+
+            setTimeTaken(formattedTime);
+            setGeneratedValues(values);
+            resolve();
+          }, 2000);
+        }),
+        {
+          loading: "Generating values...",
+          success: "Values generated successfully!",
+          error: (error) => {
+            if (errorOccurred) {
+              // show toast error if flag variable is true
+              return error.message;
+            } else {
+              return "An error occurred while generating values";
+            }
+          },
         }
-        return;
-      }
-      if (
-        selectedOptions.includes("numbers") &&
-        selectedOptions.includes("uppercase") &&
-        length === 2
-      ) {
-        setLength(3);
-        alert("Cannot generate palindromes of length 2 with selected options");
-        return;
-      }
-
-      if (
-        selectedOptions.includes("numbers") &&
-        selectedOptions.includes("lowercase") &&
-        length === 2
-      ) {
-        setLength(3);
-        alert("Cannot generate palindromes of length 2 with selected options");
-        return;
-      }
-
-      if (
-        selectedOptions.includes("uppercase") &&
-        selectedOptions.includes("lowercase") &&
-        length === 2
-      ) {
-        setLength(3);
-        alert("Cannot generate palindromes of length 2 with selected options");
-        return;
-      }
-
-      if (
-        selectedOptions.includes("numbers") &&
-        selectedOptions.includes("uppercase") &&
-        selectedOptions.includes("lowercase") &&
-        length === 3
-      ) {
-        setLength(4);
-        alert("Cannot generate palindromes of length 3 with selected options");
-        return;
-      }
-
-      for (let i = 0; i < numPalindromes; i++) {
-        let palindrome = "";
-        const numChars = length % 2 === 0 ? length / 2 : (length - 1) / 2 + 1;
-        for (let j = 0; j < numChars; j++) {
-          const char =
-            allowedChars[Math.floor(Math.random() * allowedChars.length)];
-          palindrome += char;
-        }
-        palindrome += [...palindrome]
-          .reverse()
-          .join("")
-          .substr(length % 2 === 0 ? 0 : 1);
-        values.push(palindrome);
-      }
-    } else if (arrayPalindrome) {
-      if (length !== ("" + max).length) {
-        alert(
-          `The maximum value should be of ${length} digit(s) when the length is ${length}.`
-        );
-      } else if (length === 1 && min > 9) {
-        alert(
-          "It's impossible to create palindromes with length 1 and a minimum value greater than 9."
-        );
-      } else if (min >= max) {
-        alert("The minimum value must be less than the maximum value.");
-      } else if (min >= 10 ** length || max < 10 ** (length - 1)) {
-        alert(
-          `It's impossible to create palindromes with length ${length}, minimum value ${min}, and maximum value ${max}.`
-        );
-      } else {
-        while (values.length < numPalindromes) {
-          let palindromeArr = [];
-          const numDigits = arrayPalindrome
-            ? length / 2
-            : Math.floor(length / 2) + 1;
-
-          for (let j = 0; j < numDigits; j++) {
-            const minDigit = j === 0 && min === 0 ? 1 : 0;
-            const maxDigit = j === numDigits - 1 && !arrayPalindrome ? 9 : 10;
-            const digit = Math.floor(
-              Math.random() * (maxDigit - minDigit) + minDigit
-            );
-            palindromeArr.push(digit);
-          }
-
-          let secondHalf = palindromeArr
-            .slice(0, Math.floor(length / 2))
-            .reverse();
-          palindromeArr = [...palindromeArr, ...secondHalf];
-
-          const num = parseInt(palindromeArr.join(""));
-          if (num >= min && num <= max) {
-            values.push(palindromeArr);
-          }
-        }
-      }
+      );
+    } catch (error) {
+      toast.error(error.message);
     }
-    const endTime = performance.now();
-    const timeDiff = endTime - startTime;
-    const formattedTime =
-      timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
-
-    setTimeTaken(formattedTime);
-    setGeneratedValues(values);
-    setCopied(false);
+    setIsLoading(false); // set isLoading to false
   };
 
   const handleCopyValues = () => {
     if (!generatedValues.length) {
-      alert("Please generate values first");
+      toast.error("Please generate values first");
       return;
     }
+
+    setIsLoading(true);
 
     let values = "";
 
@@ -356,14 +425,31 @@ const PalindromeGenerator = () => {
     }
 
     navigator.clipboard.writeText(values);
+    toast.promise(
+      navigator.clipboard.writeText(values),
+      {
+        loading: "Copying values...",
+        success: "Values copied!",
+        error: "Failed to copy values",
+      },
+      {
+        style: {
+          minWidth: "250px",
+        },
+      }
+    );
+
     setCopied(true);
+    setIsLoading(false);
   };
 
   const handleDownloadValues = () => {
     if (!generatedValues.length) {
-      alert("Please generate values first");
+      toast.error("Please generate values first");
       return;
     }
+
+    setIsLoading(true);
 
     let values = "";
 
@@ -402,9 +488,16 @@ const PalindromeGenerator = () => {
     element.download = "palindromes.txt";
     document.body.appendChild(element);
     element.click();
+    toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
+      pending: "Downloading values...",
+      success: "Values downloaded!",
+      error: "Failed to download values",
+    });
+    setIsLoading(false);
   };
 
   const handleResetValues = () => {
+    setIsLoading(true);
     setLength(2);
     setNumPalindromes(1);
     setMin(0);
@@ -415,10 +508,17 @@ const PalindromeGenerator = () => {
     setStringPalindrome(true);
     setArrayPalindrome(false);
     setAdvanceOptions(["Show Total Cases"]);
+    toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
+      pending: "Resetting values...",
+      success: "Values reset successfully!",
+      error: "Error resetting values",
+    });
+    setIsLoading(false);
   };
 
   return (
     <StyledGrid container>
+      <Toaster reverseOrder={true} />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
         <StyledCard>
           <StyledCardHeader title="Palindrome Generator" />
@@ -432,7 +532,7 @@ const PalindromeGenerator = () => {
                     value={length}
                     onChange={(e) => {
                       if (e.target.value < 0) {
-                        alert("Please enter a number greater than 1");
+                        toast.error("Please enter a number greater than 1");
                         setLength(1);
                       } else {
                         const value = Number(e.target.value);
@@ -451,7 +551,7 @@ const PalindromeGenerator = () => {
                     value={numPalindromes}
                     onChange={(e) => {
                       if (e.target.value < 0) {
-                        alert("Please enter a positive number");
+                        toast.error("Please enter a positive number");
                         setNumPalindromes(1);
                       } else {
                         setNumPalindromes(e.target.value);
@@ -555,8 +655,8 @@ const PalindromeGenerator = () => {
                         value={min}
                         onChange={(e) => {
                           if (e.target.value < 0) {
-                            alert("Please enter a positive number");
-                            setMin(1);
+                            toast.error("Please enter a positive number");
+                            setMin(0);
                           } else {
                             setMin(e.target.value);
                           }
@@ -573,7 +673,7 @@ const PalindromeGenerator = () => {
                         value={max}
                         onChange={(e) => {
                           if (e.target.value < 0) {
-                            alert("Please enter a positive number");
+                            toast.error("Please enter a positive number");
                             setMax(99);
                           } else {
                             setMax(e.target.value);
@@ -593,16 +693,19 @@ const PalindromeGenerator = () => {
                   fullWidth
                   startIcon={<GenerateIcon />}
                   onClick={() => handleGenerateValues()}
+                  disabled={isLoading}
                 >
                   Generate Palindromes
                 </StyledButton>
               </Grid>
               <Grid item xs={6}>
-                <CopyToClipboard onCopy={handleCopyValues}>
+                <CopyToClipboard>
                   <StyledButton
                     variant="contained"
                     fullWidth
                     startIcon={<FileCopyIcon />}
+                    onClick={handleCopyValues}
+                    disabled={isLoading}
                   >
                     {copied ? "Copied!" : "Copy Array"}
                   </StyledButton>
@@ -614,6 +717,7 @@ const PalindromeGenerator = () => {
                   fullWidth
                   startIcon={<RefreshIcon />}
                   onClick={handleResetValues}
+                  disabled={isLoading}
                 >
                   Reset
                 </StyledButton>
@@ -624,6 +728,7 @@ const PalindromeGenerator = () => {
                   fullWidth
                   startIcon={<DownloadIcon />}
                   onClick={handleDownloadValues}
+                  disabled={isLoading}
                 >
                   Download
                 </StyledButton>

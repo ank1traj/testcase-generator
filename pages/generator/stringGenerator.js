@@ -25,6 +25,8 @@ import GenerateIcon from "@mui/icons-material/PlayArrow";
 import DownloadIcon from "@mui/icons-material/GetApp";
 import { styled } from "@mui/material/styles";
 
+import toast, { Toaster } from "react-hot-toast";
+
 const StyledCard = styled(Card)(({ theme }) => ({
   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -152,6 +154,8 @@ const GenerateString = () => {
 
   const [advanceOptions, setAdvanceOptions] = useState(["Hide Length"]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleAdvanceOptionChange = (event) => {
     const { value } = event.target;
     setAdvanceOptions(value);
@@ -164,7 +168,7 @@ const GenerateString = () => {
         event.target.value === "random") &&
       numStrings === 1
     ) {
-      alert("Please generate more than one string to sort");
+      toast.error("Please generate more than one string to sort");
       return;
     }
     switch (event.target.value) {
@@ -191,103 +195,141 @@ const GenerateString = () => {
     }
   };
 
-  const handleGenerateStrings = () => {
-    if (
-      smallAlphabets === false &&
-      capitalAlphabets === false &&
-      numbers === false &&
-      specialChars === false &&
-      includedChars === ""
-    ) {
-      alert(
-        "Please select at least one character set from a-z or A-Z or special characters or numbers or included characters"
-      );
-      return;
-    }
+  const handleGenerateStrings = async () => {
+    setIsLoading(true); // set isLoading to true
+    let errorOccurred = false; // add this flag variable
 
-    // Check if any character is included in both includeChars and excludedChars
-    const commonChars = [
-      ...new Set(
-        [...includedChars].filter((char) => excludedChars.includes(char))
-      ),
-    ];
-    if (commonChars.length > 0) {
-      alert(
-        `Please do not include the same characters (${commonChars.join(
-          ", "
-        )}) in both include and exclude fields.`
-      );
-      return;
-    }
+    try {
+      await toast.promise(
+        new Promise((resolve, reject) => {
+          // add reject parameter to the promise
+          setTimeout(() => {
+            if (
+              smallAlphabets === false &&
+              capitalAlphabets === false &&
+              numbers === false &&
+              specialChars === false &&
+              includedChars === ""
+            ) {
+              reject(
+                new Error(
+                  "Please select at least one character set from a-z or A-Z or special characters or numbers or included characters"
+                )
+              );
+              return;
+            }
 
-    const startTime = performance.now();
+            // Check if any character is included in both includeChars and excludedChars
+            const commonChars = [
+              ...new Set(
+                [...includedChars].filter((char) =>
+                  excludedChars.includes(char)
+                )
+              ),
+            ];
+            if (commonChars.length > 0) {
+              reject(
+                new Error(
+                  `Please do not include the same characters (${commonChars.join(
+                    ", "
+                  )}) in both include and exclude fields.`
+                )
+              );
+              return;
+            }
 
-    // Define the character sets to include in the generated strings
-    let chars = "";
-    if (smallAlphabets) chars += "abcdefghijklmnopqrstuvwxyz";
-    if (capitalAlphabets) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if (numbers) chars += "0123456789";
-    if (specialChars) chars += '!@#$%^&*()_+-={}[]|:;"<>,.?/~`';
-    if (includedChars) chars += includedChars;
+            const startTime = performance.now();
 
-    // Exclude any characters specified by the user
-    if (excludedChars) {
-      excludedChars.split("").forEach((char) => {
-        chars = chars.split(char).join("");
-      });
-    }
+            // Define the character sets to include in the generated strings
+            let chars = "";
+            if (smallAlphabets) chars += "abcdefghijklmnopqrstuvwxyz";
+            if (capitalAlphabets) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (numbers) chars += "0123456789";
+            if (specialChars) chars += '!@#$%^&*()_+-={}[]|:;"<>,.?/~`';
+            if (includedChars) chars += includedChars;
 
-    let newStrings = [];
-    for (let i = 0; i < numStrings; i++) {
-      // Generate a random length for the current string
-      const length =
-        randomSize && stringLength > 1
-          ? Math.floor(Math.random() * (stringLength - 1)) + 1
-          : stringLength;
+            // Exclude any characters specified by the user
+            if (excludedChars) {
+              excludedChars.split("").forEach((char) => {
+                chars = chars.split(char).join("");
+              });
+            }
 
-      // Generate the string using the selected character set and length
-      let newString = "";
+            let newStrings = [];
+            for (let i = 0; i < numStrings; i++) {
+              // Generate a random length for the current string
+              const length =
+                randomSize && stringLength > 1
+                  ? Math.floor(Math.random() * (stringLength - 1)) + 1
+                  : stringLength;
 
-      const includeCharsPos = Math.floor(Math.random() * length);
-      for (let j = 0; j < length; j++) {
-        if (j === includeCharsPos) {
-          newString += includedChars;
+              // Generate the string using the selected character set and length
+              let newString = "";
+
+              const includeCharsPos = Math.floor(Math.random() * length);
+              for (let j = 0; j < length; j++) {
+                if (j === includeCharsPos) {
+                  newString += includedChars;
+                }
+                const char = chars.charAt(
+                  Math.floor(Math.random() * chars.length)
+                );
+                newString += char;
+              }
+
+              newStrings.push(newString);
+            }
+
+            if (advanceOptions.includes("distinct strings")) {
+              newStrings = [...new Set(newStrings)];
+            }
+            if (advanceOptions.includes("distinct strings(case sensitive)")) {
+              newStrings = Array.from(
+                new Set(newStrings.map((s) => s.toLowerCase()))
+              ).map((s) => newStrings.find((t) => s === t.toLowerCase()));
+            }
+
+            if (increasing) newStrings.sort((a, b) => a.localeCompare(b));
+            if (decreasing) newStrings.sort((a, b) => b.localeCompare(a));
+            if (random) newStrings.sort(() => Math.random() - 0.5);
+
+            const endTime = performance.now();
+            const timeDiff = endTime - startTime;
+            const formattedTime =
+              timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+
+            setTimeTaken(formattedTime);
+            setGeneratedStrings(newStrings);
+            setCopied(false);
+            resolve();
+          }, 2000);
+        }),
+        {
+          loading: "Generating values...",
+          success: "Values generated successfully!",
+          error: (error) => {
+            if (errorOccurred) {
+              // show toast error if flag variable is true
+              return error.message;
+            } else {
+              return "An error occurred while generating values";
+            }
+          },
         }
-        const char = chars.charAt(Math.floor(Math.random() * chars.length));
-        newString += char;
-      }
-
-      newStrings.push(newString);
+      );
+    } catch (error) {
+      toast.error(error.message);
     }
-
-    if (advanceOptions.includes("distinct strings")) {
-      newStrings = [...new Set(newStrings)];
-    }
-    if (advanceOptions.includes("distinct strings(case sensitive)")) {
-      newStrings = Array.from(
-        new Set(newStrings.map((s) => s.toLowerCase()))
-      ).map((s) => newStrings.find((t) => s === t.toLowerCase()));
-    }
-
-    if (increasing) newStrings.sort((a, b) => a.localeCompare(b));
-    if (decreasing) newStrings.sort((a, b) => b.localeCompare(a));
-    if (random) newStrings.sort(() => Math.random() - 0.5);
-
-    const endTime = performance.now();
-    const timeDiff = endTime - startTime;
-    const formattedTime =
-      timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
-
-    setTimeTaken(formattedTime);
-    setGeneratedStrings(newStrings);
-    setCopied(false);
+    setIsLoading(false); // set isLoading to false
   };
 
   const handleCopyStrings = () => {
     if (!generatedStrings.length) {
-      alert("Please generate values first");
+      toast.error("Please generate values first");
       return;
     }
+
+    setIsLoading(true); // set isLoading to true
 
     let valuesString = "";
     let totalCases = 0;
@@ -311,14 +353,30 @@ const GenerateString = () => {
     }
 
     navigator.clipboard.writeText(valuesString);
+    toast.promise(
+      navigator.clipboard.writeText(valuesString),
+      {
+        loading: "Copying values...",
+        success: "Values copied!",
+        error: "Failed to copy values",
+      },
+      {
+        style: {
+          minWidth: "250px",
+        },
+      }
+    );
     setCopied(true);
+    setIsLoading(false); // set isLoading to false
   };
 
   const handleDownloadValues = () => {
     if (!generatedStrings.length) {
-      alert("Please generate values first");
+      toast.error("Please generate values first");
       return;
     }
+
+    setIsLoading(true); // set isLoading to true
 
     let valuesString = "";
     let totalCases = 0;
@@ -346,9 +404,16 @@ const GenerateString = () => {
     element.href = URL.createObjectURL(file);
     element.download = "generated_values.txt";
     element.click();
+    toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
+      pending: "Downloading values...",
+      success: "Values downloaded!",
+      error: "Failed to download values",
+    });
+    setIsLoading(false); // set isLoading to false
   };
 
   const handleResetValues = () => {
+    setIsLoading(true); // set isLoading to true
     setStringLength(10);
     setNumStrings(1);
     setExcludedChars("");
@@ -362,300 +427,307 @@ const GenerateString = () => {
     setSpecialChars(false);
     setRandomSize(false);
     setAdvanceOptions(["Hide Length"]);
+    toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
+      pending: "Resetting values...",
+      success: "Values reset successfully!",
+      error: "Error resetting values",
+    });
+    setIsLoading(false); // set isLoading to false
   };
 
   return (
-    <>
-      <StyledGrid container>
-        <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
-          <StyledCard>
-            <StyledCardHeader title="Random String Generator" />
-            <StyledCardContent>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Tooltip title="Enter the number of string">
-                    <StyledTextField
-                      label="Number of Strings"
-                      type="number"
-                      value={numStrings}
-                      onChange={(e) => {
-                        if (e.target.value < 0) {
-                          alert("Please enter a positive number");
-                          setNumStrings(1);
-                        } else {
-                          setNumStrings(e.target.value);
-                        }
-                      }}
-                      fullWidth
-                    />
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={6}>
-                  <Tooltip title="Enter the length of the string">
-                    <StyledTextField
-                      label="string length"
-                      type="number"
-                      value={stringLength}
-                      onChange={(e) => {
-                        if (e.target.value < 0) {
-                          alert("Please enter a positive number");
-                          setStringLength(10);
-                        } else {
-                          setStringLength(e.target.value);
-                        }
-                      }}
-                      fullWidth
-                    />
-                  </Tooltip>
-                </Grid>
+    <StyledGrid container>
+      <Toaster reverseOrder={true} />
+      <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
+        <StyledCard>
+          <StyledCardHeader title="Random String Generator" />
+          <StyledCardContent>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Tooltip title="Enter the number of string">
+                  <StyledTextField
+                    label="Number of Strings"
+                    type="number"
+                    value={numStrings}
+                    onChange={(e) => {
+                      if (e.target.value < 0) {
+                        toast.error("Please enter a positive number");
+                        setNumStrings(1);
+                      } else {
+                        setNumStrings(e.target.value);
+                      }
+                    }}
+                    fullWidth
+                  />
+                </Tooltip>
               </Grid>
-              <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-                <Grid item xs={2}>
+              <Grid item xs={6}>
+                <Tooltip title="Enter the length of the string">
+                  <StyledTextField
+                    label="string length"
+                    type="number"
+                    value={stringLength}
+                    onChange={(e) => {
+                      if (e.target.value < 0) {
+                        toast.error("Please enter a positive number");
+                        setStringLength(10);
+                      } else {
+                        setStringLength(e.target.value);
+                      }
+                    }}
+                    fullWidth
+                  />
+                </Tooltip>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+              <Grid item xs={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={randomSize}
+                      onChange={(e) => setRandomSize(e.target.checked)}
+                      color="primary"
+                    />
+                  }
+                  label="Random Size"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Tooltip title="Advanced options">
+                  <StyledFormControl>
+                    <InputLabel>Advanced Options</InputLabel>
+                    <StyledSelect
+                      value={advanceOptions}
+                      onChange={handleAdvanceOptionChange}
+                      multiple
+                    >
+                      {options.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </StyledSelect>
+                  </StyledFormControl>
+                </Tooltip>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+              <Grid item xs={3}>
+                <Tooltip title="Check to include a-z">
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={randomSize}
-                        onChange={(e) => setRandomSize(e.target.checked)}
-                        color="primary"
+                        checked={smallAlphabets}
+                        onChange={(e) => setSmallAlphabets(e.target.checked)}
+                        name="a-z"
                       />
                     }
-                    label="Random Size"
+                    label="a-z"
                   />
-                </Grid>
-                <Grid item xs={4}>
-                  <Tooltip title="Advanced options">
-                    <StyledFormControl>
-                      <InputLabel>Advanced Options</InputLabel>
-                      <StyledSelect
-                        value={advanceOptions}
-                        onChange={handleAdvanceOptionChange}
-                        multiple
-                      >
-                        {options.map((option) => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </StyledSelect>
-                    </StyledFormControl>
-                  </Tooltip>
-                </Grid>
+                </Tooltip>
               </Grid>
-              <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-                <Grid item xs={3}>
-                  <Tooltip title="Check to include a-z">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={smallAlphabets}
-                          onChange={(e) => setSmallAlphabets(e.target.checked)}
-                          name="a-z"
-                        />
-                      }
-                      label="a-z"
-                    />
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={3}>
-                  <Tooltip title="Check to include A-Z">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={capitalAlphabets}
-                          onChange={(e) =>
-                            setCapitalAlphabets(e.target.checked)
-                          }
-                          name="A-Z"
-                        />
-                      }
-                      label="A-Z"
-                    />
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={3}>
-                  <Tooltip title="Check to include 0-9">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={numbers}
-                          onChange={(e) => setNumbers(e.target.checked)}
-                          name="0-9"
-                        />
-                      }
-                      label="0-9"
-                    />
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={3}>
-                  <Tooltip title="Check to include special chars">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={specialChars}
-                          onChange={(e) => setSpecialChars(e.target.checked)}
-                          name="special chars"
-                        />
-                      }
-                      label="special chars"
-                    />
-                  </Tooltip>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-                <Grid item xs={6}>
-                  <Tooltip title="Enter the chars to be exclude">
-                    <StyledTextField
-                      label="Exclude Characters"
-                      value={excludedChars}
-                      onChange={(e) => setExcludedChars(e.target.value)}
-                      fullWidth
-                    />
-                  </Tooltip>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <Tooltip title="Enter the chars to be include">
-                    <StyledTextField
-                      label="Include Characters"
-                      value={includedChars}
-                      onChange={(e) => setIncludedChars(e.target.value)}
-                      fullWidth
-                    />
-                  </Tooltip>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-                <Grid item xs={4}>
-                  <Tooltip title="Check to generate increasing values(Only work with multiple strings)">
-                    <FormControlLabel
-                      control={
-                        <Radio
-                          checked={increasing}
-                          onChange={handleSortChange}
-                          value="increasing"
-                          name="radio-button-demo"
-                          inputProps={{ "aria-label": "increasing" }}
-                          disabled={numStrings <= 1}
-                        />
-                      }
-                      label="Increasing"
-                    />
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={4}>
-                  <Tooltip title="Check to generate decreasing values(Only work with multiple strings)">
-                    <FormControlLabel
-                      control={
-                        <Radio
-                          checked={decreasing}
-                          onChange={handleSortChange}
-                          value="decreasing"
-                          name="radio-button-demo"
-                          inputProps={{ "aria-label": "decreasing" }}
-                          disabled={numStrings <= 1}
-                        />
-                      }
-                      label="Decreasing"
-                    />
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={4}>
-                  <Tooltip title="Check to generate random values(Only work with multiple strings)">
-                    <FormControlLabel
-                      control={
-                        <Radio
-                          checked={random}
-                          onChange={handleSortChange}
-                          value="random"
-                          name="radio-button-demo"
-                          inputProps={{ "aria-label": "random" }}
-                          disabled={numStrings <= 1}
-                        />
-                      }
-                      label="Random"
-                    />
-                  </Tooltip>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-                <Grid item xs={12}>
-                  <StyledButton
-                    variant="contained"
-                    onClick={handleGenerateStrings}
-                    fullWidth
-                    startIcon={<GenerateIcon />}
-                  >
-                    Generate
-                  </StyledButton>
-                </Grid>
-                <Grid item xs={6}>
-                  <StyledButton
-                    variant="contained"
-                    onClick={handleCopyStrings}
-                    fullWidth
-                    startIcon={
-                      <CopyToClipboard onCopy={handleCopyStrings}>
-                        <FileCopyIcon />
-                      </CopyToClipboard>
+              <Grid item xs={3}>
+                <Tooltip title="Check to include A-Z">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={capitalAlphabets}
+                        onChange={(e) => setCapitalAlphabets(e.target.checked)}
+                        name="A-Z"
+                      />
                     }
-                  >
-                    {copied ? "Copied" : "Copy"}
-                  </StyledButton>
-                </Grid>
-                <Grid item xs={6}>
-                  <StyledButton
-                    variant="contained"
-                    onClick={handleResetValues}
-                    fullWidth
-                    startIcon={<RefreshIcon />}
-                  >
-                    Reset
-                  </StyledButton>
-                </Grid>
-                <Grid item xs={12}>
-                  <StyledButton
-                    variant="contained"
-                    fullWidth
-                    startIcon={<DownloadIcon />}
-                    onClick={handleDownloadValues}
-                  >
-                    Download
-                  </StyledButton>
-                </Grid>
+                    label="A-Z"
+                  />
+                </Tooltip>
               </Grid>
-              <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-                <Grid item xs={6}>
-                  {timeTaken && <p>Time taken: {timeTaken}</p>}
-                  <StyledTypography variant="h6">
-                    Generated String
-                  </StyledTypography>
-                </Grid>
-                <Grid item xs={12}>
-                  <StyledTypography variant="subtitle">
-                    {generatedStrings.length > 0 && (
-                      <>
-                        <Typography variant="subtitle">
-                          {!advanceOptions.includes("Hide Number of Strings") &&
-                            generatedStrings.length}
-                          {generatedStrings.map((str, index) => (
-                            <div key={index}>
-                              {!advanceOptions.includes("Hide Length") && (
-                                <div>{str.length}</div>
-                              )}
-                              {str}
-                            </div>
-                          ))}
-                        </Typography>
-                      </>
-                    )}
-                  </StyledTypography>
-                </Grid>
+              <Grid item xs={3}>
+                <Tooltip title="Check to include 0-9">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={numbers}
+                        onChange={(e) => setNumbers(e.target.checked)}
+                        name="0-9"
+                      />
+                    }
+                    label="0-9"
+                  />
+                </Tooltip>
               </Grid>
-            </StyledCardContent>
-          </StyledCard>
-        </Grid>
-      </StyledGrid>
-    </>
+              <Grid item xs={3}>
+                <Tooltip title="Check to include special chars">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={specialChars}
+                        onChange={(e) => setSpecialChars(e.target.checked)}
+                        name="special chars"
+                      />
+                    }
+                    label="special chars"
+                  />
+                </Tooltip>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+              <Grid item xs={6}>
+                <Tooltip title="Enter the chars to be exclude">
+                  <StyledTextField
+                    label="Exclude Characters"
+                    value={excludedChars}
+                    onChange={(e) => setExcludedChars(e.target.value)}
+                    fullWidth
+                  />
+                </Tooltip>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Tooltip title="Enter the chars to be include">
+                  <StyledTextField
+                    label="Include Characters"
+                    value={includedChars}
+                    onChange={(e) => setIncludedChars(e.target.value)}
+                    fullWidth
+                  />
+                </Tooltip>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+              <Grid item xs={4}>
+                <Tooltip title="Check to generate increasing values(Only work with multiple strings)">
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        checked={increasing}
+                        onChange={handleSortChange}
+                        value="increasing"
+                        name="radio-button-demo"
+                        inputProps={{ "aria-label": "increasing" }}
+                        disabled={numStrings <= 1}
+                      />
+                    }
+                    label="Increasing"
+                  />
+                </Tooltip>
+              </Grid>
+              <Grid item xs={4}>
+                <Tooltip title="Check to generate decreasing values(Only work with multiple strings)">
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        checked={decreasing}
+                        onChange={handleSortChange}
+                        value="decreasing"
+                        name="radio-button-demo"
+                        inputProps={{ "aria-label": "decreasing" }}
+                        disabled={numStrings <= 1}
+                      />
+                    }
+                    label="Decreasing"
+                  />
+                </Tooltip>
+              </Grid>
+              <Grid item xs={4}>
+                <Tooltip title="Check to generate random values(Only work with multiple strings)">
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        checked={random}
+                        onChange={handleSortChange}
+                        value="random"
+                        name="radio-button-demo"
+                        inputProps={{ "aria-label": "random" }}
+                        disabled={numStrings <= 1}
+                      />
+                    }
+                    label="Random"
+                  />
+                </Tooltip>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+              <Grid item xs={12}>
+                <StyledButton
+                  variant="contained"
+                  onClick={handleGenerateStrings}
+                  disabled={isLoading}
+                  fullWidth
+                  startIcon={<GenerateIcon />}
+                >
+                  Generate
+                </StyledButton>
+              </Grid>
+              <Grid item xs={6}>
+                <StyledButton
+                  variant="contained"
+                  onClick={handleCopyStrings}
+                  disabled={isLoading}
+                  fullWidth
+                  startIcon={
+                    <CopyToClipboard onCopy={handleCopyStrings}>
+                      <FileCopyIcon />
+                    </CopyToClipboard>
+                  }
+                >
+                  {copied ? "Copied" : "Copy"}
+                </StyledButton>
+              </Grid>
+              <Grid item xs={6}>
+                <StyledButton
+                  variant="contained"
+                  onClick={handleResetValues}
+                  disabled={isLoading}
+                  fullWidth
+                  startIcon={<RefreshIcon />}
+                >
+                  Reset
+                </StyledButton>
+              </Grid>
+              <Grid item xs={12}>
+                <StyledButton
+                  variant="contained"
+                  fullWidth
+                  startIcon={<DownloadIcon />}
+                  onClick={handleDownloadValues}
+                  disabled={isLoading}
+                >
+                  Download
+                </StyledButton>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+              <Grid item xs={6}>
+                {timeTaken && <p>Time taken: {timeTaken}</p>}
+                <StyledTypography variant="h6">
+                  Generated String
+                </StyledTypography>
+              </Grid>
+              <Grid item xs={12}>
+                <StyledTypography variant="subtitle">
+                  {generatedStrings.length > 0 && (
+                    <>
+                      <Typography variant="subtitle">
+                        {!advanceOptions.includes("Hide Number of Strings") &&
+                          generatedStrings.length}
+                        {generatedStrings.map((str, index) => (
+                          <div key={index}>
+                            {!advanceOptions.includes("Hide Length") && (
+                              <div>{str.length}</div>
+                            )}
+                            {str}
+                          </div>
+                        ))}
+                      </Typography>
+                    </>
+                  )}
+                </StyledTypography>
+              </Grid>
+            </Grid>
+          </StyledCardContent>
+        </StyledCard>
+      </Grid>
+    </StyledGrid>
   );
 };
 
