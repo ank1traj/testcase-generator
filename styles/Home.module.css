@@ -84,7 +84,7 @@
   background: var(--secondary-glow);
   border-radius: 50%;
   width: 480px;
-  height: 360px;
+  height: 300px;
   margin-left: -400px;
 }
 
@@ -274,35 +274,5 @@
   }
   to {
     transform: rotate(0deg);
-  }
-}
-
-.author {
-  position: relative;
-}
-
-.author::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
-  animation: glowing 2s infinite;
-  opacity: 0.5;
-}
-
-@keyframes glowing {
-  0% {
-    opacity: 0.5;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0.5;
   }
 }
