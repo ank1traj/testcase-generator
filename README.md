@@ -34,8 +34,8 @@ When creating a pull request, please ensure it meets the following guidelines:
 To develop this project locally, follow these steps:
 
 1. Clone the repository.
-2. Install the necessary dependencies by running ```npm install``` or ```yarn install```.
-3. Start the development server by running ```npm run dev``` or ```yarn dev```.
+2. Install the necessary dependencies by running `npm install` or `yarn install`.
+3. Start the development server by running `npm run dev` or `yarn dev`.
 4. Make changes and test them locally.
 5. Commit your changes with clear and concise commit messages.
 6. Push your changes to your forked repository.
@@ -44,4 +44,3 @@ To develop this project locally, follow these steps:
 ### License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details.
-
