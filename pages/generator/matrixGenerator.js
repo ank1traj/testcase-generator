@@ -78,10 +78,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: "#fff",
-}));
-
 // const StyledFormControl = styled(FormControl)(({ theme }) => ({
 //   minWidth: "300px",
 //   "& .MuiSelect-select": {
