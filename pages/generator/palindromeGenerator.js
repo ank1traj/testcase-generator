@@ -300,7 +300,9 @@ const PalindromeGenerator = () => {
               if (length !== ("" + max).length) {
                 reject(
                   new Error(
-                    `The maximum value should be of ${length} digit(s) when the length is ${length}.`
+                    `The length of the array must be equal to the number of digits in the maximum value. Here the length is ${length} and the number of digits in the maximum value is ${
+                      ("" + max).length
+                    }.`
                   )
                 );
               } else if (length === 1 && min > 9) {
