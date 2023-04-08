@@ -65,7 +65,7 @@ export default function Home() {
               Integer <HourglassEmptyIcon style={{ color: "blue" }} />{" "}
               <span>-&gt;</span>
             </h2>
-            <p className={inter.className}>Generate random integer</p>
+            <p className={inter.className}>Generate random integers</p>
           </Link>
 
           <Link
