@@ -262,6 +262,13 @@ const GenerateLinkedList = () => {
         new Promise((resolve, reject) => {
           // add reject parameter to the promise
           setTimeout(() => {
+            if (minValue > maxValue) {
+              reject(
+                new Error(
+                  "The minimum value cannot be greater than the maximum value"
+                )
+              );
+            }
             // Initialize an array to hold the generated linked lists
             const newGeneratedLists = [];
 
@@ -281,7 +288,7 @@ const GenerateLinkedList = () => {
                 // Generate a random value within the specified range
                 const value =
                   Math.floor(Math.random() * (maxValue - minValue + 1)) +
-                  minValue;
+                  parseInt(minValue);
 
                 // Add the new node to the linked list
                 current.next = { value, next: null };
@@ -880,6 +887,7 @@ const GenerateLinkedList = () => {
                       variant="contained"
                       fullWidth
                       startIcon={<FileCopyIcon />}
+                      disabled={isLoading}
                     >
                       {copied ? "Copied" : "Copy to clipboard"}
                     </StyledButton>
@@ -916,6 +924,11 @@ const GenerateLinkedList = () => {
                   </StyledTypography>
                 </Grid>
                 <Grid item xs={12}>
+                  <StyledTypography variant="subtitle" my={2}>
+                    {!generatedLists.length > 0 ? (
+                      <div>No LinkedList generated yet</div>
+                    ) : null}
+                  </StyledTypography>
                   <StyledTypography variant="subtitle">
                     {generatedLists.length > 0 &&
                     advanceOptions.includes("Show Total List") &&

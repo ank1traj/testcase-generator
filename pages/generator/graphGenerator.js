@@ -242,7 +242,7 @@ const GenerateGraph = () => {
                   const type = isDirected ? "arrow" : undefined;
                   const weight = weightedGraph
                     ? Math.floor(Math.random() * (maxWeight - minWeight + 1)) +
-                      minWeight
+                      parseInt(minWeight)
                     : undefined;
                   const edgeData = { from, to };
                   if (type) {
@@ -644,6 +644,7 @@ const GenerateGraph = () => {
                         setMinWeight(e.target.value);
                       }
                     }}
+                    disabled={!weightedGraph}
                     fullWidth
                   />
                 </Tooltip>
@@ -662,6 +663,7 @@ const GenerateGraph = () => {
                         setMaxWeight(e.target.value);
                       }
                     }}
+                    disabled={!weightedGraph}
                     fullWidth
                   />
                 </Tooltip>
