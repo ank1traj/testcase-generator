@@ -1,278 +1,171 @@
-import { useState } from "react"
+import { useState } from "react";
 import {
   Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  TextField,
-  Button,
   Typography,
-  IconButton,
   Tooltip,
   FormControlLabel,
   Checkbox,
   Radio,
   MenuItem,
-  Select,
   InputLabel,
-  FormControl,
-} from "@mui/material"
-import { CopyToClipboard } from "react-copy-to-clipboard"
-import FileCopyIcon from "@mui/icons-material/FileCopy"
-import RefreshIcon from "@mui/icons-material/Refresh"
-import GenerateIcon from "@mui/icons-material/PlayArrow"
-import DownloadIcon from "@mui/icons-material/GetApp"
-import { styled } from "@mui/material/styles"
-
-import toast, { Toaster } from "react-hot-toast"
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  background:
-    "linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 15%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1))",
-  boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-  backdropFilter: "blur(4.7px)",
-  color: "white",
-  borderRadius: "12px",
-  width: "100%",
-  height: "100%",
-  margin: "auto",
-  display: "flex",
-  flexDirection: "column",
-}))
-
-const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
-  textAlign: "center",
-  color: "#fff",
-}))
-
-const StyledCardContent = styled(CardContent)(({ theme }) => ({
-  flexGrow: 1,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-}))
-
-const StyledGrid = styled(Grid)(({ theme }) => ({
-  height: "100vh",
-}))
-
-const StyledTypography = styled(Typography)(({ theme }) => ({
-  color: "#fff",
-  fontWeight: "bold",
-}))
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
-  "& label": {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  "& input": {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  "& .MuiInput-underline:before": {
-    borderBottomColor: "#fff",
-  },
-}))
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  background: "transparent",
-  backdropFilter: "blur(5px)",
-  color: "white",
-  fontWeight: "bold",
-  "&:hover": {
-    background: "rgba(255, 255, 255, 0.3)",
-    color: "#fff",
-  },
-}))
-
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  radio: {
-    "&$checked": {
-      color: "#4B8DF8",
-    },
-  },
-  checked: {},
-  color: "#fff",
-}))
-
-const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  minWidth: "300px",
-  "& .MuiSelect-select": {
-    paddingRight: theme.spacing(4),
-  },
-  "& .MuiSelect-icon": {
-    right: 0,
-  },
-}))
-
-const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.secondary.main,
-  backgroundColor: theme.palette.background.paper,
-  "&:hover": {
-    backgroundColor: theme.palette.secondary.light,
-  },
-  "&.Mui-selected": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-  },
-  "&.Mui-selected:hover": {
-    backgroundColor: theme.palette.primary.light,
-  },
-}))
-
-const StyledSelect = styled(Select)(({ theme }) => ({
-  color: "white",
-  "&.MuiSelect-select": {
-    paddingRight: theme.spacing(2),
-    "&:focus": {
-      backgroundColor: "transparent",
-    },
-  },
-  "& .MuiSelect-icon": {
-    color: theme.palette.secondary.main,
-  },
-}))
+} from "@mui/material";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import GenerateIcon from "@mui/icons-material/PlayArrow";
+import DownloadIcon from "@mui/icons-material/GetApp";
+import toast, { Toaster } from "react-hot-toast";
+import {
+  StyledButton,
+  StyledCard,
+  StyledCardContent,
+  StyledCardHeader,
+  StyledFormControl,
+  StyledGrid,
+  StyledSelect,
+  StyledTextField,
+  StyledTypography,
+} from "@/lib/styles";
 
 const options = [
   "Negative Outputs",
   "Hide Array Size",
   "Distinct Elements",
   "Show Total Cases",
-]
+];
 
 const GenerateArray = () => {
-  const [minValue, setMinValue] = useState(-100)
-  const [maxValue, setMaxValue] = useState(100)
-  const [arraySize, setArraySize] = useState(10)
-  const [numArrays, setNumArrays] = useState(1)
-  const [generatedValues, setGeneratedValues] = useState([])
-  const [isFloat, setIsFloat] = useState(false)
-  const [randomSize, setRandomSize] = useState(false)
-  const [copied, setCopied] = useState(false)
+  const [minValue, setMinValue] = useState(-100);
+  const [maxValue, setMaxValue] = useState(100);
+  const [arraySize, setArraySize] = useState(10);
+  const [numArrays, setNumArrays] = useState(1);
+  const [generatedValues, setGeneratedValues] = useState([]);
+  const [isFloat, setIsFloat] = useState(false);
+  const [randomSize, setRandomSize] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [timeTaken, setTimeTaken] = useState(
     "Click the button to generate values"
-  )
+  );
 
-  const [any, setAny] = useState(true)
-  const [odd, setOdd] = useState(false)
-  const [even, setEven] = useState(false)
-  const [prime, setPrime] = useState(false)
-  const [selectedOption, setSelectedOption] = useState("any")
+  const [any, setAny] = useState(true);
+  const [odd, setOdd] = useState(false);
+  const [even, setEven] = useState(false);
+  const [prime, setPrime] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("any");
 
-  const [increasing, setIncreasing] = useState(false) // for sorting in increasing order
-  const [decreasing, setDecreasing] = useState(false) // for sorting in decreasing order
-  const [random, setRandom] = useState(true) // for random order
+  const [increasing, setIncreasing] = useState(false); // for sorting in increasing order
+  const [decreasing, setDecreasing] = useState(false); // for sorting in decreasing order
+  const [random, setRandom] = useState(true); // for random order
 
-  const [advanceOptions, setAdvanceOptions] = useState(["Show Total Cases"])
+  const [advanceOptions, setAdvanceOptions] = useState(["Show Total Cases"]);
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAdvanceOptionChange = (event) => {
-    const { value } = event.target
-    setAdvanceOptions(value)
-  }
+    const { value } = event.target;
+    setAdvanceOptions(value);
+  };
 
   const handleSortChange = (event) => {
     switch (event.target.value) {
       case "increasing":
-        setIncreasing(true)
-        setDecreasing(false)
-        setRandom(false)
-        break
+        setIncreasing(true);
+        setDecreasing(false);
+        setRandom(false);
+        break;
       case "decreasing":
-        setIncreasing(false)
-        setDecreasing(true)
-        setRandom(false)
-        break
+        setIncreasing(false);
+        setDecreasing(true);
+        setRandom(false);
+        break;
       case "random":
-        setIncreasing(false)
-        setDecreasing(false)
-        setRandom(true)
-        break
+        setIncreasing(false);
+        setDecreasing(false);
+        setRandom(true);
+        break;
       default:
-        setIncreasing(false)
-        setDecreasing(false)
-        setRandom(false)
-        break
+        setIncreasing(false);
+        setDecreasing(false);
+        setRandom(false);
+        break;
     }
-  }
+  };
 
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value)
+    setSelectedOption(event.target.value);
     switch (event.target.value) {
       case "even":
-        setEven(true)
-        setOdd(false)
-        setPrime(false)
-        setAny(false)
-        break
+        setEven(true);
+        setOdd(false);
+        setPrime(false);
+        setAny(false);
+        break;
       case "odd":
-        setEven(false)
-        setOdd(true)
-        setPrime(false)
-        setAny(false)
-        break
+        setEven(false);
+        setOdd(true);
+        setPrime(false);
+        setAny(false);
+        break;
       case "prime":
-        setEven(false)
-        setOdd(false)
-        setPrime(true)
-        setAny(false)
-        break
+        setEven(false);
+        setOdd(false);
+        setPrime(true);
+        setAny(false);
+        break;
       default:
-        setEven(false)
-        setOdd(false)
-        setPrime(false)
-        setAny(true)
-        break
+        setEven(false);
+        setOdd(false);
+        setPrime(false);
+        setAny(true);
+        break;
     }
-  }
+  };
 
   function isPrime(n) {
     if (n <= 1) {
-      return false
+      return false;
     }
     for (let i = 2; i <= Math.sqrt(n); i++) {
       if (n % i === 0) {
-        return false
+        return false;
       }
     }
-    return true
+    return true;
   }
 
   const handleGenerateValues = async () => {
-    setIsLoading(true) // set isLoading to true
-    let errorOccurred = false // add this flag variable
+    setIsLoading(true); // set isLoading to true
+    let errorOccurred = false; // add this flag variable
 
     try {
       await toast.promise(
         new Promise((resolve, reject) => {
           // add reject parameter to the promise
           setTimeout(() => {
-            const startTime = performance.now()
+            const startTime = performance.now();
             let newValues = Array.from({ length: numArrays }, (_, index) => {
               const size = randomSize
                 ? Math.floor(Math.random() * arraySize) + 1
-                : arraySize
+                : arraySize;
               return Array.from({ length: size }, () => {
                 if (odd) {
                   let num = Math.floor(
                     Math.random() * (maxValue - minValue + 1)
-                  )
+                  );
                   if (num % 2 === 0) {
-                    num += 1
+                    num += 1;
                   }
-                  return num + parseInt(minValue)
+                  return num + parseInt(minValue);
                 } else if (even) {
                   let num = Math.floor(
                     Math.random() * (maxValue - minValue + 1)
-                  )
+                  );
                   if (num % 2 !== 0) {
-                    num += 1
+                    num += 1;
                   }
-                  return num + parseInt(minValue)
+                  return num + parseInt(minValue);
                 } else if (prime) {
-                  let num = 0
+                  let num = 0;
                   while (true) {
                     num =
                       2 *
@@ -280,80 +173,80 @@ const GenerateArray = () => {
                           Math.random() * ((maxValue - minValue + 1) / 2)
                         ) +
                       parseInt(minValue) +
-                      1
-                    let isPrime = true
+                      1;
+                    let isPrime = true;
                     for (let i = 2; i <= Math.sqrt(num); i++) {
                       if (num % i === 0) {
-                        isPrime = false
-                        break
+                        isPrime = false;
+                        break;
                       }
                     }
                     if (isPrime) {
-                      break
+                      break;
                     }
                   }
-                  return num
+                  return num;
                 } else if (isFloat) {
                   return (
                     Math.random() * (maxValue - minValue) +
                     minValue
-                  ).toFixed(2)
+                  ).toFixed(2);
                 } else {
                   return (
                     Math.floor(Math.random() * (maxValue - minValue + 1)) +
                     parseInt(minValue)
-                  )
+                  );
                 }
-              })
-            })
+              });
+            });
 
             if (advanceOptions.includes("Negative Outputs")) {
               newValues = newValues.map((array) => {
                 array.forEach((element, index) => {
                   if (element > 0) {
-                    array[index] = -element
+                    array[index] = -element;
                   }
-                })
-                return array
-              })
+                });
+                return array;
+              });
             }
 
             if (advanceOptions.includes("Distinct Elements") && randomSize) {
               newValues = newValues.map((array) => {
-                const set = new Set(array)
-                return Array.from(set)
-              })
+                const set = new Set(array);
+                return Array.from(set);
+              });
             } else if (advanceOptions.includes("Distinct Elements")) {
               reject(
                 new Error(
                   "Distinct Elements option is only available for random size"
                 )
-              ) // reject the promise with an error
+              ); // reject the promise with an error
             }
 
             if (increasing) {
-              newValues = newValues.map((array) => array.sort((a, b) => a - b))
+              newValues = newValues.map((array) => array.sort((a, b) => a - b));
             } else if (decreasing) {
-              newValues = newValues.map((array) => array.sort((a, b) => b - a))
+              newValues = newValues.map((array) => array.sort((a, b) => b - a));
             } else if (random) {
               newValues = newValues.map((array) => {
                 for (let i = array.length - 1; i > 0; i--) {
-                  const j = Math.floor(Math.random() * (i + 1))
-                  ;[array[i], array[j]] = [array[j], array[i]]
+                  const j = Math.floor(Math.random() * (i + 1));
+                  [array[i], array[j]] = [array[j], array[i]];
                 }
-                return array
-              })
+                return array;
+              });
             }
 
-            const endTime = performance.now()
-            const timeDiff = endTime - startTime
+            const endTime = performance.now();
+            const timeDiff = endTime - startTime;
             const formattedTime =
-              timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`
-            setTimeTaken(formattedTime)
-            setGeneratedValues(newValues)
-            setCopied(false)
-            resolve()
-          }, 2000)
+              timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
+            setTimeTaken(formattedTime);
+            setGeneratedValues(newValues);
+            setCopied(false);
+            resolve();
+          }, 2000);
         }),
         {
           loading: "Generating values...",
@@ -361,39 +254,39 @@ const GenerateArray = () => {
           error: (error) => {
             if (errorOccurred) {
               // show toast error if flag variable is true
-              return error.message
+              return error.message;
             } else {
-              return "An error occurred while generating values"
+              return "An error occurred while generating values";
             }
           },
         }
-      )
+      );
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
-    setIsLoading(false) // set isLoading to false
-  }
+    setIsLoading(false); // set isLoading to false
+  };
 
   const handleCopyValues = () => {
     if (!generatedValues.length) {
-      toast.error("Please generate values first")
-      return
+      toast.error("Please generate values first");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     const totalCases = advanceOptions.includes("Show Total Cases")
       ? `${numArrays}\n`
-      : ""
+      : "";
     const valuesString = generatedValues
       .map((array) => {
         const lengthString = advanceOptions.includes("Hide Array Size")
           ? ""
-          : `${array.length}\n`
-        return totalCases + lengthString + array.join(", ")
+          : `${array.length}\n`;
+        return totalCases + lengthString + array.join(", ");
       })
-      .join("\n")
+      .join("\n");
 
-    navigator.clipboard.writeText(`${totalCases}\n${valuesString}\n`)
+    navigator.clipboard.writeText(`${totalCases}\n${valuesString}\n`);
     toast.promise(
       navigator.clipboard.writeText(valuesString),
       {
@@ -406,29 +299,29 @@ const GenerateArray = () => {
           minWidth: "250px",
         },
       }
-    )
-    setCopied(true)
-    setIsLoading(false)
-  }
+    );
+    setCopied(true);
+    setIsLoading(false);
+  };
 
   const handleDownloadValues = () => {
     if (!generatedValues.length) {
-      toast.error("Please generate values first")
-      return
+      toast.error("Please generate values first");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
-    let valuesString = ""
-    let totalCases = 0
+    let valuesString = "";
+    let totalCases = 0;
     if (
       advanceOptions.includes("Show Total Cases") &&
       advanceOptions.includes("Hide Array Size")
     ) {
-      totalCases = numArrays
+      totalCases = numArrays;
       valuesString =
         `${totalCases} \n` +
-        generatedValues.map((array) => array.join(", ")).join("\n")
+        generatedValues.map((array) => array.join(", ")).join("\n");
     }
 
     if (
@@ -439,7 +332,7 @@ const GenerateArray = () => {
         `${numArrays}\n` +
         generatedValues
           .map((array) => array.length + "\n" + array.join(", "))
-          .join("\n")
+          .join("\n");
     }
 
     if (
@@ -448,42 +341,42 @@ const GenerateArray = () => {
     ) {
       valuesString = generatedValues
         .map((array) => array.length + "\n" + array.join(", "))
-        .join("\n")
+        .join("\n");
     }
-    const element = document.createElement("a")
-    const file = new Blob([valuesString], { type: "text/plain" })
-    element.href = URL.createObjectURL(file)
-    element.download = "generated_values.txt"
-    document.body.appendChild(element) // Required for this to work in Firefox
-    element.click()
-    document.body.removeChild(element)
+    const element = document.createElement("a");
+    const file = new Blob([valuesString], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = "generated_values.txt";
+    document.body.appendChild(element); // Required for this to work in Firefox
+    element.click();
+    document.body.removeChild(element);
     toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
       pending: "Downloading values...",
       success: "Values downloaded!",
       error: "Failed to download values",
-    })
-    setIsLoading(false)
-  }
+    });
+    setIsLoading(false);
+  };
 
   const handleResetValues = () => {
-    setIsLoading(true)
-    setMinValue(-100)
-    setMaxValue(100)
-    setArraySize(10)
-    setNumArrays(1)
-    setGeneratedValues([])
-    setCopied(false)
-    setTimeTaken(null)
-    setIsFloat(false)
-    setRandomSize(false)
-    setAdvanceOptions(["Show Total Cases"])
+    setIsLoading(true);
+    setMinValue(-100);
+    setMaxValue(100);
+    setArraySize(10);
+    setNumArrays(1);
+    setGeneratedValues([]);
+    setCopied(false);
+    setTimeTaken(null);
+    setIsFloat(false);
+    setRandomSize(false);
+    setAdvanceOptions(["Show Total Cases"]);
     toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
       pending: "Resetting values...",
       success: "Values reset successfully!",
       error: "Error resetting values",
-    })
-    setIsLoading(false)
-  }
+    });
+    setIsLoading(false);
+  };
 
   return (
     <StyledGrid container>
@@ -523,10 +416,10 @@ const GenerateArray = () => {
                     value={arraySize}
                     onChange={(e) => {
                       if (e.target.value < 0) {
-                        toast.error("Please enter a positive number")
-                        setArraySize(10)
+                        toast.error("Please enter a positive number");
+                        setArraySize(10);
                       } else {
-                        setArraySize(e.target.value)
+                        setArraySize(e.target.value);
                       }
                     }}
                     fullWidth
@@ -541,10 +434,10 @@ const GenerateArray = () => {
                     value={numArrays}
                     onChange={(e) => {
                       if (e.target.value < 0) {
-                        toast.error("Please enter a positive number")
-                        setNumArrays(1)
+                        toast.error("Please enter a positive number");
+                        setNumArrays(1);
                       } else {
-                        setNumArrays(e.target.value)
+                        setNumArrays(e.target.value);
                       }
                     }}
                     fullWidth
@@ -783,17 +676,16 @@ const GenerateArray = () => {
                     <>
                       <Typography variant="subtitle">
                         <p>
-                          Total Cases: &nbsp;
                           {advanceOptions.includes("Show Total Cases") &&
                             generatedValues.length}
                         </p>
                         {generatedValues.map((array, index) => (
                           <div key={index}>
                             {!advanceOptions.includes("Hide Array Size") && (
-                              <div>Array Size: {array.length}</div>
+                              <div>{array.length}</div>
                             )}
                             <br />
-                            <p>Array: &nbsp; {array.join(", ")}</p>
+                            <p>{array.join(", ")}</p>
                           </div>
                         ))}
                       </Typography>
@@ -806,7 +698,7 @@ const GenerateArray = () => {
         </StyledCard>
       </Grid>
     </StyledGrid>
-  )
-}
+  );
+};
 
-export default GenerateArray
+export default GenerateArray;
