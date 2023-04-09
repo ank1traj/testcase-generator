@@ -10,7 +10,7 @@ import ErrorIcon from '@mui/icons-material/Error'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home () {
+export default function Home() {
   return (
     <>
       <Head>
@@ -20,17 +20,28 @@ export default function Home () {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
+        <nav className={styles.nav}>
+          <div>
+            <a href="#">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <div>
             <a
               href='https://github.com/ank1traj/testcase-generator'
               target='_blank'
               rel='noopener noreferrer'
             >
-              {' '}
-              Wanna Contribute &hearts;
-              <code className={styles.code}>write and send it on GitHub</code>
+
+              <code className={styles.code}>Contribute &hearts;</code>
             </a>
+          </div>
+
+        </nav>
+
+        <div className={styles.description}>
+          <p>
+            An Open Source Comprehensive Test Case Generator
           </p>
           <div className={styles.author}>
             <a
