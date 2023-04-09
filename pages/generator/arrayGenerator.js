@@ -121,21 +121,9 @@ const GenerateArray = () => {
     }
   };
 
-  function isPrime(n) {
-    if (n <= 1) {
-      return false;
-    }
-    for (let i = 2; i <= Math.sqrt(n); i++) {
-      if (n % i === 0) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   const handleGenerateValues = async () => {
     setIsLoading(true); // set isLoading to true
-    let errorOccurred = false; // add this flag variable
+    const errorOccurred = false; // add this flag variable
 
     try {
       await toast.promise(
@@ -380,7 +368,7 @@ const GenerateArray = () => {
 
   return (
     <StyledGrid container>
-      <Toaster reverseOrder={true} />
+      <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
         <StyledCard>
           <StyledCardHeader title="Generate Array" />
@@ -635,7 +623,7 @@ const GenerateArray = () => {
                     startIcon={<FileCopyIcon />}
                     disabled={isLoading}
                   >
-                    {copied ? "Copied!" : "Copy Array"}
+                    {copied ? "Copied" : "Copy to clipboard"}
                   </StyledButton>
                 </CopyToClipboard>
               </Grid>
@@ -671,6 +659,9 @@ const GenerateArray = () => {
               </Grid>
               <Grid item xs={12}>
                 <StyledTypography variant="subtitle">
+                  {generatedValues.length === 0 ? (
+                    <div>No Array generated yet</div>
+                  ) : null}
                   {generatedValues.length > 0 && (
                     <>
                       <Typography variant="subtitle">

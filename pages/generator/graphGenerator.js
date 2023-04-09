@@ -78,7 +78,7 @@ const GenerateGraph = () => {
 
   const handleGenerateValues = async (numGraphs) => {
     setIsLoading(true); // set isLoading to true
-    let errorOccurred = false; // add this flag variable
+    const errorOccurred = false; // add this flag variable
 
     try {
       await toast.promise(
@@ -163,7 +163,7 @@ const GenerateGraph = () => {
                   const type = isDirected ? "arrow" : undefined;
                   const weight = weightedGraph
                     ? Math.floor(Math.random() * (maxWeight - minWeight + 1)) +
-                      minWeight
+                      parseInt(minWeight)
                     : undefined;
                   const edgeData = { from, to };
                   if (type) {
@@ -209,14 +209,14 @@ const GenerateGraph = () => {
               //   container.id = `graph-${i + 1}`;
               //   document.body.appendChild(container);
 
-              const data = { nodes, edges };
-              const options = {
-                edges: {
-                  font: {
-                    size: 16,
-                  },
-                },
-              };
+              // const data = { nodes, edges };
+              // const options = {
+              //   edges: {
+              //     font: {
+              //       size: 16,
+              //     },
+              //   },
+              // };
 
               //   const network = new Network(container, data, options);
 
@@ -260,12 +260,12 @@ const GenerateGraph = () => {
     }
     setIsLoading(true);
 
-    let graphStrings = generatedGraph.map((graph) => {
+    const graphStrings = generatedGraph.map((graph) => {
       const nodes = graph.nodes.map((node) => node.label);
       const edges = graph.edges.map((edge) => {
         const from = edge.from;
         const to = edge.to;
-        const type = edge.type;
+        // const type = edge.type;
         const label = edge.label;
         let edgeString = isDirected ? `${from} -> ${to}` : `${from} ${to}`;
         edgeString = isArrow ? `${from} -> ${to}` : `${from} ${to}`;
@@ -325,7 +325,7 @@ const GenerateGraph = () => {
 
     setIsLoading(true);
 
-    let graphStrings = generatedGraph.map((graph) => {
+    const graphStrings = generatedGraph.map((graph) => {
       const nodes = graph.nodes.map((node) => node.label);
       const edges = graph.edges.map((edge) => {
         const from = edge.from;
@@ -400,7 +400,7 @@ const GenerateGraph = () => {
 
   return (
     <StyledGrid container>
-      <Toaster reverseOrder={true} />
+      <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
         <StyledCard>
           <StyledCardHeader title="Graph Generator" />
@@ -569,6 +569,7 @@ const GenerateGraph = () => {
                         setMinWeight(e.target.value);
                       }
                     }}
+                    disabled={!weightedGraph}
                     fullWidth
                   />
                 </Tooltip>
@@ -587,6 +588,7 @@ const GenerateGraph = () => {
                         setMaxWeight(e.target.value);
                       }
                     }}
+                    disabled={!weightedGraph}
                     fullWidth
                   />
                 </Tooltip>
@@ -715,6 +717,7 @@ const GenerateGraph = () => {
               </Grid>
               <Grid item xs={12}>
                 <StyledTypography variant="subtitle" my={2}>
+                  {!generatedGraph ? <div>No Graph generated yet</div> : null}
                   {advanceOptions.includes("Show Total Cases") && generatedGraph
                     ? `${numGraph}`
                     : null}

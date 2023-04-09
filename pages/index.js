@@ -7,6 +7,7 @@ import Link from "next/link";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import ErrorIcon from "@mui/icons-material/Error";
+import HourglassTopOutlinedIcon from "@mui/icons-material/HourglassTopOutlined";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,8 +34,14 @@ export default function Home() {
             </a>
           </p>
           <div className={styles.author}>
-            By Ankit Raj
-            <div className={styles.glow}></div>
+            <a
+              href="https://www.linkedin.com/in/ank1traj/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              By Ankit Raj
+            </a>
+            <div className={styles.glow} />
           </div>
         </div>
         <div className={styles.center}>
@@ -59,7 +66,7 @@ export default function Home() {
               Integer <HourglassEmptyIcon style={{ color: "blue" }} />{" "}
               <span>-&gt;</span>
             </h2>
-            <p className={inter.className}>Generate random array</p>
+            <p className={inter.className}>Generate random integers</p>
           </Link>
 
           <Link
@@ -110,7 +117,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Linked List <ErrorIcon style={{ color: "red" }} />{" "}
+              Linked List{" "}
+              <HourglassTopOutlinedIcon style={{ color: "green" }} />{" "}
               <span>-&gt;</span>
             </h2>
             <p className={inter.className}>

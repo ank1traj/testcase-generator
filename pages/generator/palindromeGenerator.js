@@ -72,14 +72,14 @@ const PalindromeGenerator = () => {
 
   const handleGenerateValues = async () => {
     setIsLoading(true); // set isLoading to true
-    let errorOccurred = false; // add this flag variable
+    const errorOccurred = false; // add this flag variable
 
     try {
       await toast.promise(
         new Promise((resolve, reject) => {
           // add reject parameter to the promise
           setTimeout(() => {
-            let values = [];
+            const values = [];
 
             const startTime = performance.now();
 
@@ -208,24 +208,28 @@ const PalindromeGenerator = () => {
                     }.`
                   )
                 );
+                return;
               } else if (length === 1 && min > 9) {
                 reject(
                   new Error(
                     "It's impossible to create palindromes with length 1 and a minimum value greater than 9."
                   )
                 );
+                return;
               } else if (min >= max) {
                 reject(
                   new Error(
                     "The minimum value must be less than the maximum value."
                   )
                 );
+                return;
               } else if (min >= 10 ** length || max < 10 ** (length - 1)) {
                 reject(
                   new Error(
                     `It's impossible to create palindromes with length ${length}, minimum value ${min}, and maximum value ${max}.`
                   )
                 );
+                return;
               } else {
                 while (values.length < numPalindromes) {
                   let palindromeArr = [];
@@ -243,7 +247,7 @@ const PalindromeGenerator = () => {
                     palindromeArr.push(digit);
                   }
 
-                  let secondHalf = palindromeArr
+                  const secondHalf = palindromeArr
                     .slice(0, Math.floor(length / 2))
                     .reverse();
                   palindromeArr = [...palindromeArr, ...secondHalf];
@@ -423,7 +427,7 @@ const PalindromeGenerator = () => {
 
   return (
     <StyledGrid container>
-      <Toaster reverseOrder={true} />
+      <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
         <StyledCard>
           <StyledCardHeader title="Palindrome Generator" />
@@ -615,7 +619,7 @@ const PalindromeGenerator = () => {
                     onClick={handleCopyValues}
                     disabled={isLoading}
                   >
-                    {copied ? "Copied!" : "Copy Array"}
+                    {copied ? "Copied" : "Copy to clipboard"}
                   </StyledButton>
                 </CopyToClipboard>
               </Grid>
@@ -672,6 +676,9 @@ const PalindromeGenerator = () => {
                   </StyledTypography>
                 </Grid>
                 <StyledTypography variant="subtitle">
+                  {generatedValues.length === 0 ? (
+                    <div>No Palindrome generated yet</div>
+                  ) : null}
                   {generatedValues.length > 0 &&
                   !advanceOptions.includes("Show Length") &&
                   arrayPalindrome

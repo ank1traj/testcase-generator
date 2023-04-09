@@ -100,7 +100,7 @@ const GenerateString = () => {
 
   const handleGenerateStrings = async () => {
     setIsLoading(true); // set isLoading to true
-    let errorOccurred = false; // add this flag variable
+    const errorOccurred = false; // add this flag variable
 
     try {
       await toast.promise(
@@ -149,7 +149,7 @@ const GenerateString = () => {
             if (capitalAlphabets) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             if (numbers) chars += "0123456789";
             if (specialChars) chars += '!@#$%^&*()_+-={}[]|:;"<>,.?/~`';
-            if (includedChars) chars += includedChars;
+            // if (includedChars) chars += includedChars;
 
             // Exclude any characters specified by the user
             if (excludedChars) {
@@ -282,13 +282,11 @@ const GenerateString = () => {
     setIsLoading(true); // set isLoading to true
 
     let valuesString = "";
-    let totalCases = 0;
 
     if (advanceOptions.includes("Hide Length")) {
       if (advanceOptions.includes("Hide Number of Strings")) {
         valuesString = generatedStrings.join(", ");
       } else {
-        totalCases = numStrings;
         valuesString = `${numStrings}\n${generatedStrings.join("\n")}`;
       }
     } else if (advanceOptions.includes("Hide Number of Strings")) {
@@ -296,7 +294,6 @@ const GenerateString = () => {
         .map((str) => `${str.length}\n${str}`)
         .join("\n");
     } else {
-      totalCases = numStrings;
       valuesString = `${numStrings}\n${generatedStrings
         .map((str) => `${str.length}\n${str}`)
         .join("\n")}`;
@@ -340,7 +337,7 @@ const GenerateString = () => {
 
   return (
     <StyledGrid container>
-      <Toaster reverseOrder={true} />
+      <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
         <StyledCard>
           <StyledCardHeader title="Random String Generator" />
@@ -577,7 +574,7 @@ const GenerateString = () => {
                     </CopyToClipboard>
                   }
                 >
-                  {copied ? "Copied" : "Copy"}
+                  {copied ? "Copied" : "Copy to clipboard"}
                 </StyledButton>
               </Grid>
               <Grid item xs={6}>
@@ -612,21 +609,22 @@ const GenerateString = () => {
               </Grid>
               <Grid item xs={12}>
                 <StyledTypography variant="subtitle">
+                  {generatedStrings.length === 0 ? (
+                    <div>No Strings generated yet</div>
+                  ) : null}
                   {generatedStrings.length > 0 && (
-                    <>
-                      <Typography variant="subtitle">
-                        {!advanceOptions.includes("Hide Number of Strings") &&
-                          generatedStrings.length}
-                        {generatedStrings.map((str, index) => (
-                          <div key={index}>
-                            {!advanceOptions.includes("Hide Length") && (
-                              <div>{str.length}</div>
-                            )}
-                            {str}
-                          </div>
-                        ))}
-                      </Typography>
-                    </>
+                    <Typography variant="subtitle">
+                      {!advanceOptions.includes("Hide Number of Strings") &&
+                        generatedStrings.length}
+                      {generatedStrings.map((str, index) => (
+                        <div key={index}>
+                          {!advanceOptions.includes("Hide Length") && (
+                            <div>{str.length}</div>
+                          )}
+                          {str}
+                        </div>
+                      ))}
+                    </Typography>
                   )}
                 </StyledTypography>
               </Grid>
