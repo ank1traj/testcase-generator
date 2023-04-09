@@ -390,7 +390,7 @@ const GenerateString = () => {
                     <Checkbox
                       checked={randomSize}
                       onChange={(e) => setRandomSize(e.target.checked)}
-                      color="primary"
+                      color="warning"
                     />
                   }
                   label="Random Size"
@@ -424,6 +424,7 @@ const GenerateString = () => {
                         checked={smallAlphabets}
                         onChange={(e) => setSmallAlphabets(e.target.checked)}
                         name="a-z"
+                        color="warning"
                       />
                     }
                     label="a-z"
@@ -438,6 +439,7 @@ const GenerateString = () => {
                         checked={capitalAlphabets}
                         onChange={(e) => setCapitalAlphabets(e.target.checked)}
                         name="A-Z"
+                        color="warning"
                       />
                     }
                     label="A-Z"
@@ -452,6 +454,7 @@ const GenerateString = () => {
                         checked={numbers}
                         onChange={(e) => setNumbers(e.target.checked)}
                         name="0-9"
+                        color="warning"
                       />
                     }
                     label="0-9"
@@ -466,6 +469,7 @@ const GenerateString = () => {
                         checked={specialChars}
                         onChange={(e) => setSpecialChars(e.target.checked)}
                         name="special chars"
+                        color="warning"
                       />
                     }
                     label="special chars"

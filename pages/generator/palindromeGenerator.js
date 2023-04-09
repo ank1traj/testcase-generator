@@ -480,6 +480,7 @@ const PalindromeGenerator = () => {
                           setStringPalindrome(false);
                         }}
                         value="array"
+                        color="warning"
                         name="radio-button-demo"
                         inputProps={{
                           "aria-label": "array",
@@ -501,6 +502,7 @@ const PalindromeGenerator = () => {
                           setArrayPalindrome(false);
                         }}
                         value="string"
+                        color="warning"
                         name="radio-button-demo"
                         inputProps={{
                           "aria-label": "string",
@@ -544,6 +546,7 @@ const PalindromeGenerator = () => {
                         <Checkbox
                           checked={selectedOptions.includes(option.value)}
                           onChange={() => handleOptionChange(option.value)}
+                          color="warning"
                         />
                       }
                       label={option.label}

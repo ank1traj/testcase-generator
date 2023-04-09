@@ -481,7 +481,6 @@ const GenerateArray = () => {
                       value={advanceOptions}
                       onChange={handleAdvanceOptionChange}
                       multiple
-                      color="warning"
                     >
                       {options.map((option) => (
                         <MenuItem key={option} value={option}>

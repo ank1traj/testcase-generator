@@ -500,6 +500,7 @@ const GenerateGraph = () => {
                         checked={weightedGraph}
                         onChange={(e) => setWeightedGraph(e.target.checked)}
                         name="Weighted Graph"
+                        color="warning"
                       />
                     }
                     label="Weighted"
@@ -514,6 +515,7 @@ const GenerateGraph = () => {
                         checked={isArrow}
                         onChange={(e) => setIsArrow(e.target.checked)}
                         name="Arrow"
+                        color="warning"
                       />
                     }
                     label="Include Arrow"
@@ -528,6 +530,7 @@ const GenerateGraph = () => {
                         checked={isColon}
                         onChange={(e) => setIsColon(e.target.checked)}
                         name="Colon"
+                        color="warning"
                         disabled={!weightedGraph}
                       />
                     }
@@ -543,6 +546,7 @@ const GenerateGraph = () => {
                         checked={useCharacters}
                         onChange={(e) => setUseCharacters(e.target.checked)}
                         name="Char"
+                        color="warning"
                       />
                     }
                     label="Include Char"
@@ -598,6 +602,7 @@ const GenerateGraph = () => {
                         onChange={(e) =>
                           setAllowMultipleEdges(e.target.checked)
                         }
+                        color="warning"
                         name="Multiple Edges"
                       />
                     }
@@ -613,6 +618,7 @@ const GenerateGraph = () => {
                         checked={allowSelfLoops}
                         onChange={(e) => setAllowSelfLoops(e.target.checked)}
                         name="Self loop"
+                        color="warning"
                       />
                     }
                     label="Self loop"
@@ -627,6 +633,7 @@ const GenerateGraph = () => {
                         checked={allowCycles}
                         onChange={(e) => setAllowCycles(e.target.checked)}
                         name="Cycles"
+                        color="warning"
                       />
                     }
                     label="Cycles"
@@ -641,6 +648,7 @@ const GenerateGraph = () => {
                         checked={isDirected}
                         onChange={(e) => setIsDirected(e.target.checked)}
                         name="Directed Graph"
+                        color="warning"
                       />
                     }
                     label="Directed"

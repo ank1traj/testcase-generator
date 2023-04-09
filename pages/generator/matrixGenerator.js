@@ -361,6 +361,7 @@ const GenerateMatrix = () => {
                         checked={any}
                         onChange={handleOptionChange}
                         value="any"
+                        color="warning"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "any" }}
                       />
@@ -377,6 +378,7 @@ const GenerateMatrix = () => {
                         checked={isEven}
                         onChange={handleOptionChange}
                         value="even"
+                        color="warning"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "even" }}
                       />
@@ -393,6 +395,7 @@ const GenerateMatrix = () => {
                         checked={isOdd}
                         onChange={handleOptionChange}
                         value="odd"
+                        color="warning"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "odd" }}
                       />
@@ -409,6 +412,7 @@ const GenerateMatrix = () => {
                         checked={prime}
                         onChange={handleOptionChange}
                         value="prime"
+                        color="warning"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "prime" }}
                       />
@@ -427,6 +431,7 @@ const GenerateMatrix = () => {
                         checked={increasing}
                         onChange={handleSortChange}
                         value="increasing"
+                        color="warning"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "increasing" }}
                       />
@@ -443,6 +448,7 @@ const GenerateMatrix = () => {
                         checked={decreasing}
                         onChange={handleSortChange}
                         value="decreasing"
+                        color="warning"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "decreasing" }}
                       />
@@ -459,6 +465,7 @@ const GenerateMatrix = () => {
                         checked={random}
                         onChange={handleSortChange}
                         value="random"
+                        color="warning"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "random" }}
                       />
