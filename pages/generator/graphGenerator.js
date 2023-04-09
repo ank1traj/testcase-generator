@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { DataSet } from 'vis-data'
+import React, { useEffect, useState } from "react";
+import { DataSet } from "vis-data";
 // import { Network } from "vis-network";
 import {
   Grid,
@@ -15,149 +15,149 @@ import {
   MenuItem,
   Select,
   InputLabel,
-  FormControl
-} from '@mui/material'
+  FormControl,
+} from "@mui/material";
 
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import FileCopyIcon from '@mui/icons-material/FileCopy'
-import RefreshIcon from '@mui/icons-material/Refresh'
-import GenerateIcon from '@mui/icons-material/PlayArrow'
-import DownloadIcon from '@mui/icons-material/GetApp'
-import { styled } from '@mui/material/styles'
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import GenerateIcon from "@mui/icons-material/PlayArrow";
+import DownloadIcon from "@mui/icons-material/GetApp";
+import { styled } from "@mui/material/styles";
 
-import toast, { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from "react-hot-toast";
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-  borderRadius: '12px',
-  width: '100%',
-  height: '100%',
-  margin: 'auto',
-  display: 'flex',
-  flexDirection: 'column'
-}))
+  background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+  borderRadius: "12px",
+  width: "100%",
+  height: "100%",
+  margin: "auto",
+  display: "flex",
+  flexDirection: "column",
+}));
 
 const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
-  textAlign: 'center',
-  color: '#fff'
-}))
+  textAlign: "center",
+  color: "#fff",
+}));
 
 const StyledCardContent = styled(CardContent)(({ theme }) => ({
   flexGrow: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between'
-}))
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+}));
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
-  height: '100vh'
-}))
+  height: "100vh",
+}));
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
-  color: '#fff',
-  fontWeight: 'bold'
-}))
+  color: "#fff",
+  fontWeight: "bold",
+}));
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
-  '& label': {
-    color: '#fff',
-    fontWeight: 'bold'
+  "& label": {
+    color: "#fff",
+    fontWeight: "bold",
   },
-  '& input': {
-    color: '#fff',
-    fontWeight: 'bold'
+  "& input": {
+    color: "#fff",
+    fontWeight: "bold",
   },
-  '& .MuiInput-underline:before': {
-    borderBottomColor: '#fff'
-  }
-}))
+  "& .MuiInput-underline:before": {
+    borderBottomColor: "#fff",
+  },
+}));
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  background: '#fff',
-  color: '#FF8E53',
-  fontWeight: 'bold',
-  '&:hover': {
-    background: '#FF8E53',
-    color: '#fff'
-  }
-}))
+  background: "#fff",
+  color: "#FF8E53",
+  fontWeight: "bold",
+  "&:hover": {
+    background: "#FF8E53",
+    color: "#fff",
+  },
+}));
 
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  minWidth: '300px',
-  '& .MuiSelect-select': {
-    paddingRight: theme.spacing(4)
+  minWidth: "300px",
+  "& .MuiSelect-select": {
+    paddingRight: theme.spacing(4),
   },
-  '& .MuiSelect-icon': {
-    right: 0
-  }
-}))
+  "& .MuiSelect-icon": {
+    right: 0,
+  },
+}));
 
 const StyledSelect = styled(Select)(({ theme }) => ({
-  '&.MuiSelect-select': {
+  "&.MuiSelect-select": {
     paddingRight: theme.spacing(2),
-    '&:focus': {
-      backgroundColor: 'transparent'
-    }
+    "&:focus": {
+      backgroundColor: "transparent",
+    },
   },
-  '& .MuiSelect-icon': {
-    color: theme.palette.secondary.main
-  }
-}))
+  "& .MuiSelect-icon": {
+    color: theme.palette.secondary.main,
+  },
+}));
 
 const options = [
-  'Show Total Cases',
-  'Show Total Edges & Vertices',
-  'A-Z',
-  'a-z'
-]
+  "Show Total Cases",
+  "Show Total Edges & Vertices",
+  "A-Z",
+  "a-z",
+];
 
 const GenerateGraph = () => {
-  const [numVertices, setNumVertices] = useState(5)
-  const [numEdges, setNumEdges] = useState(8)
-  const [numGraph, setNumGraph] = useState(1)
-  const [minWeight, setMinWeight] = useState(1)
-  const [maxWeight, setMaxWeight] = useState(100)
-  const [weightedGraph, setWeightedGraph] = useState(false)
-  const [allowMultipleEdges, setAllowMultipleEdges] = useState(false)
-  const [allowSelfLoops, setAllowSelfLoops] = useState(false)
-  const [allowCycles, setAllowCycles] = useState(false)
-  const [isDirected, setIsDirected] = useState(false)
-  const [isArrow, setIsArrow] = useState(false)
-  const [isColon, setIsColon] = useState(false)
-  const [useCharacters, setUseCharacters] = useState(false)
+  const [numVertices, setNumVertices] = useState(5);
+  const [numEdges, setNumEdges] = useState(8);
+  const [numGraph, setNumGraph] = useState(1);
+  const [minWeight, setMinWeight] = useState(1);
+  const [maxWeight, setMaxWeight] = useState(100);
+  const [weightedGraph, setWeightedGraph] = useState(false);
+  const [allowMultipleEdges, setAllowMultipleEdges] = useState(false);
+  const [allowSelfLoops, setAllowSelfLoops] = useState(false);
+  const [allowCycles, setAllowCycles] = useState(false);
+  const [isDirected, setIsDirected] = useState(false);
+  const [isArrow, setIsArrow] = useState(false);
+  const [isColon, setIsColon] = useState(false);
+  const [useCharacters, setUseCharacters] = useState(false);
 
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState(false);
   const [timeTaken, setTimeTaken] = useState(
-    'Click the button to generate values'
-  )
+    "Click the button to generate values"
+  );
 
-  const [generatedGraph, setGeneratedGraph] = useState(null)
+  const [generatedGraph, setGeneratedGraph] = useState(null);
 
-  const [advanceOptions, setAdvanceOptions] = useState(['Show Total Cases'])
+  const [advanceOptions, setAdvanceOptions] = useState(["Show Total Cases"]);
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (
       useCharacters &&
-      !advanceOptions.includes('a-z') &&
-      !advanceOptions.includes('A-Z')
+      !advanceOptions.includes("a-z") &&
+      !advanceOptions.includes("A-Z")
     ) {
       toast.error(
         "Please select 'a-z' or 'A-Z' from advanced options when using characters."
-      )
+      );
     }
-  }, [useCharacters, advanceOptions])
+  }, [useCharacters, advanceOptions]);
 
   const handleAdvanceOptionChange = (event) => {
-    const { value } = event.target
-    setAdvanceOptions(value)
-  }
+    const { value } = event.target;
+    setAdvanceOptions(value);
+  };
 
   const handleGenerateValues = async (numGraphs) => {
-    setIsLoading(true) // set isLoading to true
-    const errorOccurred = false // add this flag variable
+    setIsLoading(true); // set isLoading to true
+    const errorOccurred = false; // add this flag variable
 
     try {
       await toast.promise(
@@ -165,70 +165,70 @@ const GenerateGraph = () => {
           // add reject parameter to the promise
           setTimeout(() => {
             if (numVertices <= 1) {
-              reject(new Error('Number of vertices must be greater than 0'))
-              return
+              reject(new Error("Number of vertices must be greater than 0"));
+              return;
             }
             const maxNumEdges = isDirected
               ? numVertices * (numVertices - 1)
-              : (numVertices * (numVertices - 1)) / 2
+              : (numVertices * (numVertices - 1)) / 2;
             if (numEdges > maxNumEdges) {
               reject(
                 new Error(
                   `Number of edges must be less than or equal to ${maxNumEdges} for ${numVertices} vertices`
                 )
-              )
-              return
+              );
+              return;
             }
             if (weightedGraph && minWeight >= maxWeight) {
               reject(
-                new Error('Minimum weight must be less than maximum weight')
-              )
-              return
+                new Error("Minimum weight must be less than maximum weight")
+              );
+              return;
             }
 
-            const startTime = performance.now()
-            const generatedData = []
+            const startTime = performance.now();
+            const generatedData = [];
 
             for (let i = 0; i < numGraphs; i++) {
               const nodes = new DataSet(
                 Array.from({ length: numVertices }, (_, i) => ({
                   id: i,
-                  label: i.toString()
+                  label: i.toString(),
                 }))
-              )
+              );
 
-              const alphabet = 'abcdefghijklmnopqrstuvwxyz'
-              if (useCharacters && advanceOptions.includes('A-Z')) {
+              const alphabet = "abcdefghijklmnopqrstuvwxyz";
+              if (useCharacters && advanceOptions.includes("A-Z")) {
                 nodes.forEach((node) => {
-                  const char = alphabet[node.id]
-                  node.label = char.toUpperCase()
-                })
+                  const char = alphabet[node.id];
+                  node.label = char.toUpperCase();
+                });
               }
 
-              if (useCharacters && advanceOptions.includes('a-z')) {
+              if (useCharacters && advanceOptions.includes("a-z")) {
                 nodes.forEach((node) => {
-                  const char = alphabet[node.id]
-                  node.label = char
-                })
+                  const char = alphabet[node.id];
+                  node.label = char;
+                });
               }
 
-              const edges = new DataSet()
-              const graphData = { nodes: nodes.get(), edges: [] }
+              const edges = new DataSet();
+              const graphData = { nodes: nodes.get(), edges: [] };
 
               while (edges.length < numEdges) {
-                const from = Math.floor(Math.random() * numVertices)
-                const to = Math.floor(Math.random() * numVertices)
-                const isSelfLoop = from === to
+                const from = Math.floor(Math.random() * numVertices);
+                const to = Math.floor(Math.random() * numVertices);
+                const isSelfLoop = from === to;
                 const isCycle =
                   allowCycles &&
                   edges
                     .get()
-                    .some((edge) => edge.from === to && edge.to === from)
+                    .some((edge) => edge.from === to && edge.to === from);
                 const isMultipleEdge =
                   allowMultipleEdges &&
                   edges
                     .get()
-                    .some((edge) => edge.from === from && edge.to === to)
+                    .some((edge) => edge.from === from && edge.to === to);
 
                 if (
                   !isSelfLoop &&
@@ -239,48 +239,48 @@ const GenerateGraph = () => {
                       .get()
                       .some((edge) => edge.from === to && edge.to === from))
                 ) {
-                  const type = isDirected ? 'arrow' : undefined
+                  const type = isDirected ? "arrow" : undefined;
                   const weight = weightedGraph
                     ? Math.floor(Math.random() * (maxWeight - minWeight + 1)) +
-                      minWeight
-                    : undefined
-                  const edgeData = { from, to }
+                      parseInt(minWeight)
+                    : undefined;
+                  const edgeData = { from, to };
                   if (type) {
-                    edgeData.type = type
+                    edgeData.type = type;
                   }
                   if (weight) {
-                    edgeData.label = weight
+                    edgeData.label = weight;
                   }
-                  if (useCharacters && advanceOptions.includes('A-Z')) {
-                    const charCodeA = 65 // ASCII code for 'A'
-                    const charCodeZ = 90 // ASCII code for 'Z'
+                  if (useCharacters && advanceOptions.includes("A-Z")) {
+                    const charCodeA = 65; // ASCII code for 'A'
+                    const charCodeZ = 90; // ASCII code for 'Z'
                     const randomChar = () =>
                       String.fromCharCode(
                         Math.floor(
                           Math.random() * (charCodeZ - charCodeA + 1)
                         ) + charCodeA
-                      )
+                      );
 
-                    edgeData.to = randomChar()
-                    edgeData.from = randomChar()
+                    edgeData.to = randomChar();
+                    edgeData.from = randomChar();
                   }
 
-                  if (useCharacters && advanceOptions.includes('a-z')) {
-                    const charCodeA = 97 // ASCII code for 'a'
-                    const charCodeZ = 122 // ASCII code for 'z'
+                  if (useCharacters && advanceOptions.includes("a-z")) {
+                    const charCodeA = 97; // ASCII code for 'a'
+                    const charCodeZ = 122; // ASCII code for 'z'
                     const randomChar = () =>
                       String.fromCharCode(
                         Math.floor(
                           Math.random() * (charCodeZ - charCodeA + 1)
                         ) + charCodeA
-                      )
+                      );
 
-                    edgeData.to = randomChar()
-                    edgeData.from = randomChar()
+                    edgeData.to = randomChar();
+                    edgeData.from = randomChar();
                   }
 
-                  edges.add(edgeData)
-                  graphData.edges.push(edgeData)
+                  edges.add(edgeData);
+                  graphData.edges.push(edgeData);
                 }
               }
 
@@ -299,204 +299,204 @@ const GenerateGraph = () => {
 
               //   const network = new Network(container, data, options);
 
-              generatedData.push(graphData)
+              generatedData.push(graphData);
             }
 
-            setGeneratedGraph(generatedData)
-            const endTime = performance.now()
-            const timeDiff = endTime - startTime
+            setGeneratedGraph(generatedData);
+            const endTime = performance.now();
+            const timeDiff = endTime - startTime;
             const formattedTime =
-              timeDiff < 1 ? 'less than 1 ms' : `${timeDiff.toFixed(2)} ms`
+              timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
 
-            setTimeTaken(formattedTime)
-            setCopied(false)
-            resolve()
-          }, 2000)
+            setTimeTaken(formattedTime);
+            setCopied(false);
+            resolve();
+          }, 2000);
         }),
         {
-          loading: 'Generating values...',
-          success: 'Values generated successfully!',
+          loading: "Generating values...",
+          success: "Values generated successfully!",
           error: (error) => {
             if (errorOccurred) {
               // show toast error if flag variable is true
-              return error.message
+              return error.message;
             } else {
-              return 'An error occurred while generating values'
+              return "An error occurred while generating values";
             }
-          }
+          },
         }
-      )
+      );
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
-    setIsLoading(false) // set isLoading to false
-  }
+    setIsLoading(false); // set isLoading to false
+  };
 
   const handleCopyGraphs = () => {
     if (!generatedGraph) {
-      toast.error('Please generate values first')
-      return
+      toast.error("Please generate values first");
+      return;
     }
-    setIsLoading(true)
+    setIsLoading(true);
 
     const graphStrings = generatedGraph.map((graph) => {
-      const nodes = graph.nodes.map((node) => node.label)
+      const nodes = graph.nodes.map((node) => node.label);
       const edges = graph.edges.map((edge) => {
-        const from = edge.from
-        const to = edge.to
+        const from = edge.from;
+        const to = edge.to;
         // const type = edge.type;
-        const label = edge.label
-        let edgeString = isDirected ? `${from} -> ${to}` : `${from} ${to}`
-        edgeString = isArrow ? `${from} -> ${to}` : `${from} ${to}`
+        const label = edge.label;
+        let edgeString = isDirected ? `${from} -> ${to}` : `${from} ${to}`;
+        edgeString = isArrow ? `${from} -> ${to}` : `${from} ${to}`;
 
         if (weightedGraph && label) {
-          edgeString += isColon ? ` : ${label}` : ` ${label}`
+          edgeString += isColon ? ` : ${label}` : ` ${label}`;
         }
 
-        return edgeString
-      })
+        return edgeString;
+      });
 
-      const graphString = `${nodes.join('\n')}\n${edges.join('\n')}`
+      const graphString = `${nodes.join("\n")}\n${edges.join("\n")}`;
 
       if (
-        advanceOptions.includes('Show Total Edges & Vertices') &&
-        advanceOptions.includes('Show Total Cases')
+        advanceOptions.includes("Show Total Edges & Vertices") &&
+        advanceOptions.includes("Show Total Cases")
       ) {
-        return `${numGraph}\n${graph.edges.length} ${graph.nodes.length}\n${graphString}\n`
+        return `${numGraph}\n${graph.edges.length} ${graph.nodes.length}\n${graphString}\n`;
       }
 
-      if (advanceOptions.includes('Show Total Cases')) {
-        return `${numGraph}\n${graphString}`
+      if (advanceOptions.includes("Show Total Cases")) {
+        return `${numGraph}\n${graphString}`;
       }
 
-      if (advanceOptions.includes('Show Total Edges & Vertices')) {
-        return `${graph.edges.length} ${graph.nodes.length}\n${graphString}\n`
+      if (advanceOptions.includes("Show Total Edges & Vertices")) {
+        return `${graph.edges.length} ${graph.nodes.length}\n${graphString}\n`;
       }
 
-      return graphString
-    })
+      return graphString;
+    });
 
-    const text = graphStrings.join('\n\n')
+    const text = graphStrings.join("\n\n");
 
-    navigator.clipboard.writeText(text)
+    navigator.clipboard.writeText(text);
     toast.promise(
       navigator.clipboard.writeText(graphStrings),
       {
-        loading: 'Copying values...',
-        success: 'Values copied!',
-        error: 'Failed to copy values'
+        loading: "Copying values...",
+        success: "Values copied!",
+        error: "Failed to copy values",
       },
       {
         style: {
-          minWidth: '250px'
-        }
+          minWidth: "250px",
+        },
       }
-    )
-    setCopied(true)
-    setIsLoading(false)
-  }
+    );
+    setCopied(true);
+    setIsLoading(false);
+  };
 
   const handleDownloadValues = () => {
     if (!generatedGraph) {
-      toast.error('Please generate values first')
-      return
+      toast.error("Please generate values first");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     const graphStrings = generatedGraph.map((graph) => {
-      const nodes = graph.nodes.map((node) => node.label)
+      const nodes = graph.nodes.map((node) => node.label);
       const edges = graph.edges.map((edge) => {
-        const from = edge.from
-        const to = edge.to
-        const type = edge.type
-        const label = edge.label
+        const from = edge.from;
+        const to = edge.to;
+        const type = edge.type;
+        const label = edge.label;
         const edgeString = isDirected
           ? `${from} ${type} ${to}`
-          : `${from} ${to} \n`
-        return label ? `${edgeString} : ${label}` : edgeString
-      })
-      const graphString = `${nodes.join(' ')}\n${edges.join('')}`
+          : `${from} ${to} \n`;
+        return label ? `${edgeString} : ${label}` : edgeString;
+      });
+      const graphString = `${nodes.join(" ")}\n${edges.join("")}`;
 
       if (
-        advanceOptions.includes('Show Total Edges & Vertices') &&
-        advanceOptions.includes('Show Total Cases')
+        advanceOptions.includes("Show Total Edges & Vertices") &&
+        advanceOptions.includes("Show Total Cases")
       ) {
-        return `${numGraph}\nTotal Edges: ${graph.edges.length}\nTotal Vertices: ${graph.nodes.length}\n${graphString}\n`
+        return `${numGraph}\nTotal Edges: ${graph.edges.length}\nTotal Vertices: ${graph.nodes.length}\n${graphString}\n`;
       }
 
-      if (advanceOptions.includes('Show Total Cases')) {
-        return `${numGraph}\n${graphString}\nTotal Cases: ${graph.edges.length}`
+      if (advanceOptions.includes("Show Total Cases")) {
+        return `${numGraph}\n${graphString}\nTotal Cases: ${graph.edges.length}`;
       }
 
-      if (advanceOptions.includes('Show Total Edges & Vertices')) {
-        return `Total Edges: ${graph.edges.length}\nTotal Vertices: ${graph.nodes.length}\n${graphString}\n`
+      if (advanceOptions.includes("Show Total Edges & Vertices")) {
+        return `Total Edges: ${graph.edges.length}\nTotal Vertices: ${graph.nodes.length}\n${graphString}\n`;
       }
 
-      return graphString
-    })
+      return graphString;
+    });
 
-    const text = graphStrings.join('\n\n')
+    const text = graphStrings.join("\n\n");
 
-    const element = document.createElement('a')
-    const file = new Blob([text], { type: 'text/plain' })
-    element.href = URL.createObjectURL(file)
-    element.download = 'graph.txt'
-    document.body.appendChild(element) // Required for this to work in FireFox
-    element.click()
-    document.body.removeChild(element)
+    const element = document.createElement("a");
+    const file = new Blob([text], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = "graph.txt";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+    document.body.removeChild(element);
     toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
-      pending: 'Downloading values...',
-      success: 'Values downloaded!',
-      error: 'Failed to download values'
-    })
-    setIsLoading(false)
-  }
+      pending: "Downloading values...",
+      success: "Values downloaded!",
+      error: "Failed to download values",
+    });
+    setIsLoading(false);
+  };
 
   const handleResetValues = () => {
-    setIsLoading(true)
-    setNumVertices(5)
-    setNumEdges(8)
-    setNumGraph(1)
-    setMinWeight(1)
-    setMaxWeight(100)
-    setWeightedGraph(false)
-    setAllowMultipleEdges(false)
-    setAllowSelfLoops(false)
-    setAllowCycles(false)
-    setIsDirected(false)
-    setUseCharacters(false)
-    setGeneratedGraph(null)
-    setCopied(false)
-    setAdvanceOptions(['Show Total Cases'])
+    setIsLoading(true);
+    setNumVertices(5);
+    setNumEdges(8);
+    setNumGraph(1);
+    setMinWeight(1);
+    setMaxWeight(100);
+    setWeightedGraph(false);
+    setAllowMultipleEdges(false);
+    setAllowSelfLoops(false);
+    setAllowCycles(false);
+    setIsDirected(false);
+    setUseCharacters(false);
+    setGeneratedGraph(null);
+    setCopied(false);
+    setAdvanceOptions(["Show Total Cases"]);
     toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
-      pending: 'Resetting values...',
-      success: 'Values reset successfully!',
-      error: 'Error resetting values'
-    })
-    setIsLoading(false)
-  }
+      pending: "Resetting values...",
+      success: "Values reset successfully!",
+      error: "Error resetting values",
+    });
+    setIsLoading(false);
+  };
 
   return (
     <StyledGrid container>
       <Toaster />
-      <Grid item xs={12} sm={8} md={8} sx={{ margin: 'auto' }}>
+      <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
         <StyledCard>
-          <StyledCardHeader title='Graph Generator' />
+          <StyledCardHeader title="Graph Generator" />
           <StyledCardContent>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Tooltip title='Enter the number of edges of graph'>
+                <Tooltip title="Enter the number of edges of graph">
                   <StyledTextField
-                    label='Number of edges'
-                    type='number'
+                    label="Number of edges"
+                    type="number"
                     value={numEdges}
                     onChange={(e) => {
                       if (e.target.value < 0) {
-                        toast.error('Please enter a positive number')
-                        setNumEdges(8)
+                        toast.error("Please enter a positive number");
+                        setNumEdges(8);
                       } else {
-                        setNumEdges(e.target.value)
+                        setNumEdges(e.target.value);
                       }
                     }}
                     fullWidth
@@ -504,19 +504,19 @@ const GenerateGraph = () => {
                 </Tooltip>
               </Grid>
               <Grid item xs={6}>
-                <Tooltip title='Enter the number of vertices of graph'>
+                <Tooltip title="Enter the number of vertices of graph">
                   <StyledTextField
-                    label='Number of vertices'
-                    type='number'
+                    label="Number of vertices"
+                    type="number"
                     value={numVertices}
                     onChange={(e) => {
                       if (e.target.value < 0) {
                         toast.error(
-                          'Please enter a positive number greater than 0'
-                        )
-                        setNumVertices(5)
+                          "Please enter a positive number greater than 0"
+                        );
+                        setNumVertices(5);
                       } else {
-                        setNumVertices(e.target.value)
+                        setNumVertices(e.target.value);
                       }
                     }}
                     fullWidth
@@ -524,17 +524,17 @@ const GenerateGraph = () => {
                 </Tooltip>
               </Grid>
               <Grid item xs={6}>
-                <Tooltip title='Enter the number of graph required'>
+                <Tooltip title="Enter the number of graph required">
                   <StyledTextField
-                    label='Number of graph'
-                    type='number'
+                    label="Number of graph"
+                    type="number"
                     value={numGraph}
                     onChange={(e) => {
                       if (e.target.value < 0) {
-                        toast.error('Please enter a positive number')
-                        setNumGraph(10)
+                        toast.error("Please enter a positive number");
+                        setNumGraph(10);
                       } else {
-                        setNumGraph(e.target.value)
+                        setNumGraph(e.target.value);
                       }
                     }}
                     fullWidth
@@ -542,7 +542,7 @@ const GenerateGraph = () => {
                 </Tooltip>
               </Grid>
               <Grid item xs={4}>
-                <Tooltip title='Advanced options'>
+                <Tooltip title="Advanced options">
                   <StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledSelect
@@ -556,10 +556,10 @@ const GenerateGraph = () => {
                           value={option}
                           disabled={
                             (!useCharacters &&
-                              (option === 'A-Z' || option === 'a-z')) ||
-                            (advanceOptions.includes('a-z') &&
-                              option === 'A-Z') ||
-                            (advanceOptions.includes('A-Z') && option === 'a-z')
+                              (option === "A-Z" || option === "a-z")) ||
+                            (advanceOptions.includes("a-z") &&
+                              option === "A-Z") ||
+                            (advanceOptions.includes("A-Z") && option === "a-z")
                           }
                         >
                           {option}
@@ -570,166 +570,169 @@ const GenerateGraph = () => {
                 </Tooltip>
               </Grid>
             </Grid>
-            <Grid container spacing={2} sx={{ marginTop: '1rem' }}>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
               <Grid item xs={3}>
-                <Tooltip title='Weighet Graph'>
+                <Tooltip title="Weighet Graph">
                   <FormControlLabel
                     control={
                       <Checkbox
                         checked={weightedGraph}
                         onChange={(e) => setWeightedGraph(e.target.checked)}
-                        name='Weighted Graph'
+                        name="Weighted Graph"
                       />
                     }
-                    label='Weighted'
+                    label="Weighted"
                   />
                 </Tooltip>
               </Grid>
               <Grid item xs={3}>
-                <Tooltip title='Select for adding -> between edges'>
+                <Tooltip title="Select for adding -> between edges">
                   <FormControlLabel
                     control={
                       <Checkbox
                         checked={isArrow}
                         onChange={(e) => setIsArrow(e.target.checked)}
-                        name='Arrow'
+                        name="Arrow"
                       />
                     }
-                    label='Include Arrow'
+                    label="Include Arrow"
                   />
                 </Tooltip>
               </Grid>
               <Grid item xs={3}>
-                <Tooltip title='Select for adding : for weight'>
+                <Tooltip title="Select for adding : for weight">
                   <FormControlLabel
                     control={
                       <Checkbox
                         checked={isColon}
                         onChange={(e) => setIsColon(e.target.checked)}
-                        name='Colon'
+                        name="Colon"
                         disabled={!weightedGraph}
                       />
                     }
-                    label='Include Colon'
+                    label="Include Colon"
                   />
                 </Tooltip>
               </Grid>
               <Grid item xs={3}>
-                <Tooltip title='Make Graph of chars'>
+                <Tooltip title="Make Graph of chars">
                   <FormControlLabel
                     control={
                       <Checkbox
                         checked={useCharacters}
                         onChange={(e) => setUseCharacters(e.target.checked)}
-                        name='Char'
+                        name="Char"
                       />
                     }
-                    label='Include Char'
+                    label="Include Char"
                   />
                 </Tooltip>
               </Grid>
             </Grid>
-            <Grid container spacing={2} sx={{ marginTop: '1rem' }}>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
               <Grid item xs={6}>
-                <Tooltip title='Enter the minimum weight'>
+                <Tooltip title="Enter the minimum weight">
                   <StyledTextField
-                    label='Minimum weight'
-                    type='number'
+                    label="Minimum weight"
+                    type="number"
                     value={minWeight}
                     onChange={(e) => {
                       if (e.target.value < 0) {
-                        toast.error('Please enter a positive number')
-                        setMinWeight(0)
+                        toast.error("Please enter a positive number");
+                        setMinWeight(0);
                       } else {
-                        setMinWeight(e.target.value)
+                        setMinWeight(e.target.value);
                       }
                     }}
+                    disabled={!weightedGraph}
                     fullWidth
                   />
                 </Tooltip>
               </Grid>
               <Grid item xs={6}>
-                <Tooltip title='Enter the maximum weight'>
+                <Tooltip title="Enter the maximum weight">
                   <StyledTextField
-                    label='Maximum weight'
-                    type='number'
+                    label="Maximum weight"
+                    type="number"
                     value={maxWeight}
                     onChange={(e) => {
                       if (e.target.value < 0) {
-                        toast.error('Please enter a positive number')
-                        setMaxWeight(100)
+                        toast.error("Please enter a positive number");
+                        setMaxWeight(100);
                       } else {
-                        setMaxWeight(e.target.value)
+                        setMaxWeight(e.target.value);
                       }
                     }}
+                    disabled={!weightedGraph}
                     fullWidth
                   />
                 </Tooltip>
               </Grid>
             </Grid>
-            <Grid container spacing={2} sx={{ marginTop: '1rem' }}>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
               <Grid item xs={3}>
-                <Tooltip title='Multiple Edges'>
+                <Tooltip title="Multiple Edges">
                   <FormControlLabel
                     control={
                       <Checkbox
                         checked={allowMultipleEdges}
                         onChange={(e) =>
-                          setAllowMultipleEdges(e.target.checked)}
-                        name='Multiple Edges'
+                          setAllowMultipleEdges(e.target.checked)
+                        }
+                        name="Multiple Edges"
                       />
                     }
-                    label='Multiple Edges'
+                    label="Multiple Edges"
                   />
                 </Tooltip>
               </Grid>
               <Grid item xs={3}>
-                <Tooltip title='Self loop'>
+                <Tooltip title="Self loop">
                   <FormControlLabel
                     control={
                       <Checkbox
                         checked={allowSelfLoops}
                         onChange={(e) => setAllowSelfLoops(e.target.checked)}
-                        name='Self loop'
+                        name="Self loop"
                       />
                     }
-                    label='Self loop'
+                    label="Self loop"
                   />
                 </Tooltip>
               </Grid>
               <Grid item xs={3}>
-                <Tooltip title='Cycles'>
+                <Tooltip title="Cycles">
                   <FormControlLabel
                     control={
                       <Checkbox
                         checked={allowCycles}
                         onChange={(e) => setAllowCycles(e.target.checked)}
-                        name='Cycles'
+                        name="Cycles"
                       />
                     }
-                    label='Cycles'
+                    label="Cycles"
                   />
                 </Tooltip>
               </Grid>
               <Grid item xs={3}>
-                <Tooltip title='Directed Graph'>
+                <Tooltip title="Directed Graph">
                   <FormControlLabel
                     control={
                       <Checkbox
                         checked={isDirected}
                         onChange={(e) => setIsDirected(e.target.checked)}
-                        name='Directed Graph'
+                        name="Directed Graph"
                       />
                     }
-                    label='Directed'
+                    label="Directed"
                   />
                 </Tooltip>
               </Grid>
             </Grid>
-            <Grid container spacing={2} sx={{ marginTop: '1rem' }}>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
               <Grid item xs={12}>
                 <StyledButton
-                  variant='contained'
+                  variant="contained"
                   fullWidth
                   startIcon={<GenerateIcon />}
                   onClick={() => handleGenerateValues(numGraph)}
@@ -740,7 +743,7 @@ const GenerateGraph = () => {
               </Grid>
               <Grid item xs={6}>
                 <StyledButton
-                  variant='contained'
+                  variant="contained"
                   onClick={handleCopyGraphs}
                   disabled={isLoading}
                   fullWidth
@@ -750,12 +753,12 @@ const GenerateGraph = () => {
                     </CopyToClipboard>
                   }
                 >
-                  {copied ? 'Copied' : 'Copy'}
+                  {copied ? "Copied" : "Copy"}
                 </StyledButton>
               </Grid>
               <Grid item xs={6}>
                 <StyledButton
-                  variant='contained'
+                  variant="contained"
                   onClick={handleResetValues}
                   fullWidth
                   startIcon={<RefreshIcon />}
@@ -766,7 +769,7 @@ const GenerateGraph = () => {
               </Grid>
               <Grid item xs={12}>
                 <StyledButton
-                  variant='contained'
+                  variant="contained"
                   fullWidth
                   startIcon={<DownloadIcon />}
                   onClick={handleDownloadValues}
@@ -776,20 +779,21 @@ const GenerateGraph = () => {
                 </StyledButton>
               </Grid>
             </Grid>
-            <Grid container spacing={2} sx={{ marginTop: '1rem' }}>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
               <Grid item xs={6}>
                 {timeTaken && <p>Time taken: {timeTaken}</p>}
-                <StyledTypography variant='h6'>
+                <StyledTypography variant="h6">
                   Generated Graph
                 </StyledTypography>
               </Grid>
               <Grid item xs={12}>
-                <StyledTypography variant='subtitle' my={2}>
-                  {advanceOptions.includes('Show Total Cases') && generatedGraph
+                <StyledTypography variant="subtitle" my={2}>
+                  {!generatedGraph ? <div>No Graph generated yet</div> : null}
+                  {advanceOptions.includes("Show Total Cases") && generatedGraph
                     ? `${numGraph}`
                     : null}
 
-                  {advanceOptions.includes('Show Total Edges & Vertices') &&
+                  {advanceOptions.includes("Show Total Edges & Vertices") &&
                     generatedGraph &&
                     generatedGraph.map((s, i) => (
                       <div key={i}>
@@ -798,23 +802,23 @@ const GenerateGraph = () => {
                           <div key={n.id}>{n.label}</div>
                         ))}
                         {s.edges.map((e, id) => {
-                          let label = ''
+                          let label = "";
                           if (weightedGraph && isColon) {
-                            label = ` : ${e.label}`
+                            label = ` : ${e.label}`;
                           } else if (weightedGraph) {
-                            label = ` ${e.label}`
+                            label = ` ${e.label}`;
                           }
                           return (
                             <div key={id}>
-                              {`${e.from}${isArrow ? ' -> ' : ' '}${
+                              {`${e.from}${isArrow ? " -> " : " "}${
                                 e.to
                               }${label}`}
                             </div>
-                          )
+                          );
                         })}
                       </div>
                     ))}
-                  {!advanceOptions.includes('Show Total Edges & Vertices') &&
+                  {!advanceOptions.includes("Show Total Edges & Vertices") &&
                     generatedGraph &&
                     generatedGraph.map((s, i) => (
                       <div key={i}>
@@ -822,19 +826,19 @@ const GenerateGraph = () => {
                           <div key={n.id}>{n.label}</div>
                         ))}
                         {s.edges.map((e, id) => {
-                          let label = ''
+                          let label = "";
                           if (weightedGraph && isColon) {
-                            label = ` : ${e.label}`
+                            label = ` : ${e.label}`;
                           } else if (weightedGraph) {
-                            label = ` ${e.label}`
+                            label = ` ${e.label}`;
                           }
                           return (
                             <div key={id}>
-                              {`${e.from}${isArrow ? ' -> ' : ' '}${
+                              {`${e.from}${isArrow ? " -> " : " "}${
                                 e.to
                               }${label}`}
                             </div>
-                          )
+                          );
                         })}
                       </div>
                     ))}
@@ -845,7 +849,7 @@ const GenerateGraph = () => {
         </StyledCard>
       </Grid>
     </StyledGrid>
-  )
-}
+  );
+};
 
-export default GenerateGraph
+export default GenerateGraph;
