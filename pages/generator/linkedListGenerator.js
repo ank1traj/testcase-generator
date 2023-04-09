@@ -158,6 +158,7 @@ const GenerateLinkedList = () => {
                   "The minimum value cannot be greater than the maximum value"
                 )
               );
+              return;
             }
             // Initialize an array to hold the generated linked lists
             const newGeneratedLists = [];
@@ -268,6 +269,7 @@ const GenerateLinkedList = () => {
                   "The minimum value cannot be greater than the maximum value"
                 )
               );
+              return;
             }
             // Initialize an array to hold the generated linked lists
             const newGeneratedLists = [];
@@ -925,7 +927,7 @@ const GenerateLinkedList = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <StyledTypography variant="subtitle" my={2}>
-                    {!generatedLists.length > 0 ? (
+                    {!(generatedLists.length > 0) ? (
                       <div>No LinkedList generated yet</div>
                     ) : null}
                   </StyledTypography>
