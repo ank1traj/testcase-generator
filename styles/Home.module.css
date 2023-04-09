@@ -10,19 +10,19 @@
 
 .nav {
   display: inherit;
-  background-color: rgba(var(--callout-rgb), 5);
+  background-color: rgba(var(--callout-rgb), 11);
   border: 1px solid rgba(var(--callout-border-rgb), 0.3);
   border-radius: var(--border-radius);
-  justify-content: inherit;
+  justify-content: space-between;
   align-items: inherit;
   width: 100%;
   padding: 1rem;
 }
 .nav a {
-  padding-right: 16px;
+  padding: 16px;
   font-family: "Inter", sans-serif;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 600;;
 }
 
 .description {
@@ -33,6 +33,7 @@
   max-width: var(--max-width);
   width: 100%;
   z-index: 2;
+  margin-top: 20px;
   font-family: var(--font-mono);
 }
 
@@ -84,7 +85,7 @@
 
 .card p {
   margin: 0;
-  opacity: 0.6;
+  opacity: 0.7;
   font-size: 0.9rem;
   line-height: 1.5;
   max-width: 30ch;
@@ -103,7 +104,7 @@
   border-radius: 50%;
   width: 480px;
   height: 200px;
-  /* margin-left: -400px; */
+  /* margin: -40px; */
 }
 
 .center::after {
@@ -244,10 +245,15 @@
     border-radius: 0%;
     width: 100%;
     border-bottom: 2px solid rgba(var(--callout-border-rgb), 0.50);
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--background-start-rgb), 1),
+      rgba(var(--callout-rgb), 0.5)
+    );
+    backdrop-filter: blur(24px);
   }
-  .nav a{
-    background-color: rgba(var(--callout-rgb), 10);
-  }
+
   .description p {
     align-items: center;
     inset: 0 0 auto;

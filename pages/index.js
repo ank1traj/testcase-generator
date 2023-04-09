@@ -8,6 +8,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty'
 import ErrorIcon from '@mui/icons-material/Error'
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -22,23 +23,19 @@ export default function Home() {
       <main className={styles.main}>
         <nav className={styles.nav}>
           <div>
-            <a href="#">Home</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+            <Link href="/">Home</Link>
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
           </div>
           <div>
-            <a
+            <Link
               href='https://github.com/ank1traj/testcase-generator'
-              target='_blank'
               rel='noopener noreferrer'
             >
-
               <code className={styles.code}>Contribute &hearts;</code>
-            </a>
+            </Link>
           </div>
-
         </nav>
-
         <div className={styles.description}>
           <p>
             An Open Source Comprehensive Test Case Generator
