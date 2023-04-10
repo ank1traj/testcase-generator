@@ -14,14 +14,17 @@
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.15",
+    "@sentry/browser": "^7.47.0",
     "@vercel/analytics": "^0.1.11",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
+    "logrocket": "^4.0.0",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.0",
+    "uuid": "^9.0.0",
     "vis-data": "^7.1.6",
     "vis-network": "^9.1.6"
   }
