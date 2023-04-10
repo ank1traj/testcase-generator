@@ -878,7 +878,9 @@ const GenerateLinkedList = () => {
                         ? handleAddGenerateValues
                         : handleUpdateGenerateValues
                     }
-                    disabled={isLoading}
+                    disabled={
+                      isLoading || doublyLinkedList || circularLinkedList
+                    }
                   >
                     Generate Linked Lists
                   </StyledButton>
@@ -889,7 +891,9 @@ const GenerateLinkedList = () => {
                       variant="contained"
                       fullWidth
                       startIcon={<FileCopyIcon />}
-                      disabled={isLoading}
+                      disabled={
+                        isLoading || doublyLinkedList || circularLinkedList
+                      }
                     >
                       {copied ? "Copied" : "Copy to clipboard"}
                     </StyledButton>
@@ -901,7 +905,9 @@ const GenerateLinkedList = () => {
                     fullWidth
                     startIcon={<RefreshIcon />}
                     onClick={handleResetValues}
-                    disabled={isLoading}
+                    disabled={
+                      isLoading || doublyLinkedList || circularLinkedList
+                    }
                   >
                     Reset
                   </StyledButton>
@@ -912,7 +918,9 @@ const GenerateLinkedList = () => {
                     fullWidth
                     startIcon={<DownloadIcon />}
                     onClick={handleDownloadValues}
-                    disabled={isLoading}
+                    disabled={
+                      isLoading || doublyLinkedList || circularLinkedList
+                    }
                   >
                     Download
                   </StyledButton>
