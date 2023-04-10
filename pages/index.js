@@ -36,7 +36,9 @@ Sentry.init({
   ],
 });
 
-LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET_ID);
+LogRocket.init("mbkjpk/testcase-generator");
+
+LogRocket.identify(uuidv4());
 
 export default function Home() {
   return (
