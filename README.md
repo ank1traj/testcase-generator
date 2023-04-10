@@ -1,47 +1,35 @@
-## Contribution Guidelines
+![testcase-generator](https://user-images.githubusercontent.com/88102392/230890576-752c744a-0a9e-47d2-9e83-64cf03cbe692.png)
 
-Thank you for considering contributing to this project! The following guidelines will help you make a meaningful and successful contribution.
+## What is Testcase Generator?
 
-### Getting Started
+Automated Test Case Generation for Competitive Programming (CP) automates the process of generating test cases. It takes input data, specified constraints, and test case conditions as input, and produces a set of test cases that effectively exercise various paths and functions of the software application under test.
 
-1. Fork the repository and clone it locally.
-2. Install the necessary dependencies by running npm install.
-3. Make your changes and test them locally.
-4. Commit your changes with clear and concise commit messages.
-5. Push your changes to your forked repository.
-6. Create a pull request from your forked repository to this repository.
+### How to contribute?
 
-### Code of Conduct
+Participating in open-source software (OSS) initiatives can provide a gratifying and satisfying experience. It offers an opportunity to acquire novel abilities while also contributing to a project that has a significant impact on the larger community.
 
-Please note that this project follows a code of conduct. We expect all contributors to uphold its principles. You can read the full code of conduct in the CODE_OF_CONDUCT.md file.
+> Here are some steps you can take to contribute to this project
 
-### Issues
+- Remember to read [Code Of Conduct](/CODE_OF_CONDUCT.md) before contributing.
+- Follow the [Contribution Documents](/contributing.md)
+- Create an [issue](https://github.com/ank1traj/testcase-generator/issues/new/choose) to report bugs, and vulnerabilities or add a new feature.
+- Remember to add a [good commit message](https://gitopener.vercel.app/guides/general-terminology/How-to-write-professional-commits).
+- Don't spam if you do it your PR/issue will be closed.
 
-If you find a bug or have a feature request, please open an issue on the GitHub repository. Before creating a new issue, please search existing issues to see if it has already been reported or resolved.
+### Tech stack used
 
-### Pull Requests
+Currently we are using NextJs framework for this project.
 
-When creating a pull request, please ensure it meets the following guidelines:
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 
-1. The pull request should have a clear and descriptive title.
-2. The pull request should include a detailed description of the changes.
-3. The pull request should include any necessary tests and documentation.
-4. The pull request should not include unnecessary changes.
-5. The pull request should be linked to an issue (if applicable).
+### Contributors
 
-### Development
+We would like to extend our heartfelt gratitude to all the individuals who contributed to and supported this project. Your unwavering dedication, time, skills, and knowledge played a pivotal role in the success of this endeavor. Whether you offered code, documentation, testing, or provided valuable feedback and suggestions, please know that your contributions are highly valued and appreciated.
 
-To develop this project locally, follow these steps:
-
-1. Clone the repository.
-2. Install the necessary dependencies by running ```npm install``` or ```yarn install```.
-3. Start the development server by running ```npm run dev``` or ```yarn dev```.
-4. Make changes and test them locally.
-5. Commit your changes with clear and concise commit messages.
-6. Push your changes to your forked repository.
-7. Create a pull request from your forked repository to this repository.
+<a href="https://github.com/ank1traj/testcase-generator/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ank1traj/testcase-generator" />
+</a>
 
 ### License
 
-This project is licensed under the MIT License - see the LICENSE.md file for details.
-
+This project is licensed under the [MIT License](/LICENSE).
