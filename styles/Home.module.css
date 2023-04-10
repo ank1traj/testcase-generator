@@ -22,7 +22,7 @@
   padding: 16px;
   font-family: "Inter", sans-serif;
   font-size: 1rem;
-  font-weight: 600;;
+  font-weight: 600;
 }
 
 .description {
@@ -237,14 +237,14 @@
     position: fixed;
     width: 100%;
   }
-  .nav{
+  .nav {
     margin: 20px;
     display: flex;
     justify-content: inherit;
     position: fixed;
     border-radius: 0%;
     width: 100%;
-    border-bottom: 2px solid rgba(var(--callout-border-rgb), 0.50);
+    border-bottom: 2px solid rgba(var(--callout-border-rgb), 0.5);
     z-index: 1;
     background: linear-gradient(
       to bottom,
@@ -326,6 +326,26 @@
   background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
   animation: glowing 2s infinite;
   opacity: 0.5;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+  padding-top: 3rem;
+  min-height: 100vh;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+  padding-top: 3rem;
+  min-height: 100vh;
 }
 
 @keyframes glowing {

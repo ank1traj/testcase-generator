@@ -38,9 +38,9 @@ export default function Home() {
           </div>
         </nav>
         <div className={styles.description}>
-        <p>
+          <p>
             An Open Source Comprehensive Test Case Generator
-            </p>
+          </p>
           <div className={styles.author}>
             <a
               href="https://www.linkedin.com/in/ank1traj/"
