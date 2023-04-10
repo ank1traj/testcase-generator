@@ -38,17 +38,9 @@ export default function Home() {
           </div>
         </nav>
         <div className={styles.description}>
-          <p>
-            <a
-              href="https://github.com/ank1traj/testcase-generator"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              Wanna Contribute &hearts;
-              <code className={styles.code}>write and send it on GitHub</code>
-            </a>
-          </p>
+        <p>
+            An Open Source Comprehensive Test Case Generator
+            </p>
           <div className={styles.author}>
             <a
               href="https://www.linkedin.com/in/ank1traj/"
