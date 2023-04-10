@@ -11,6 +11,7 @@ import HourglassTopOutlinedIcon from "@mui/icons-material/HourglassTopOutlined";
 
 import * as Sentry from "@sentry/browser";
 import LogRocket from "logrocket";
+import { v4 as uuidv4 } from "uuid";
 
 const inter = Inter({ subsets: ["latin"] });
 
