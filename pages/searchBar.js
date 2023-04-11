@@ -9,9 +9,7 @@ export default function SearchBar() {
 
     const handleChange = (event) => {
         const value = event.target.value;
-        if (value.length <= 50) {
             setText(value);
-        }
     };
 
     return (
