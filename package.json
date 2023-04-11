@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "author": {"name": "Ankit Raj", "email": "ankit.raj928@gmail.com"},
+  "license": "MIT",
+  "url": "https://testcase-generator.vercel.app/",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
