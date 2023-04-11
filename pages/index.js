@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 
+
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -59,17 +60,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        {/* navBar */}
+        <nav className={styles.nav}>
+          <div>
+            {/* routes */}
+            <Link href="/">Home</Link>
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
+          </div>
+          {/* GitHub */}
+          <div>
+            <Link
+              href='https://github.com/ank1traj/testcase-generator'
+              rel='noopener noreferrer'
+            >
+              <code className={styles.code}>Contribute &hearts;</code>
+            </Link>
+          </div>
+        </nav>
         <div className={styles.description}>
           <p>
-            <a
-              href="https://github.com/ank1traj/testcase-generator"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {" "}
-              Wanna Contribute &hearts;
-              <code className={styles.code}>write and send it on GitHub</code>
-            </a>
+            An Open Source Comprehensive Test Case Generator
           </p>
           <div className={styles.author}>
             <a
