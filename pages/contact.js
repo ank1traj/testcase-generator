@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import styles from "@/styles/Home.module.css"; 
-import SearchBar from "pages/searchbar.js";
+import SearchBar from "@/pages/searchBar.js";
 
 export default function contact() {
     return (
