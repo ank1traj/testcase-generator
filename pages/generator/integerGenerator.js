@@ -239,6 +239,11 @@ const GenerateInteger = () => {
     setCopied(false);
     setTimeTaken(null);
     setAdvanceOptions(["Show Total Cases"]);
+    toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
+      pending: "Resetting values...",
+      success: "Values reset successfully!",
+      error: "Error resetting values",
+    });
     setIsLoading(false);
   };
 
