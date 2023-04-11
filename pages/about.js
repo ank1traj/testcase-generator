@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import styles from "@/styles/Home.module.css";
+import SearchBar from "./searchbar";
 
 export default function about() {
     return (
@@ -18,7 +19,10 @@ export default function about() {
                             <code className={styles.code}>Contribute &hearts;</code>
                         </Link>
                     </div>
-                </nav> 
+                    <div className={styles.search}>
+                        <SearchBar onSearch={"handleSearch"} /> {/* handleSearch function */}
+                    </div>
+                </nav>
             </div>
 
         </>
