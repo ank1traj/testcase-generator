@@ -117,8 +117,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Integer <HourglassEmptyIcon style={{ color: "blue" }} />{" "}
-              <span>-&gt;</span>
+              Integer <CheckCircleIcon style={{ color: "green" }} />
             </h2>
             <p className={inter.className}>Generate random integers</p>
           </Link>
@@ -129,8 +128,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              String <CheckCircleIcon style={{ color: "green" }} />{" "}
-              <span>-&gt;</span>
+              String <CheckCircleIcon style={{ color: "green" }} />
             </h2>
             <p className={inter.className}>
               Generate random string of characters.
@@ -143,8 +141,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Array <CheckCircleIcon style={{ color: "green" }} />{" "}
-              <span>-&gt;</span>
+              Array <CheckCircleIcon style={{ color: "green" }} />
             </h2>
             <p className={inter.className}>
               Generate random array of integer & float values.
@@ -157,8 +154,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Binary Tree <ErrorIcon style={{ color: "red" }} />{" "}
-              <span>-&gt;</span>
+              Binary Tree <ErrorIcon style={{ color: "red" }} />
             </h2>
             <p className={inter.className}>
               Generate random binary tree of integer values.
@@ -171,9 +167,8 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Linked List{" "}
-              <HourglassTopOutlinedIcon style={{ color: "green" }} />{" "}
-              <span>-&gt;</span>
+              Linked List
+              <HourglassTopOutlinedIcon style={{ color: "green" }} />
             </h2>
             <p className={inter.className}>
               Generate random linked list of integer values.
@@ -186,8 +181,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Graph <CheckCircleIcon style={{ color: "green" }} />{" "}
-              <span>-&gt;</span>
+              Graph <CheckCircleIcon style={{ color: "green" }} />
             </h2>
             <p className={inter.className}>
               Generate random graph of integer/char values.
@@ -199,8 +193,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Matrix <HourglassEmptyIcon style={{ color: "Blue" }} />{" "}
-              <span>-&gt;</span>
+              Matrix <HourglassEmptyIcon style={{ color: "Blue" }} />
             </h2>
             <p className={inter.className}>
               Generate random Matrix of integer/char values.
@@ -212,8 +205,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Palindrome <CheckCircleIcon style={{ color: "green" }} />{" "}
-              <span>-&gt;</span>
+              Palindrome <CheckCircleIcon style={{ color: "green" }} />
             </h2>
             <p className={inter.className}>
               Generate random Palindrome of integer/char values.
