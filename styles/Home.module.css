@@ -14,12 +14,12 @@
   border: 1px solid rgba(var(--callout-border-rgb), 0.3);
   border-radius: var(--border-radius);
   justify-content: space-between;
-  align-items: inherit;
+  align-items: center;
   width: 100%;
-  padding: 1rem;
+  padding-right: 10px;
 }
 .nav a {
-  padding: 16px;
+  padding: 15px;
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 600;
@@ -328,10 +328,15 @@
   opacity: 0.5;
 }
 
+.search {
+  margin-bottom: 1px;
+  padding-bottom: 10px;
+}
+
 .about {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: inherit;
   align-items: center;
   padding: 6rem;
   padding-top: 3rem;

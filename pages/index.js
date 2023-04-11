@@ -4,6 +4,10 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
+
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -57,6 +61,7 @@ export default function Home() {
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
           </div>
+
           <div>
             <Link
               href='https://github.com/ank1traj/testcase-generator'
@@ -64,6 +69,23 @@ export default function Home() {
             >
               <code className={styles.code}>Contribute &hearts;</code>
             </Link>
+          </div>
+          <div className={styles.search}>
+            <TextField
+              id="outlined-search"
+              label="Search"
+              type="search"
+              variant="standard"
+              InputProps={{
+                maxLength: 35,
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                padding: 10,
+              }}
+            />
           </div>
         </nav>
         <div className={styles.description}>
