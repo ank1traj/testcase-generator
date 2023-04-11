@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import styles from "@/styles/Home.module.css"; 
-import SearchBar from "@/pages/searchBar.js";
+import styles from "@/styles/Home.module.css";
 
 export default function contact() {
     return (
@@ -18,9 +17,6 @@ export default function contact() {
                         >
                             <code className={styles.code}>Contribute &hearts;</code>
                         </Link>
-                    </div>
-                    <div className={styles.search}>
-                        <SearchBar onSearch={"handleSearch"} /> {/* handleSearch function */}
                     </div>
                 </nav>
             </div>

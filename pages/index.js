@@ -13,7 +13,6 @@ import HourglassTopOutlinedIcon from "@mui/icons-material/HourglassTopOutlined";
 import * as Sentry from "@sentry/browser";
 import LogRocket from "logrocket";
 import { v4 as uuidv4 } from "uuid";
-import SearchBar from "@/pages/searchBar.js";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -77,10 +76,6 @@ export default function Home() {
             >
               <code className={styles.code}>Contribute &hearts;</code>
             </Link>
-          </div>
-          {/* SearchBar */}
-          <div className={styles.search}>
-            <SearchBar onSearch={"handleSearch"} /> {/* handleSearch function */}
           </div>
         </nav>
         <div className={styles.description}>

@@ -16,6 +16,8 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding-right: 10px;
+  padding: 14px;
 }
 .nav a {
   padding: 15px;
