@@ -4,7 +4,26 @@
   justify-content: space-between;
   align-items: center;
   padding: 6rem;
+  padding-top: 3rem;
   min-height: 100vh;
+}
+
+.nav {
+  display: inherit;
+  background-color: rgba(var(--callout-rgb), 11);
+  border: 1px solid rgba(var(--callout-border-rgb), 0.3);
+  border-radius: var(--border-radius);
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-right: 10px;
+  padding: 14px;
+}
+.nav a {
+  padding: 15px;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .description {
@@ -15,6 +34,7 @@
   max-width: var(--max-width);
   width: 100%;
   z-index: 2;
+  margin-top: 20px;
   font-family: var(--font-mono);
 }
 
@@ -66,7 +86,7 @@
 
 .card p {
   margin: 0;
-  opacity: 0.6;
+  opacity: 0.7;
   font-size: 0.9rem;
   line-height: 1.5;
   max-width: 30ch;
@@ -85,7 +105,7 @@
   border-radius: 50%;
   width: 480px;
   height: 200px;
-  margin-left: -400px;
+  /* margin: -40px; */
 }
 
 .center::after {
@@ -97,7 +117,7 @@
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -125,7 +145,7 @@
 
 .thirteen::before,
 .thirteen::after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: -1;
 }
@@ -218,6 +238,22 @@
     position: fixed;
     width: 100%;
   }
+  .nav {
+    margin: 20px;
+    display: flex;
+    justify-content: inherit;
+    position: fixed;
+    border-radius: 0%;
+    width: 100%;
+    border-bottom: 2px solid rgba(var(--callout-border-rgb), 0.5);
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--background-start-rgb), 1),
+      rgba(var(--callout-rgb), 0.5)
+    );
+    backdrop-filter: blur(24px);
+  }
 
   .description p {
     align-items: center;
@@ -291,6 +327,31 @@
   background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
   animation: glowing 2s infinite;
   opacity: 0.5;
+}
+
+.search {
+  margin-bottom: 1px;
+  padding-bottom: 10px;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: inherit;
+  align-items: center;
+  padding: 6rem;
+  padding-top: 3rem;
+  min-height: 100vh;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+  padding-top: 3rem;
+  min-height: 100vh;
 }
 
 @keyframes glowing {
