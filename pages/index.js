@@ -47,10 +47,11 @@ Sentry.init({
 });
 
 LogRocket.init("mbkjpk/testcase-generator");
-
+// import { useMediaQuery } from '@mui/material'
 LogRocket.identify(uuidv4());
 
-export default function Home() {
+export default function Home () {
+
   return (
     <>
       <Head>
@@ -90,7 +91,7 @@ export default function Home() {
             >
               By Ankit Raj
             </a>
-            <div className={styles.glow} />
+            {/* <div className={styles.glow} /> */}
           </div>
         </div>
         <div className={styles.center}>
