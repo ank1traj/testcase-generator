@@ -267,7 +267,6 @@ const ArrayGeneratorFunc = () => {
 
     setIsLoading(true);
 
-    let valuesString = "";
     let totalCases = 0;
     if (
       advanceOptions.includes("Show Total Cases") &&

@@ -15,7 +15,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import GenerateIcon from "@mui/icons-material/PlayArrow";
 import DownloadIcon from "@mui/icons-material/GetApp";
 
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 import LinkedListGeneratorFunc from "components/generatorFunc/linkedListGeneratorFunc";
 
