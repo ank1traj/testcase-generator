@@ -1,3 +1,5 @@
+import { StyledComponents } from "components/style";
+
 import {
   Grid,
   Typography,
@@ -8,8 +10,6 @@ import {
   MenuItem,
   InputLabel,
 } from "@mui/material";
-import { StyledComponents } from "../style";
-
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import RefreshIcon from "@mui/icons-material/Refresh";

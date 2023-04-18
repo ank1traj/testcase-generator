@@ -1,4 +1,4 @@
-import { StyledComponents } from "../style";
+import { StyledComponents } from "components/style";
 
 import {
   Grid,

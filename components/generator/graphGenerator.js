@@ -1,5 +1,4 @@
-import React from "react";
-import { StyledComponents } from "../style";
+import { StyledComponents } from "components/style";
 // import { Network } from "vis-network";
 import {
   Grid,

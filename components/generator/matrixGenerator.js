@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { StyledComponents } from "../style";
 
 import {
   Grid,
