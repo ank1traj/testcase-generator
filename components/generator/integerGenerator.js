@@ -1,4 +1,5 @@
-import { StyledComponents } from "../style";
+import { StyledComponents } from "components/style";
+
 import { Grid, Tooltip, MenuItem, InputLabel } from "@mui/material";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
