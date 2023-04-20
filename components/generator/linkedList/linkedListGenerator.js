@@ -17,7 +17,7 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 
 import { Toaster } from "react-hot-toast";
 
-import LinkedListGeneratorFunc from "components/generatorFunc/linkedListGeneratorFunc";
+import LinkedListGeneratorFunc from "components/generator/linkedList/linkedListGeneratorFunc";
 
 const options = ["Show Total List", "Show List Size"];
 
