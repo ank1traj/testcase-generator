@@ -17,7 +17,7 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 
 import toast, { Toaster } from "react-hot-toast";
 
-import PalindromeGeneratorFunc from "components/generatorFunc/palindromeGeneratorFunc.js";
+import PalindromeGeneratorFunc from "components/generator/palindrome/palindromeGeneratorFunc.js";
 
 const options = ["Show Total Cases", "Show Length"];
 

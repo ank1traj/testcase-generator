@@ -17,7 +17,7 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 
 import toast, { Toaster } from "react-hot-toast";
 
-import GraphGeneratorFunc from "components/generatorFunc/graphGeneratorFunc.js";
+import GraphGeneratorFunc from "components/generator/graph/graphGeneratorFunc.js";
 
 const options = [
   "Show Total Cases",

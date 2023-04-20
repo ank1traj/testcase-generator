@@ -1,4 +1,4 @@
-import GenerateGraph from "@/components/generator/graphGenerator";
+import GenerateGraph from "@/components/generator/graph/graphGenerator";
 
 export default function GraphGenerator() {
   return <GenerateGraph />;
