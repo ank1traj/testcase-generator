@@ -7,7 +7,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import GenerateIcon from "@mui/icons-material/PlayArrow";
 import DownloadIcon from "@mui/icons-material/GetApp";
 
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 import IntegerGeneratorFunc from "components/generator/integer/integerGeneratorFunc";
 
@@ -69,7 +69,14 @@ const GenerateInteger = () => {
                     label="Number of Integers"
                     type="number"
                     value={numValues}
-                    onChange={(e) => setNumValues(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value < 0) {
+                        toast.error("Please enter a positive number");
+                        setNumValues(1);
+                      } else {
+                        setNumValues(e.target.value);
+                      }
+                    }}
                     fullWidth
                   />
                 </Tooltip>
