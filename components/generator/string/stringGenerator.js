@@ -7,8 +7,8 @@ import {
   FormControlLabel,
   Checkbox,
   Radio,
-  MenuItem,
   InputLabel,
+  MenuItem,
 } from "@mui/material";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
@@ -18,94 +18,72 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 
 import toast, { Toaster } from "react-hot-toast";
 
-import ArrayGeneratorFunc from "components/generatorFunc/arrayGeneratorFunc.js";
+import StringGeneratorFunc from "components/generator/string/stringGeneratorFunc";
 
 const options = [
-  "Negative Outputs",
-  "Hide Array Size",
-  "Distinct Elements",
-  "Show Total Cases",
+  "Hide Length",
+  "Hide Number of Strings",
+  "Distinct Strings",
+  "Distinct Strings (Case Insensitive)",
+  "Distinct Characters",
 ];
 
-const GenerateArray = () => {
+const GenerateString = () => {
   const {
-    minValue,
-    setMinValue,
-    maxValue,
-    setMaxValue,
-    arraySize,
-    setArraySize,
-    numArrays,
-    setNumArrays,
-    generatedValues,
+    stringLength,
+    setStringLength,
+    numStrings,
+    setNumStrings,
+    excludedChars,
+    setExcludedChars,
+    includedChars,
+    setIncludedChars,
+    generatedStrings,
     copied,
     timeTaken,
-    isFloat,
-    setIsFloat,
+    smallAlphabets,
+    setSmallAlphabets,
+    capitalAlphabets,
+    setCapitalAlphabets,
+    numbers,
+    setNumbers,
+    specialChars,
+    setSpecialChars,
     randomSize,
     setRandomSize,
     advanceOptions,
     isLoading,
-    handleGenerateValues,
-    handleCopyValues,
+    handleGenerateStrings,
+    handleCopyStrings,
     handleDownloadValues,
     handleResetValues,
     handleAdvanceOptionChange,
-    handleSortChange,
-    handleOptionChange,
-    any,
-    odd,
-    even,
-    prime,
     increasing,
     decreasing,
     random,
-  } = ArrayGeneratorFunc();
-
-  console.log(isFloat);
+    handleSortChange,
+  } = StringGeneratorFunc();
 
   return (
     <StyledComponents.StyledGrid container>
       <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
         <StyledComponents.StyledCard>
-          <StyledComponents.StyledCardHeader title="Generate Array" />
+          <StyledComponents.StyledCardHeader title="Random String Generator" />
           <StyledComponents.StyledCardContent>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Tooltip title="Enter the minimum value for the array">
+                <Tooltip title="Enter the number of string">
                   <StyledComponents.StyledTextField
-                    label="Min Value"
+                    label="Number of Strings"
                     type="number"
-                    value={minValue}
-                    onChange={(e) => setMinValue(e.target.value)}
-                    fullWidth
-                  />
-                </Tooltip>
-              </Grid>
-              <Grid item xs={6}>
-                <Tooltip title="Enter the maximum value for the array">
-                  <StyledComponents.StyledTextField
-                    label="Max Value"
-                    type="number"
-                    value={maxValue}
-                    onChange={(e) => setMaxValue(e.target.value)}
-                    fullWidth
-                  />
-                </Tooltip>
-              </Grid>
-              <Grid item xs={6}>
-                <Tooltip title="Enter the size of the array">
-                  <StyledComponents.StyledTextField
-                    label="Array Size"
-                    type="number"
-                    value={arraySize}
+                    value={numStrings}
                     onChange={(e) => {
                       if (e.target.value < 0) {
                         toast.error("Please enter a positive number");
-                        setArraySize(10);
+                        setNumStrings(1);
                       } else {
-                        setArraySize(e.target.value);
+                        setNumStrings(e.target.value);
                       }
                     }}
                     fullWidth
@@ -113,17 +91,17 @@ const GenerateArray = () => {
                 </Tooltip>
               </Grid>
               <Grid item xs={6}>
-                <Tooltip title="Enter the number of arrays to generate">
+                <Tooltip title="Enter the length of the string">
                   <StyledComponents.StyledTextField
-                    label="Number of Arrays"
+                    label="string length"
                     type="number"
-                    value={numArrays}
+                    value={stringLength}
                     onChange={(e) => {
                       if (e.target.value < 0) {
                         toast.error("Please enter a positive number");
-                        setNumArrays(1);
+                        setStringLength(10);
                       } else {
-                        setNumArrays(e.target.value);
+                        setStringLength(e.target.value);
                       }
                     }}
                     fullWidth
@@ -132,22 +110,8 @@ const GenerateArray = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={3}>
-                <Tooltip title="Check to generate float values">
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={isFloat}
-                        onChange={(e) => setIsFloat(e.target.checked)}
-                        name="isFloat"
-                      />
-                    }
-                    label="Generate Float Arrays"
-                  />
-                </Tooltip>
-              </Grid>
               <Grid item xs={2}>
-                <Tooltip title="Check to generate random size arry">
+                <Tooltip title="Check for random size">
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -180,74 +144,89 @@ const GenerateArray = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
-                <Tooltip title="Check to generate any values">
+              <Grid item xs={3}>
+                <Tooltip title="Check to include a-z">
                   <FormControlLabel
                     control={
-                      <Radio
-                        checked={any}
-                        onChange={handleOptionChange}
-                        value="any"
-                        name="radio-button-demo"
-                        inputProps={{ "aria-label": "any" }}
+                      <Checkbox
+                        checked={smallAlphabets}
+                        onChange={(e) => setSmallAlphabets(e.target.checked)}
+                        name="a-z"
                       />
                     }
-                    label="any"
+                    label="a-z"
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
-                <Tooltip title="Check to generate even values">
+              <Grid item xs={3}>
+                <Tooltip title="Check to include A-Z">
                   <FormControlLabel
                     control={
-                      <Radio
-                        checked={even}
-                        onChange={handleOptionChange}
-                        value="even"
-                        name="radio-button-demo"
-                        inputProps={{ "aria-label": "even" }}
+                      <Checkbox
+                        checked={capitalAlphabets}
+                        onChange={(e) => setCapitalAlphabets(e.target.checked)}
+                        name="A-Z"
                       />
                     }
-                    label="Even"
+                    label="A-Z"
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
-                <Tooltip title="Check to generate odd values">
+              <Grid item xs={3}>
+                <Tooltip title="Check to include 0-9">
                   <FormControlLabel
                     control={
-                      <Radio
-                        checked={odd}
-                        onChange={handleOptionChange}
-                        value="odd"
-                        name="radio-button-demo"
-                        inputProps={{ "aria-label": "odd" }}
+                      <Checkbox
+                        checked={numbers}
+                        onChange={(e) => setNumbers(e.target.checked)}
+                        name="0-9"
                       />
                     }
-                    label="Odd"
+                    label="0-9"
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
-                <Tooltip title="Check to generate prime values">
+              <Grid item xs={3}>
+                <Tooltip title="Check to include special chars">
                   <FormControlLabel
                     control={
-                      <Radio
-                        checked={prime}
-                        onChange={handleOptionChange}
-                        value="prime"
-                        name="radio-button-demo"
-                        inputProps={{ "aria-label": "prime" }}
+                      <Checkbox
+                        checked={specialChars}
+                        onChange={(e) => setSpecialChars(e.target.checked)}
+                        name="special chars"
                       />
                     }
-                    label="Prime"
+                    label="special chars"
+                  />
+                </Tooltip>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
+              <Grid item xs={6}>
+                <Tooltip title="Enter the chars to be exclude">
+                  <StyledComponents.StyledTextField
+                    label="Exclude Characters"
+                    value={excludedChars}
+                    onChange={(e) => setExcludedChars(e.target.value)}
+                    fullWidth
+                  />
+                </Tooltip>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Tooltip title="Enter the chars to be include">
+                  <StyledComponents.StyledTextField
+                    label="Include Characters"
+                    value={includedChars}
+                    onChange={(e) => setIncludedChars(e.target.value)}
+                    fullWidth
                   />
                 </Tooltip>
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
               <Grid item xs={4}>
-                <Tooltip title="Check to generate increasing values">
+                <Tooltip title="Check to generate increasing values(Only work with multiple strings)">
                   <FormControlLabel
                     control={
                       <Radio
@@ -256,6 +235,7 @@ const GenerateArray = () => {
                         value="increasing"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "increasing" }}
+                        disabled={numStrings <= 1}
                       />
                     }
                     label="Increasing"
@@ -263,7 +243,7 @@ const GenerateArray = () => {
                 </Tooltip>
               </Grid>
               <Grid item xs={4}>
-                <Tooltip title="Check to generate decreasing values">
+                <Tooltip title="Check to generate decreasing values(Only work with multiple strings)">
                   <FormControlLabel
                     control={
                       <Radio
@@ -272,6 +252,7 @@ const GenerateArray = () => {
                         value="decreasing"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "decreasing" }}
+                        disabled={numStrings <= 1}
                       />
                     }
                     label="Decreasing"
@@ -279,7 +260,7 @@ const GenerateArray = () => {
                 </Tooltip>
               </Grid>
               <Grid item xs={4}>
-                <Tooltip title="Check to generate random values">
+                <Tooltip title="Check to generate random values(Only work with multiple strings)">
                   <FormControlLabel
                     control={
                       <Radio
@@ -288,6 +269,7 @@ const GenerateArray = () => {
                         value="random"
                         name="radio-button-demo"
                         inputProps={{ "aria-label": "random" }}
+                        disabled={numStrings <= 1}
                       />
                     }
                     label="Random"
@@ -299,33 +281,36 @@ const GenerateArray = () => {
               <Grid item xs={12}>
                 <StyledComponents.StyledButton
                   variant="contained"
+                  onClick={handleGenerateStrings}
+                  disabled={isLoading}
                   fullWidth
                   startIcon={<GenerateIcon />}
-                  onClick={handleGenerateValues}
-                  disabled={isLoading}
                 >
-                  Generate Array
+                  Generate
                 </StyledComponents.StyledButton>
-              </Grid>
-              <Grid item xs={6}>
-                <CopyToClipboard onCopy={handleCopyValues}>
-                  <StyledComponents.StyledButton
-                    variant="contained"
-                    fullWidth
-                    startIcon={<FileCopyIcon />}
-                    disabled={isLoading}
-                  >
-                    {copied ? "Copied" : "Copy to clipboard"}
-                  </StyledComponents.StyledButton>
-                </CopyToClipboard>
               </Grid>
               <Grid item xs={6}>
                 <StyledComponents.StyledButton
                   variant="contained"
+                  onClick={handleCopyStrings}
+                  disabled={isLoading}
                   fullWidth
-                  startIcon={<RefreshIcon />}
+                  startIcon={
+                    <CopyToClipboard onCopy={handleCopyStrings}>
+                      <FileCopyIcon />
+                    </CopyToClipboard>
+                  }
+                >
+                  {copied ? "Copied" : "Copy to clipboard"}
+                </StyledComponents.StyledButton>
+              </Grid>
+              <Grid item xs={6}>
+                <StyledComponents.StyledButton
+                  variant="contained"
                   onClick={handleResetValues}
                   disabled={isLoading}
+                  fullWidth
+                  startIcon={<RefreshIcon />}
                 >
                   Reset
                 </StyledComponents.StyledButton>
@@ -346,29 +331,27 @@ const GenerateArray = () => {
               <Grid item xs={6}>
                 {timeTaken && <p>Time taken: {timeTaken}</p>}
                 <StyledComponents.StyledTypography variant="h6">
-                  Generated Array
+                  Generated String
                 </StyledComponents.StyledTypography>
               </Grid>
               <Grid item xs={12}>
                 <StyledComponents.StyledTypography variant="subtitle">
-                  {generatedValues.length === 0 ? (
-                    <div>No Array generated yet</div>
+                  {generatedStrings.length === 0 ? (
+                    <div>No Strings generated yet</div>
                   ) : null}
-                  {generatedValues.length > 0 && (
-                    <>
-                      <Typography variant="subtitle">
-                        {advanceOptions.includes("Show Total Cases") &&
-                          generatedValues.length}
-                        {generatedValues.map((array, index) => (
-                          <div key={index}>
-                            {!advanceOptions.includes("Hide Array Size") && (
-                              <div>{array.length}</div>
-                            )}
-                            {array.join(", ")}
-                          </div>
-                        ))}
-                      </Typography>
-                    </>
+                  {generatedStrings.length > 0 && (
+                    <Typography variant="subtitle">
+                      {!advanceOptions.includes("Hide Number of Strings") &&
+                        generatedStrings.length}
+                      {generatedStrings.map((str, index) => (
+                        <div key={index}>
+                          {!advanceOptions.includes("Hide Length") && (
+                            <div>{str.length}</div>
+                          )}
+                          {str}
+                        </div>
+                      ))}
+                    </Typography>
                   )}
                 </StyledComponents.StyledTypography>
               </Grid>
@@ -380,4 +363,4 @@ const GenerateArray = () => {
   );
 };
 
-export default GenerateArray;
+export default GenerateString;

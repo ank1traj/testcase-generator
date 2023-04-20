@@ -9,7 +9,7 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 
 import { Toaster } from "react-hot-toast";
 
-import IntegerGeneratorFunc from "components/generatorFunc/integerGeneratorFunc.js";
+import IntegerGeneratorFunc from "components/generator/integer/integerGeneratorFunc";
 
 const options = ["Show Total Cases"];
 
