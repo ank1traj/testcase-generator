@@ -418,7 +418,7 @@
     animation: glowing 2s infinite;
     opacity: 0.5;
   }
-} 
+ 
   .search {
     margin-bottom: 1px;
     padding-bottom: 10px;
@@ -458,5 +458,7 @@
     }  
   }
 }
+
+
   
 
