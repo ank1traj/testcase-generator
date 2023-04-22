@@ -1,26 +1,11 @@
 import React from 'react'
-import { styled, keyframes } from '@mui/material/styles';
+import { styled} from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import { Button, Grid, Stack } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import { FaDiscord, FaInstagram, FaYoutube } from "react-icons/fa";
-// import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
 import { GitHub, LinkedIn } from '@material-ui/icons';
-const Theme = {
-  components: {
-      MuiFormHelperText: {
-          styleOverrides: {
-              root: {
-                  color: "red"
-              }
-          }
-      }
-  }
-};
 
 const Item = styled(Paper)(({ theme }) => (
     {
