@@ -5,8 +5,7 @@ import { Button, Grid } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { makeStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
-import { GitHub, LinkedIn } from '@material-ui/icons';
-
+import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 const Item = styled(Paper)(({ theme }) => (
     {
       backgroundColor: 'inherit',
@@ -103,10 +102,10 @@ const Item = styled(Paper)(({ theme }) => (
           <br/><br/>
       <Grid container>
       <IconButton color='primary' style={{color: '#FFF'}}>
-        <GitHub/>
+        <FaGithub/>
       </IconButton>
       <IconButton color='primary'>
-        <LinkedIn/>
+        <FaLinkedinIn/>
       </IconButton>
       
       </Grid>
