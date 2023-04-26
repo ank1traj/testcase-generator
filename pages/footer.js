@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { styled} from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { Button, Grid } from '@mui/material';
@@ -61,10 +61,24 @@ const Item = styled(Paper)(({ theme }) => (
     },
   }));
 
-  const Footer = () => {
+  const Footer = ({ data }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
     const classes = useStyles();
+
+    useEffect(() => {
+      if (data && data.length > 0) {
+        setIsExpanded(true);
+      } else {
+        setIsExpanded(false);
+      }
+    }, [data]);
+
+    // const classes = useStyles();
     return (
-      <div style={{flexGrow: 1, padding: '20px'}} >
+      <div style={{
+        flexGrow: 1, 
+        padding: '20px'
+        }} >
         <br/><br/><br/><br/>
         {/* footer section  */}
   

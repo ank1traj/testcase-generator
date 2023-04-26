@@ -12,6 +12,7 @@ import HourglassTopOutlinedIcon from "@mui/icons-material/HourglassTopOutlined";
 import * as Sentry from "@sentry/browser";
 import LogRocket from "logrocket";
 import { v4 as uuidv4 } from "uuid";
+import Footer from "./footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -206,6 +207,8 @@ export default function Home () {
           </Link>
         </div>
       </main>
+      
+      <Footer/>
     </>
   );
 }
