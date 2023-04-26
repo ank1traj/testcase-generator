@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import styles from "@/styles/Home.module.css";
+import Footer from './footer';
 
 export default function contact() {
     return (
@@ -20,6 +21,7 @@ export default function contact() {
                     </div>
                 </nav>
             </div>
+            <Footer/>
         </>
     )
 }

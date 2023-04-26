@@ -8,15 +8,18 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "author": {"name": "Ankit Raj", "email": "ankit.raj928@gmail.com"},
+  "author": {
+    "name": "Ankit Raj",
+    "email": "ankit.raj928@gmail.com"
+  },
   "license": "MIT",
   "url": "https://testcase-generator.vercel.app/",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@material-ui/icons": "^4.11.3",
-    "@mui/icons-material": "^5.11.11",
+    "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.15",
+    "@mui/styles": "^5.12.0",
     "@sentry/browser": "^7.47.0",
     "@vercel/analytics": "^0.1.11",
     "eslint": "8.37.0",
@@ -27,6 +30,9 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.0",
+    "react-icons": "^4.8.0",
+    "react-router-dom": "^6.10.0",
+    "styled-components": "^5.3.9",
     "uuid": "^9.0.0",
     "vis-data": "^7.1.6",
     "vis-network": "^9.1.6"
