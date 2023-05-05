@@ -25,6 +25,7 @@ const options = [
   "Hide Array Size",
   "Distinct Elements",
   "Show Total Cases",
+  "Hide Commas",
 ];
 
 const GenerateArray = () => {
