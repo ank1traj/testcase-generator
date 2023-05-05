@@ -19,7 +19,6 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import toast, { Toaster } from "react-hot-toast";
 
 import ArrayGeneratorFunc from "components/generator/array/arrayGeneratorFunc";
-import Footer from "@/pages/footer";
 
 const options = [
   "Negative Outputs",
@@ -377,7 +376,6 @@ const GenerateArray = () => {
           </StyledComponents.StyledCardContent>
         </StyledComponents.StyledCard>
       </Grid>
-      <Footer/>
     </StyledComponents.StyledGrid>
   );
 };

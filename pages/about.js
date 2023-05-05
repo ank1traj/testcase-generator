@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import styles from "@/styles/Home.module.css";
-import Footer from './footer';
 export default function about() {
     return (
         <>
@@ -20,7 +19,6 @@ export default function about() {
                     </div>
                 </nav>
             </div>
-            <Footer/>
         </>
     )
 }

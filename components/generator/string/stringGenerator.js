@@ -19,7 +19,6 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import toast, { Toaster } from "react-hot-toast";
 
 import StringGeneratorFunc from "components/generator/string/stringGeneratorFunc";
-import Footer from "@/pages/footer";
 
 const options = [
   "Hide Length",
@@ -360,7 +359,6 @@ const GenerateString = () => {
           </StyledComponents.StyledCardContent>
         </StyledComponents.StyledCard>
       </Grid>
-      <Footer/>
     </StyledComponents.StyledGrid>
   );
 };
