@@ -237,7 +237,11 @@ const ArrayGeneratorFunc = () => {
         const lengthString = advanceOptions.includes("Hide Array Size")
           ? ""
           : `${array.length}\n`;
-        return totalCases + lengthString + array.join(", ");
+        if (advanceOptions.includes("Hide Commas")) {
+          return totalCases + lengthString + array.join(" ");
+        } else {
+          return totalCases + lengthString + array.join(", ");
+        }
       })
       .join("\n");
 
@@ -258,24 +262,36 @@ const ArrayGeneratorFunc = () => {
     }
 
     setIsLoading(true);
-
-    let totalCases = 0;
-    if (
-      advanceOptions.includes("Show Total Cases") &&
-      advanceOptions.includes("Hide Array Size")
-    ) {
-      totalCases = numArrays;
-      valuesString = `${totalCases} \n` + generatedValues.maIntegerild(element);
-      toast.promise(
-        new Promise((resolve) => setTimeout(() => resolve(), 500)),
-        {
-          pending: "Downloading values...",
-          success: "Values downloaded!",
-          error: "Failed to download values",
+    const totalCases = advanceOptions.includes("Show Total Cases")
+      ? `${numArrays}\n`
+      : "";
+    const valuesString = generatedValues
+      .map((array) => {
+        const lengthString = advanceOptions.includes("Hide Array Size")
+          ? ""
+          : `${array.length}\n`;
+        if (advanceOptions.includes("Hide Commas")) {
+          return totalCases + lengthString + array.join(" ");
+        } else {
+          return totalCases + lengthString + array.join(", ");
         }
-      );
-      setIsLoading(false);
-    }
+      })
+      .join("\n");
+
+    const element = document.createElement("a");
+    const file = new Blob([`${totalCases}\n${valuesString}`], {
+      type: "text/plain",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = "generated_values.txt";
+    document.body.appendChild(element);
+    element.click();
+    toast.promise(new Promise((resolve) => setTimeout(() => resolve(), 500)), {
+      pending: "Downloading values...",
+      success: "Values downloaded!",
+      error: "Failed to download values",
+    });
+    setIsLoading(false);
   };
 
   const handleResetValues = () => {
