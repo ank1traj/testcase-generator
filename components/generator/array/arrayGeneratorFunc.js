@@ -242,19 +242,11 @@ const ArrayGeneratorFunc = () => {
       .join("\n");
 
     navigator.clipboard.writeText(`${totalCases}\n${valuesString}\n`);
-    toast.promise(
-      navigator.clipboard.writeText(valuesString),
-      {
-        loading: "Copying values...",
-        success: "Values copied!",
-        error: "Failed to copy values",
-      },
-      {
-        style: {
-          minWidth: "250px",
-        },
-      }
-    );
+    toast.promise(navigator.clipboard.writeText(valuesString), {
+      loading: "Copying values...",
+      success: "Values copied!",
+      error: "Failed to copy values",
+    });
     setCopied(true);
     setIsLoading(false);
   };
