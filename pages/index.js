@@ -12,6 +12,7 @@ import HourglassTopOutlinedIcon from "@mui/icons-material/HourglassTopOutlined";
 import * as Sentry from "@sentry/browser";
 import LogRocket from "logrocket";
 import { v4 as uuidv4 } from "uuid";
+import Footer from "./footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,10 +47,11 @@ Sentry.init({
 });
 
 LogRocket.init("mbkjpk/testcase-generator");
-
+// import { useMediaQuery } from '@mui/material'
 LogRocket.identify(uuidv4());
 
-export default function Home() {
+export default function Home () {
+
   return (
     <>
       <Head>
@@ -87,7 +89,7 @@ export default function Home() {
             >
               By Ankit Raj
             </a>
-            <div className={styles.glow} />
+            {/* <div className={styles.glow} /> */}
           </div>
         </div>
         <div className={styles.center}>
@@ -205,6 +207,8 @@ export default function Home() {
           </Link>
         </div>
       </main>
+      
+      <Footer/>
     </>
   );
 }

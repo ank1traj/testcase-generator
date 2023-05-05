@@ -18,6 +18,7 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import toast, { Toaster } from "react-hot-toast";
 
 import PalindromeGeneratorFunc from "components/generator/palindrome/palindromeGeneratorFunc.js";
+import Footer from "@/pages/footer";
 
 const options = ["Show Total Cases", "Show Length"];
 
@@ -331,6 +332,7 @@ const PalindromeGenerator = () => {
           </StyledComponents.StyledCardContent>
         </StyledComponents.StyledCard>
       </Grid>
+      <Footer/>
     </StyledComponents.StyledGrid>
   );
 };

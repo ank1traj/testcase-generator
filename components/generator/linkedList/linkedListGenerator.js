@@ -1,5 +1,5 @@
 import { StyledComponents } from "components/style";
-
+import Footer from "@/pages/footer";
 import {
   Grid,
   Tooltip,
@@ -584,6 +584,7 @@ const GenerateLinkedList = () => {
                                 : "")
                             : "Empty List"}
                         </div>
+                        
                       ))
                     : null}
                 </StyledComponents.StyledTypography>
@@ -592,7 +593,10 @@ const GenerateLinkedList = () => {
           </StyledComponents.StyledCardContent>
         </StyledComponents.StyledCard>
       </Grid>
+      
+      <Footer/>
     </StyledComponents.StyledGrid>
+    
   );
 };
 
