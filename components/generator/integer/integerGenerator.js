@@ -8,7 +8,6 @@ import GenerateIcon from "@mui/icons-material/PlayArrow";
 import DownloadIcon from "@mui/icons-material/GetApp";
 
 import toast, { Toaster } from "react-hot-toast";
-import Footer from "@/pages/footer";
 import IntegerGeneratorFunc from "components/generator/integer/integerGeneratorFunc";
 
 const options = ["Show Total Cases"];
@@ -174,7 +173,6 @@ const GenerateInteger = () => {
           </StyledComponents.StyledCardContent>
         </StyledComponents.StyledCard>
       </Grid>
-      <Footer/>
     </StyledComponents.StyledGrid>
   );
 };

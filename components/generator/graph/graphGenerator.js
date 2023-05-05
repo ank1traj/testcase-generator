@@ -18,7 +18,6 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import toast, { Toaster } from "react-hot-toast";
 
 import GraphGeneratorFunc from "components/generator/graph/graphGeneratorFunc.js";
-import Footer from "@/pages/footer";
 
 const options = [
   "Show Total Cases",
@@ -438,7 +437,6 @@ const GenerateGraph = () => {
           </StyledComponents.StyledCardContent>
         </StyledComponents.StyledCard>
       </Grid>
-      <Footer/>
     </StyledComponents.StyledGrid>
   );
 };

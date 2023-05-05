@@ -15,7 +15,6 @@ import FileCopyIcon from "@mui/icons-material/FileCopy";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import GenerateIcon from "@mui/icons-material/PlayArrow";
 import { styled } from "@mui/material/styles";
-import Footer from "@/pages/footer";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -276,8 +275,6 @@ const BinaryTreeGenerator = () => {
           </StyledCard>
         </Grid>
       </StyledGrid>
-      
-      <Footer/>
     </>
   );
 };
