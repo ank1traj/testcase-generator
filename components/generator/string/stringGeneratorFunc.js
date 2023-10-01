@@ -38,7 +38,7 @@ const StringGeneratorFunc = () => {
         event.target.value === "random") &&
       numStrings === 1
     ) {
-      toast.error("Please generate more than one string to sort");
+      toast.error("Please generate more than one string to perform sort");
       return;
     }
     switch (event.target.value) {
