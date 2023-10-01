@@ -62,7 +62,7 @@ const LinkedListGeneratorFunc = () => {
             const startTime = performance.now();
 
             // Generate the requested number of linked lists
-            for (let i = 0; i < numLists; i++) {
+            for (let i = 1; i <= numLists; i++) {
               // Initialize the head of the linked list with the given value
               let head = {
                 value: atStart ? startValue : headValue,
