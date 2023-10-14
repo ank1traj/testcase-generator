@@ -49,6 +49,69 @@ LogRocket.init("mbkjpk/testcase-generator");
 // import { useMediaQuery } from '@mui/material'
 LogRocket.identify(uuidv4());
 
+const links = [
+  {
+    href: "/generator/integerGenerator",
+    title: "Integer",
+    description: "Generate random integers",
+    icon: "green",
+  },
+  {
+    href: "/generator/stringGenerator",
+    title: "String",
+    description: "Generate random string of characters",
+    icon: "green",
+  },
+  {
+    href: "/generator/arrayGenerator",
+    title: "Array",
+    description: "Generate random array of integer & float values",
+    icon: "green",
+  },
+  {
+    href: "/generator/binaryTreeGenerator",
+    title: "Binary Tree",
+    description: "Generate random binary tree of integer values",
+    icon: "red",
+  },
+  {
+    href: "/generator/linkedListGenerator",
+    title: "Linked List",
+    description: "Generate random linked list of integer values",
+    icon: "green",
+  },
+  {
+    href: "/generator/graphGenerator",
+    title: "Graph",
+    description: "Generate random graph of integer/char values",
+    icon: "green",
+  },
+  {
+    href: "/generator/matrixGenerator",
+    title: "Matrix",
+    description: "Generate random Matrix of integer/char values",
+    icon: "Blue",
+  },
+  {
+    href: "/generator/palindromeGenerator",
+    title: "Palindrome",
+    description: "Generate random Palindrome of integer/char values",
+    icon: "green",
+  },
+];
+
+function renderLink(link) {
+  return (
+    <Link href={link.href} className={styles.card} rel="noopener noreferrer" key={link.href}>
+      <h2 className={inter.className}>
+        {link.title}{" "}
+        <CheckCircleIcon style={{ color: link.icon }} />
+      </h2>
+      <p className={inter.className}>{link.description}</p>
+    </Link>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -59,15 +122,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        {/* navBar */}
         <nav className={styles.nav}>
           <div>
-            {/* routes */}
-            <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-            <Link href="/contact">Contact</Link>
+            {links.map((link) => (
+              <Link href={link.href} key={link.href}>
+                {link.title}
+              </Link>
+            )}
           </div>
-          {/* GitHub */}
           <div>
             <Link
               href="https://github.com/ank1traj/testcase-generator"
@@ -87,122 +149,15 @@ export default function Home() {
             >
               By Ankit Raj
             </a>
-            {/* <div className={styles.glow} /> */}
           </div>
         </div>
         <div className={styles.center}>
           <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
+            <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
           </div>
         </div>
-
         <div className={styles.grid}>
-          <Link
-            href="/generator/integerGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Integer <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>Generate random integers</p>
-          </Link>
-
-          <Link
-            href="/generator/stringGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              String <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random string of characters.
-            </p>
-          </Link>
-
-          <Link
-            href="/generator/arrayGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Array <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random array of integer & float values.
-            </p>
-          </Link>
-
-          <Link
-            href="/generator/binaryTreeGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Binary Tree <ErrorIcon style={{ color: "red" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random binary tree of integer values.
-            </p>
-          </Link>
-
-          <Link
-            href="/generator/linkedListGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Linked List
-              <HourglassTopOutlinedIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random linked list of integer values.
-            </p>
-          </Link>
-
-          <Link
-            href="/generator/graphGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Graph <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random graph of integer/char values.
-            </p>
-          </Link>
-          <Link
-            href="/generator/matrixGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Matrix <HourglassEmptyIcon style={{ color: "Blue" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random Matrix of integer/char values.
-            </p>
-          </Link>
-          <Link
-            href="/generator/palindromeGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Palindrome <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random Palindrome of integer/char values.
-            </p>
-          </Link>
+          {links.map(renderLink)}
         </div>
       </main>
     </>
