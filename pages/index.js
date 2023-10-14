@@ -128,7 +128,7 @@ export default function Home() {
               <Link href={link.href} key={link.href}>
                 {link.title}
               </Link>
-            )}
+            ))}
           </div>
           <div>
             <Link
