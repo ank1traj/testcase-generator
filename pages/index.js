@@ -1,3 +1,4 @@
+import React from "react"
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
@@ -54,49 +55,57 @@ const links = [
     href: "/generator/integerGenerator",
     title: "Integer",
     description: "Generate random integers",
-    icon: "green",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
   },
   {
     href: "/generator/stringGenerator",
     title: "String",
     description: "Generate random string of characters",
-    icon: "green",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
   },
   {
     href: "/generator/arrayGenerator",
     title: "Array",
     description: "Generate random array of integer & float values",
-    icon: "green",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
   },
   {
     href: "/generator/binaryTreeGenerator",
     title: "Binary Tree",
     description: "Generate random binary tree of integer values",
-    icon: "red",
+    iconType: ErrorIcon,
+    iconColor: "red",
   },
   {
     href: "/generator/linkedListGenerator",
     title: "Linked List",
     description: "Generate random linked list of integer values",
-    icon: "green",
+    iconType: HourglassTopOutlinedIcon,
+    iconColor: "green",
   },
   {
     href: "/generator/graphGenerator",
     title: "Graph",
     description: "Generate random graph of integer/char values",
-    icon: "green",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
   },
   {
     href: "/generator/matrixGenerator",
     title: "Matrix",
     description: "Generate random Matrix of integer/char values",
-    icon: "Blue",
+    iconType: HourglassEmptyIcon,
+    iconColor: "blue",
   },
   {
     href: "/generator/palindromeGenerator",
     title: "Palindrome",
     description: "Generate random Palindrome of integer/char values",
-    icon: "green",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
   },
 ];
 
@@ -105,7 +114,7 @@ function renderLink(link) {
     <Link href={link.href} className={styles.card} rel="noopener noreferrer" key={link.href}>
       <h2 className={inter.className}>
         {link.title}{" "}
-        <CheckCircleIcon style={{ color: link.icon }} />
+        {React.createElement(link.iconType, { style: { color: link.iconColor } })}
       </h2>
       <p className={inter.className}>{link.description}</p>
     </Link>
