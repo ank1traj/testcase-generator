@@ -168,6 +168,26 @@ export default function Home() {
         <div className={styles.grid}>
           {links.map(renderLink)}
         </div>
+        <div className={styles.iconInfo}>
+          <ul className={styles.horizontalIconList}>
+            <li>
+              <CheckCircleIcon style={{ color: "green" }} />
+              <span className={styles.iconLabel}>Completed</span>
+            </li>
+            <li>
+              <ErrorIcon style={{ color: "red" }} />
+              <span className={styles.iconLabel}>Not Started yet</span>
+            </li>
+            <li>
+              <HourglassTopOutlinedIcon style={{ color: "green" }} />
+              <span className={styles.iconLabel}>In Progress</span>
+            </li>
+            <li>
+              <HourglassEmptyIcon style={{ color: "blue" }} />
+              <span className={styles.iconLabel}>Next</span>
+            </li>
+          </ul>
+        </div>
       </main>
     </>
   );
