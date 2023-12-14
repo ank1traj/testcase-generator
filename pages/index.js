@@ -45,7 +45,7 @@ Sentry.init({
   },
 });
 
-LogRocket.init(NEXT_PUBLIC_LOGROCKET);
+LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
 // import { useMediaQuery } from '@mui/material'
 LogRocket.identify(uuidv4());
 
