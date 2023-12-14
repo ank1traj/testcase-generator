@@ -45,7 +45,7 @@ Sentry.init({
   },
 });
 
-LogRocket.init("mbkjpk/testcase-generator");
+LogRocket.init(NEXT_PUBLIC_LOGROCKET);
 // import { useMediaQuery } from '@mui/material'
 LogRocket.identify(uuidv4());
 
