@@ -30,7 +30,12 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
 
   integrations: [
-    new Sentry.Replay({
+    new Sentry.Feedback({
+      // Additional SDK configuration goes in here
+      colorScheme: "light",
+     }),
+     new BrowserTracing(),
+     new Sentry.Replay({
       // Additional SDK configuration goes in here, for example:
       maskAllText: true,
       blockAllMedia: true,
