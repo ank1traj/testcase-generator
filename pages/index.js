@@ -11,6 +11,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import HourglassTopOutlinedIcon from "@mui/icons-material/HourglassTopOutlined";
 
 import * as Sentry from "@sentry/browser";
+import { BrowserTracing } from "@sentry/tracing";
 import LogRocket from "logrocket";
 import { v4 as uuidv4 } from "uuid";
 
