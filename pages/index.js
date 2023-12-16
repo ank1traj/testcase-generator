@@ -1,3 +1,4 @@
+import React from "react"
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
@@ -10,6 +11,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import HourglassTopOutlinedIcon from "@mui/icons-material/HourglassTopOutlined";
 
 import * as Sentry from "@sentry/browser";
+import { BrowserTracing } from "@sentry/tracing";
 import LogRocket from "logrocket";
 import { v4 as uuidv4 } from "uuid";
 
@@ -29,7 +31,12 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
 
   integrations: [
-    new Sentry.Replay({
+    new Sentry.Feedback({
+      // Additional SDK configuration goes in here
+      colorScheme: "light",
+     }),
+     new BrowserTracing(),
+     new Sentry.Replay({
       // Additional SDK configuration goes in here, for example:
       maskAllText: true,
       blockAllMedia: true,
@@ -49,6 +56,77 @@ LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
 // import { useMediaQuery } from '@mui/material'
 LogRocket.identify(uuidv4());
 
+const links = [
+  {
+    href: "/generator/integerGenerator",
+    title: "Integer",
+    description: "Generate random integers",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
+  },
+  {
+    href: "/generator/stringGenerator",
+    title: "String",
+    description: "Generate random string of characters",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
+  },
+  {
+    href: "/generator/arrayGenerator",
+    title: "Array",
+    description: "Generate random array of integer & float values",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
+  },
+  {
+    href: "/generator/binaryTreeGenerator",
+    title: "Binary Tree",
+    description: "Generate random binary tree of integer values",
+    iconType: ErrorIcon,
+    iconColor: "red",
+  },
+  {
+    href: "/generator/linkedListGenerator",
+    title: "Linked List",
+    description: "Generate random linked list of integer values",
+    iconType: HourglassTopOutlinedIcon,
+    iconColor: "green",
+  },
+  {
+    href: "/generator/graphGenerator",
+    title: "Graph",
+    description: "Generate random graph of integer/char values",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
+  },
+  {
+    href: "/generator/matrixGenerator",
+    title: "Matrix",
+    description: "Generate random Matrix of integer/char values",
+    iconType: HourglassEmptyIcon,
+    iconColor: "blue",
+  },
+  {
+    href: "/generator/palindromeGenerator",
+    title: "Palindrome",
+    description: "Generate random Palindrome of integer/char values",
+    iconType: CheckCircleIcon,
+    iconColor: "green",
+  },
+];
+
+function renderLink(link) {
+  return (
+    <Link href={link.href} className={styles.card} rel="noopener noreferrer" key={link.href}>
+      <h2 className={inter.className}>
+        {link.title}{" "}
+        {React.createElement(link.iconType, { style: { color: link.iconColor } })}
+      </h2>
+      <p className={inter.className}>{link.description}</p>
+    </Link>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -59,15 +137,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        {/* navBar */}
         <nav className={styles.nav}>
           <div>
-            {/* routes */}
-            <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-            <Link href="/contact">Contact</Link>
+            {links.map((link) => (
+              <Link href={link.href} key={link.href}>
+                {link.title}
+              </Link>
+            ))}
           </div>
-          {/* GitHub */}
           <div>
             <Link
               href="https://github.com/ank1traj/testcase-generator"
@@ -87,122 +164,35 @@ export default function Home() {
             >
               By Ankit Raj
             </a>
-            {/* <div className={styles.glow} /> */}
           </div>
         </div>
         <div className={styles.center}>
           <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
+            <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
           </div>
         </div>
-
         <div className={styles.grid}>
-          <Link
-            href="/generator/integerGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Integer <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>Generate random integers</p>
-          </Link>
-
-          <Link
-            href="/generator/stringGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              String <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random string of characters.
-            </p>
-          </Link>
-
-          <Link
-            href="/generator/arrayGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Array <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random array of integer & float values.
-            </p>
-          </Link>
-
-          <Link
-            href="/generator/binaryTreeGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Binary Tree <ErrorIcon style={{ color: "red" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random binary tree of integer values.
-            </p>
-          </Link>
-
-          <Link
-            href="/generator/linkedListGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Linked List
+          {links.map(renderLink)}
+        </div>
+        <div className={styles.iconInfo}>
+          <ul className={styles.horizontalIconList}>
+            <li>
+              <CheckCircleIcon style={{ color: "green" }} />
+              <span className={styles.iconLabel}>Completed</span>
+            </li>
+            <li>
+              <ErrorIcon style={{ color: "red" }} />
+              <span className={styles.iconLabel}>Not Started yet</span>
+            </li>
+            <li>
               <HourglassTopOutlinedIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random linked list of integer values.
-            </p>
-          </Link>
-
-          <Link
-            href="/generator/graphGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Graph <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random graph of integer/char values.
-            </p>
-          </Link>
-          <Link
-            href="/generator/matrixGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Matrix <HourglassEmptyIcon style={{ color: "Blue" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random Matrix of integer/char values.
-            </p>
-          </Link>
-          <Link
-            href="/generator/palindromeGenerator"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Palindrome <CheckCircleIcon style={{ color: "green" }} />
-            </h2>
-            <p className={inter.className}>
-              Generate random Palindrome of integer/char values.
-            </p>
-          </Link>
+              <span className={styles.iconLabel}>In Progress</span>
+            </li>
+            <li>
+              <HourglassEmptyIcon style={{ color: "blue" }} />
+              <span className={styles.iconLabel}>Next</span>
+            </li>
+          </ul>
         </div>
       </main>
     </>

@@ -459,6 +459,18 @@
   }
 }
 
+.horizontalIconList {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
 
-  
+.horizontalIconList li {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Adjust the spacing between items */
+}
 
+.horizontalIconList li span {
+  margin-left: 10px; /* Adjust the spacing between icon and label */
+}
