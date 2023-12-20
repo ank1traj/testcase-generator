@@ -130,8 +130,8 @@ const GenerateGraph = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={4}>
-                <Tooltip title="Select Advanced options">
+              <Grid item xs={6}>
+                <Tooltip title="Select Advanced options" style={{widht:"100%", position:"relative"}}>
                   <StyledComponents.StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledComponents.StyledSelect
@@ -160,7 +160,7 @@ const GenerateGraph = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Tooltip title="Select to generate Weighted Graph">
                   <FormControlLabel
                     control={
@@ -174,7 +174,7 @@ const GenerateGraph = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Tooltip title="Select for adding -> between edges">
                   <FormControlLabel
                     control={
@@ -188,7 +188,7 @@ const GenerateGraph = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Tooltip title="Select for adding : for weight">
                   <FormControlLabel
                     control={
@@ -203,7 +203,7 @@ const GenerateGraph = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Tooltip title="Make Graph of chars">
                   <FormControlLabel
                     control={

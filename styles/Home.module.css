@@ -44,7 +44,66 @@
   font-size: 1rem;
   font-weight: 600;
 }
-
+.menu_icon{
+  display: none;
+}
+.hide{
+  display: none;
+}
+@media (max-width:700px){
+  .lgnav{
+    display: none;
+  }
+  .menu_icon{
+    display: block;
+    margin:0px 10px;
+  }
+  .menu_icon:hover{
+    cursor:pointer;
+  }
+  .smnav{
+    display: flex;
+    flex-direction:column;
+    position: absolute;
+    top:60px;
+    background-image:linear-gradient(#050505,#17181B);
+    padding-right:20px;
+    border-radius:10px;
+    /* box-shadow: 1px 1px 1px 1px grey,1px 1px 1px 1px grey; */
+  }
+  .hide{
+    display: none;
+  }
+}
+@media (max-width:1110px) and (min-width:701px){
+  .lgnav{
+    display: none;
+  }
+  .menu_icon{
+    display: block;
+    margin:0px 10px;
+  }
+  .menu_icon:hover{
+    cursor:pointer;
+  }
+  .smnav{
+    display: flex;
+    flex-direction:column;
+    position: absolute;
+    top:106px;
+    background-image:linear-gradient(#050505,#17181B);
+    padding-right:20px;
+    border-radius:10px;
+    z-index:999;
+    height:fit-content;
+    max-height: 9999px;
+  }
+  .hide{
+    height:0px;
+    max-height: 0;
+    overflow: hidden;
+  }
+}
 .description {
   display: inherit;
   justify-content: inherit;
@@ -74,7 +133,12 @@
   border: 1px solid rgba(var(--callout-border-rgb), 0.3);
   border-radius: var(--border-radius);
 }
-
+@media (max-width:400px){
+  .description p {
+    padding: 1rem!important;
+    font-size:1rem;
+  }
+}
 .code {
   font-weight: 700;
   font-family: var(--font-mono);
@@ -463,12 +527,47 @@
   display: flex;
   list-style: none;
   padding: 0;
+  margin-top:30px;
 }
-
+.fir_two{
+  display: flex;
+  flex-direction: row;
+}
+.las_two{
+  display: flex;
+  flex-direction: row;
+}
+@media (max-width:680px){
+  .horizontalIconList{
+    display: flex;
+    flex-direction: column;
+    margin:20px;
+    margin-top:-70px;
+    margin-bottom: 0px;
+  }
+  .fir_two{
+    display: flex;
+    flex-direction: row;
+    margin:10px;
+    width:max-content
+  }
+  .las_two{
+    display: flex;
+    flex-direction: row;
+    margin:10px;
+    width:max-content;
+  }
+}
 .horizontalIconList li {
   display: flex;
   align-items: center;
   margin-right: 20px; /* Adjust the spacing between items */
+}
+
+@media (max-width:680px){
+  .horizontalIconList li{
+    margin:10px;
+  }
 }
 
 .horizontalIconList li span {

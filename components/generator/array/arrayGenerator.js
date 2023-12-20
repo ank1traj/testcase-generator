@@ -133,7 +133,7 @@ const GenerateArray = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={3}>
+              <Grid item xs={6}>
                 <Tooltip title="Check to generate float values">
                   <FormControlLabel
                     control={
@@ -147,7 +147,7 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={6}>
                 <Tooltip title="Check to generate random size arry">
                   <FormControlLabel
                     control={
@@ -161,8 +161,8 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={4}>
-                <Tooltip title="Select Advanced options">
+              <Grid item xs={12}>
+                <Tooltip title="Select Advanced options" style={{width:"100%", position:"relative"}}>
                   <StyledComponents.StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledComponents.StyledSelect
@@ -181,7 +181,7 @@ const GenerateArray = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate any values">
                   <FormControlLabel
                     control={
@@ -197,7 +197,7 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate even values">
                   <FormControlLabel
                     control={
@@ -213,7 +213,7 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate odd values">
                   <FormControlLabel
                     control={
@@ -229,7 +229,7 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate prime values">
                   <FormControlLabel
                     control={
