@@ -131,7 +131,7 @@ const GenerateGraph = () => {
                 </Tooltip>
               </Grid>
               <Grid item xs={6}>
-                <Tooltip title="Select Advanced options" style={{widht:"100%", position:"relative"}}>
+                <Tooltip title="Select Advanced options" style={{width:"100%", position:"relative"}}>
                   <StyledComponents.StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledComponents.StyledSelect
