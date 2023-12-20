@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 
+import MenuIcon from '@mui/icons-material/Menu';
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -128,6 +129,11 @@ function renderLink(link) {
 }
 
 export default function Home() {
+  const [display,setDisplay]=useState(false);
+  function func_display(){
+    setDisplay(!display);
+
+  }
   return (
     <>
       <Head>
@@ -138,12 +144,22 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <nav className={styles.nav}>
-          <div>
+          <div className={styles.lgnav}>
             {links.map((link) => (
               <Link href={link.href} key={link.href}>
                 {link.title}
               </Link>
             ))}
+          </div>
+          <div className={`${display ? styles.smnav : styles.hide}`}>
+            {links.map((link) => (
+              <Link href={link.href} key={link.href}>
+                {link.title}
+              </Link>
+            ))}
+          </div>
+          <div className={styles.menu_icon} onClick={func_display}>
+            <MenuIcon />
           </div>
           <div>
             <Link
@@ -176,6 +192,7 @@ export default function Home() {
         </div>
         <div className={styles.iconInfo}>
           <ul className={styles.horizontalIconList}>
+          <div className={styles.fir_two}>
             <li>
               <CheckCircleIcon style={{ color: "green" }} />
               <span className={styles.iconLabel}>Completed</span>
@@ -184,6 +201,8 @@ export default function Home() {
               <ErrorIcon style={{ color: "red" }} />
               <span className={styles.iconLabel}>Not Started yet</span>
             </li>
+          </div>
+          <div className={styles.las_two}>
             <li>
               <HourglassTopOutlinedIcon style={{ color: "green" }} />
               <span className={styles.iconLabel}>In Progress</span>
@@ -192,6 +211,7 @@ export default function Home() {
               <HourglassEmptyIcon style={{ color: "blue" }} />
               <span className={styles.iconLabel}>Next</span>
             </li>
+          </div>
           </ul>
         </div>
       </main>

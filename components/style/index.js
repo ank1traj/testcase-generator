@@ -20,6 +20,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   margin: "auto",
   display: "flex",
   flexDirection: "column",
+  overflow:"hidden"
 }));
 
 const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
@@ -35,7 +36,8 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
 }));
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
-  height: "100vh",
+  height: "100%",
+  overflow:"hidden"
 }));
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
@@ -68,7 +70,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  minWidth: "300px",
+  position:"relative",
+  width:"100%",
   "& .MuiSelect-select": {
     paddingRight: theme.spacing(4),
   },

@@ -98,7 +98,7 @@ const PalindromeGenerator = () => {
             </Grid>
 
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
+              <Grid item xs={6}>
                 <Tooltip title="Click to generate array palindromes">
                   <FormControlLabel
                     control={
@@ -119,7 +119,7 @@ const PalindromeGenerator = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={6}>
                 <Tooltip title="Click to generate string palindromes">
                   <FormControlLabel
                     control={
@@ -140,8 +140,8 @@ const PalindromeGenerator = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={4}>
-                <Tooltip title="Select Advanced options">
+              <Grid item xs={12}>
+                <Tooltip title="Select Advanced options" style={{width:"100%", position:"relative"}}>
                   <StyledComponents.StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledComponents.StyledSelect
@@ -165,7 +165,7 @@ const PalindromeGenerator = () => {
                   <Grid
                     key={option.value}
                     item
-                    xs={2}
+                    xs={3}
                     sx={{ display: "inline-block" }}
                   >
                     <FormControlLabel

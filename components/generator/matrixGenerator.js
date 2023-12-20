@@ -457,7 +457,7 @@ const GenerateMatrix = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate any values">
                   <FormControlLabel
                     control={
@@ -473,7 +473,7 @@ const GenerateMatrix = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate even values">
                   <FormControlLabel
                     control={
@@ -489,7 +489,7 @@ const GenerateMatrix = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate odd values">
                   <FormControlLabel
                     control={
@@ -505,7 +505,7 @@ const GenerateMatrix = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate prime values">
                   <FormControlLabel
                     control={
