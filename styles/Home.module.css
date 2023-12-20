@@ -1,3 +1,6 @@
+
+
+
 .main {
   display: flex;
   flex-direction: column;
@@ -50,6 +53,35 @@
 .hide{
   display: none;
 }
+
+.button{
+    --button_radius: 0.75em;
+  --button_color: #e8e8e8;
+  --button_outline_color: #000000;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  border-radius: var(--button_radius);
+  background: var(--button_outline_color);
+  cursor: pointer;
+}
+
+.buttontop{
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 0.4em 1em;
+  background: var(--button_color);
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+
+}
+.button:hover .buttontop {
+  /* Pull the button upwards when hovered */
+  transform: translateY(-0.33em);
+}
 @media (max-width:700px){
   .lgnav{
     display: none;
@@ -97,6 +129,16 @@
     z-index:999;
     height:fit-content;
     max-height: 9999px;
+  }
+
+  .btn:hover{
+    border-radius: 5px;
+ transform: translateY(-10px);
+ box-shadow: 0 7px 0 -2px #f85959,
+  0 15px 0 -4px #39a2db,
+  0 16px 10px -3px #39a2db;
+
+
   }
   .hide{
     height:0px;
@@ -152,24 +194,45 @@
 }
 
 .card {
-  padding: 1rem 1.2rem;
+  width: 190px;
+ height: 154px;
+  /* padding: 1rem 1.2rem; */
   border-radius: var(--border-radius);
-  background: rgba(var(--card-rgb), 0);
-  border: 1px solid rgba(var(--card-border-rgb), 0);
-  transition: background 200ms, border 200ms;
+  /* background: rgba(var(--card-rgb), 0); */
+  /* border: 1px solid rgba(var(--card-border-rgb), 0); */
+  background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+  /* transition: background 200ms, border 200ms; */
+  margin-bottom: 20px;
 }
+.card2{
+  width: 200px;
+  height: 154px;
+  background-color: #1a1a1a;
+  padding: 1rem 1.2rem;
+  
 
-.card span {
+}
+.card2:hover {
+  transform: scale(0.98);
+
+  border-radius: 20px;
+ }
+ .card:hover{
+  background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+  box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+ }
+
+.card2 span {
   display: inline-block;
   transition: transform 200ms;
 }
 
-.card h2 {
+.card2 h2 {
   font-weight: 600;
   margin-bottom: 0.7rem;
 }
 
-.card p {
+.card2 p {
   margin: 0;
   opacity: 0.7;
   font-size: 0.9rem;
@@ -350,9 +413,12 @@
     text-align: center;
   }
 
-  .card {
+  /* .card {
     padding: 1rem 2.5rem;
   }
+  .card2 {
+    padding: 1rem 2.5rem;
+  } */
 
   .card h2 {
     margin-bottom: 0.5rem;
