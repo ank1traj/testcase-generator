@@ -1,6 +1,3 @@
-
-
-
 .main {
   display: flex;
   flex-direction: column;
@@ -55,7 +52,7 @@
 }
 
 .button{
-    --button_radius: 0.75em;
+  --button_radius: 0.75em;
   --button_color: #e8e8e8;
   --button_outline_color: #000000;
   font-size: 17px;
@@ -101,8 +98,7 @@
     background-image:linear-gradient(#050505,#17181B);
     padding-right:20px;
     border-radius:10px;
-    /* box-shadow: 1px 1px 1px 1px grey,1px 1px 1px 1px grey; */
-  }
+    }
   .hide{
     display: none;
   }
@@ -131,16 +127,14 @@
     max-height: 9999px;
   }
 
-  .btn:hover{
-    border-radius: 5px;
- transform: translateY(-10px);
- box-shadow: 0 7px 0 -2px #f85959,
+.btn:hover{
+  border-radius: 5px;
+  transform: translateY(-10px);
+  box-shadow: 0 7px 0 -2px #f85959,
   0 15px 0 -4px #39a2db,
   0 16px 10px -3px #39a2db;
-
-
   }
-  .hide{
+.hide{
     height:0px;
     max-height: 0;
     overflow: hidden;
@@ -195,13 +189,9 @@
 
 .card {
   width: 190px;
- height: 154px;
-  /* padding: 1rem 1.2rem; */
+  height: 154px;
   border-radius: var(--border-radius);
-  /* background: rgba(var(--card-rgb), 0); */
-  /* border: 1px solid rgba(var(--card-border-rgb), 0); */
   background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
-  /* transition: background 200ms, border 200ms; */
   margin-bottom: 20px;
 }
 .card2{
@@ -209,29 +199,23 @@
   height: 154px;
   background-color: #1a1a1a;
   padding: 1rem 1.2rem;
-  
-
 }
 .card2:hover {
   transform: scale(0.98);
-
   border-radius: 20px;
  }
  .card:hover{
   background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
   box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
  }
-
 .card2 span {
   display: inline-block;
   transition: transform 200ms;
 }
-
 .card2 h2 {
   font-weight: 600;
   margin-bottom: 0.7rem;
 }
-
 .card2 p {
   margin: 0;
   opacity: 0.7;
@@ -239,7 +223,6 @@
   line-height: 1.5;
   max-width: 30ch;
 }
-
 .center {
   display: flex;
   justify-content: center;
@@ -253,7 +236,6 @@
   border-radius: 50%;
   width: 480px;
   height: 200px;
-  /* margin: -40px; */
 }
 
 .center::after {
@@ -412,13 +394,6 @@
     max-width: 320px;
     text-align: center;
   }
-
-  /* .card {
-    padding: 1rem 2.5rem;
-  }
-  .card2 {
-    padding: 1rem 2.5rem;
-  } */
 
   .card h2 {
     margin-bottom: 0.5rem;
