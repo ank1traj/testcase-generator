@@ -31,7 +31,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   padding: "7px 24px",
   borderRadius: "0px",
   transition: "transform 0.2s ease-out, box-shadow 0.2s ease-out",
-  // boxShadow: `0 0 0 0 'white'`,
   "&:hover": {
     transform: "scale(1.2)",
     backgroundColor: "inherit",
