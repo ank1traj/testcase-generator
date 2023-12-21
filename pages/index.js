@@ -1,21 +1,21 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
-
 import MenuIcon from '@mui/icons-material/Menu';
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import ErrorIcon from "@mui/icons-material/Error";
 import HourglassTopOutlinedIcon from "@mui/icons-material/HourglassTopOutlined";
-
+import { UserButton } from "@clerk/nextjs";
 import * as Sentry from "@sentry/browser";
 import { BrowserTracing } from "@sentry/tracing";
 import LogRocket from "logrocket";
 import { v4 as uuidv4 } from "uuid";
-
+"use client";
+import { useUser } from "@clerk/nextjs";
 const inter = Inter({ subsets: ["latin"] });
 
 Sentry.init({
@@ -132,8 +132,8 @@ export default function Home() {
   const [display,setDisplay]=useState(false);
   function func_display(){
     setDisplay(!display);
-
   }
+  const { isSignedIn, user } = useUser();
   return (
     <>
       <Head>
@@ -162,12 +162,29 @@ export default function Home() {
             <MenuIcon />
           </div>
           <div>
-            <Link
-              href="https://github.com/ank1traj/testcase-generator"
+            {!isSignedIn &&
+              <>
+              <Link
+              href="sign-in"
               rel="noopener noreferrer"
-            >
-              <code className={styles.code}>Contribute &hearts;</code>
-            </Link>
+              >
+                <code className={styles.code}>Sign In</code>
+              </Link>
+              <Link
+                href="sign-up"
+                rel="noopener noreferrer"
+              >
+                <code className={styles.code}>Sign Up</code>
+              </Link>
+              </>
+            }  
+            {isSignedIn &&
+            <>
+              <UserButton afterSignOutUrl="/"/>
+              {/* <p>{user.primaryEmailAddress.emailAddress}</p> */}
+            </>
+            }
+            
           </div>
         </nav>
         <div className={styles.description}>

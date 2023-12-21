@@ -1,6 +1,17 @@
 import '@/styles/globals.css'
+import { ClerkProvider } from '@clerk/nextjs'
 export default function App({ Component, pageProps }) {
   return <>
-  <Component {...pageProps} /><br/><br/>
+  <ClerkProvider
+    appearance={{
+        variables: {
+          colorPrimary: "black",
+          colorText: "black",
+          colorBackground:"white"
+        }
+    }}
+  >
+    <Component {...pageProps} /><br/><br/>
+  </ClerkProvider>
   </>
 }
