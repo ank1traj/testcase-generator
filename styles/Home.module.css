@@ -148,8 +148,8 @@
   max-width: var(--max-width);
   width: 100%;
   z-index: 2;
-  margin-top: 20px;
-  margin-top: 20px;
+  margin-top: 15px;
+  
   font-family: var(--font-mono);
   
 }
@@ -189,16 +189,17 @@
 
 .card {
   width: 190px;
-  height: 154px;
+  height: 150px;
   border-radius: var(--border-radius);
   background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .card2{
   width: 200px;
-  height: 154px;
+  height: 150px;
   background-color: #1a1a1a;
   padding: 1rem 1.2rem;
+
 }
 .card2:hover {
   transform: scale(0.98);
