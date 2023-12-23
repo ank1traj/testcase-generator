@@ -76,8 +76,8 @@
   color: var(--button_outline_color);
   transform: translateY(-0.2em);
   transition: transform 0.1s ease;
-
 }
+
 .button:hover .buttontop {
   /* Pull the button upwards when hovered */
   transform: translateY(-0.33em);
@@ -191,36 +191,25 @@
 }
 
 .card {
-  width: 190px;
-  height: 150px;
-  border-radius: var(--border-radius);
-  background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
-  margin-bottom: 10px;
-}
-.card2{
-  width: 200px;
-  height: 150px;
-  background-color: #1a1a1a;
   padding: 1rem 1.2rem;
-
 }
-.card2:hover {
+
+.card:hover {
   transform: scale(0.98);
   border-radius: 20px;
- }
- .card:hover{
   background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
   box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
  }
-.card2 span {
+
+.card span {
   display: inline-block;
   transition: transform 200ms;
 }
-.card2 h2 {
+.card h2 {
   font-weight: 600;
   margin-bottom: 0.7rem;
 }
-.card2 p {
+.card p {
   margin: 0;
   opacity: 0.7;
   font-size: 0.9rem;
