@@ -1,3 +1,4 @@
+import { sendConfirmation } from "@/lib/api";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -19,7 +20,26 @@ const IntegerGeneratorFunc = () => {
     const { value } = event.target;
     setAdvanceOptions(value);
   };
-
+  let Success=false;
+  const Generate= async() =>{
+    if (Success){
+      let value={"value":"Test Case Generated Successfully!!!"}
+      try{
+        await sendConfirmation(value);
+      }
+      catch(error){
+      }
+    }
+    else{
+      let value={"value":"Some Error Occured!!!"}
+      try{
+        await sendConfirmation(value);
+      }
+      catch(error){
+        console.log("ERROR")
+      }
+    }
+  }
   const handleGenerateValues = async () => {
     setIsLoading(true); // set isLoading to true
     const errorOccurred = false; // add this flag variable
@@ -55,7 +75,10 @@ const IntegerGeneratorFunc = () => {
         }),
         {
           loading: "Generating values...",
-          success: "Values generated successfully!",
+          success: (success)=>{
+            Success=true;
+            return "Values generated successfully and mail sent!";
+          },
           error: (error) => {
             if (errorOccurred) {
               // show toast error if flag variable is true
@@ -70,6 +93,7 @@ const IntegerGeneratorFunc = () => {
       toast.error(error.message);
     }
     setIsLoading(false); // set isLoading to false
+    await Generate();
   };
 
   const handleCopyValues = () => {
