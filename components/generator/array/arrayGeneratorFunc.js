@@ -1,5 +1,8 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { sendConfirmation } from "@/lib/api";
+"use client";
+import { useUser } from "@clerk/nextjs";
 
 const ArrayGeneratorFunc = () => {
   const [minValue, setMinValue] = useState(-100);
@@ -87,18 +90,49 @@ const ArrayGeneratorFunc = () => {
         break;
     }
   };
-
+  const { user } = useUser();
+  let send=false;
+  const generateMail= async(valuesString) =>{
+    let email=user.primaryEmailAddress.emailAddress;
+    if (send){
+      const value={
+        "email": email,
+        "textcontent": valuesString,
+        "filename": "generated_values.txt",
+        "content":valuesString,
+        "value":"Test Case Generated Successfully!!!"
+      }
+      try{
+        await sendConfirmation(value);
+      }
+      catch(error){
+        toast.error("Couldn't send mail!!");
+      }
+    }
+    else{
+      const value={
+        "email": email,
+        "value":"Couldn't generate testacases!!"
+      }
+      try{
+        await sendConfirmation(value);
+      }
+      catch(error){
+        toast.error("Couldn't send mail!!");
+      }
+    }
+  }
   const handleGenerateValues = async () => {
     setIsLoading(true); // set isLoading to true
     const errorOccurred = false; // add this flag variable
-
+    let newValues=[];
     try {
       await toast.promise(
         new Promise((resolve, reject) => {
           // add reject parameter to the promise
           setTimeout(() => {
             const startTime = performance.now();
-            let newValues = Array.from({ length: numArrays }, (_, index) => {
+            newValues = Array.from({ length: numArrays }, (_, index) => {
               const size = randomSize
                 ? Math.floor(Math.random() * arraySize) + 1
                 : arraySize;
@@ -205,7 +239,10 @@ const ArrayGeneratorFunc = () => {
         }),
         {
           loading: "Generating values...",
-          success: "Values generated successfully!",
+          success: (success)=>{
+            send=true;
+            return "Values generated successfully!!";
+          },
           error: (error) => {
             if (errorOccurred) {
               // show toast error if flag variable is true
@@ -219,7 +256,23 @@ const ArrayGeneratorFunc = () => {
     } catch (error) {
       toast.error(error.message);
     }
+    const totalCases = advanceOptions.includes("Show Total Cases")
+      ? `${numArrays}\n`
+      : "";
+    const valuesString = newValues
+      .map((array) => {
+        const lengthString = advanceOptions.includes("Hide Array Size")
+          ? ""
+          : `${array.length}\n`;
+        if (advanceOptions.includes("Hide Commas")) {
+          return totalCases + lengthString + array.join(" ");
+        } else {
+          return totalCases + lengthString + array.join(", ");
+        }
+      })
+      .join("\n");
     setIsLoading(false); // set isLoading to false
+    await generateMail(valuesString);
   };
 
   const handleCopyValues = () => {

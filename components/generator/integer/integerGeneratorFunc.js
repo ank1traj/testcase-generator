@@ -1,5 +1,8 @@
+import { sendConfirmation } from "@/lib/api";
 import { useState } from "react";
 import toast from "react-hot-toast";
+"use client";
+import { useUser } from "@clerk/nextjs";
 
 const IntegerGeneratorFunc = () => {
   const [min, setMin] = useState(-100);
@@ -19,11 +22,42 @@ const IntegerGeneratorFunc = () => {
     const { value } = event.target;
     setAdvanceOptions(value);
   };
-
+  const { user } = useUser();
+  let send=false;
+  const generateMail= async(valuesString) =>{
+    let email=user.primaryEmailAddress.emailAddress;
+    if (send){
+      const value={
+        "email": email,
+        "textcontent": valuesString,
+        "filename": "generated_values.txt",
+        "content":valuesString,
+        "value":"Test Case Generated Successfully!!!"
+      }
+      try{
+        await sendConfirmation(value);
+      }
+      catch(error){
+        toast.error("Couldn't send mail!!");
+      }
+    }
+    else{
+      const value={
+        "email": email,
+        "value":"Couldn't generate testacases!!"
+      }
+      try{
+        await sendConfirmation(value);
+      }
+      catch(error){
+        toast.error("Couldn't send mail!!");
+      }
+    }
+  }
   const handleGenerateValues = async () => {
     setIsLoading(true); // set isLoading to true
     const errorOccurred = false; // add this flag variable
-
+    let newValues=[];
     try {
       await toast.promise(
         new Promise((resolve, reject) => {
@@ -36,7 +70,7 @@ const IntegerGeneratorFunc = () => {
               );
               return;
             }
-            const newValues = Array.from(
+            newValues = Array.from(
               { length: numValues },
               () =>
                 Math.floor(
@@ -55,7 +89,10 @@ const IntegerGeneratorFunc = () => {
         }),
         {
           loading: "Generating values...",
-          success: "Values generated successfully!",
+          success: (success)=>{
+            send=true;
+            return "Values generated successfully!";
+          },
           error: (error) => {
             if (errorOccurred) {
               // show toast error if flag variable is true
@@ -69,7 +106,12 @@ const IntegerGeneratorFunc = () => {
     } catch (error) {
       toast.error(error.message);
     }
+    const totalCases = advanceOptions.includes("Show Total Cases")
+      ? `${numValues}\n`
+      : "";
+    const valuesString = `${totalCases}${newValues.join("\n")}`;
     setIsLoading(false); // set isLoading to false
+    await generateMail(valuesString);
   };
 
   const handleCopyValues = () => {
