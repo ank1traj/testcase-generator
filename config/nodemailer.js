@@ -1,9 +1,11 @@
 import nodemailer from "nodemailer"
 export const transporter= nodemailer.createTransport({
-    service: 'gmail',
-    auth:{
-        user:process.env.EMAIL,
-        pass:process.env.PASS,
-    }
+    host: "smtppro.zoho.in", 
+    secure: true, 
+    port: 465, 
+    auth: { 
+        user: process.env.EMAIL_SENDER, 
+        pass: process.env.EMAIL_PASSWORD, 
+    },
 
 });
