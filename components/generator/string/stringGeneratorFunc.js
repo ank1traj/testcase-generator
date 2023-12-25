@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { sendConfirmation } from "@/lib/api";
 import toast from "react-hot-toast";
+"use client";
+import { useUser } from "@clerk/nextjs";
 
 const StringGeneratorFunc = () => {
   const [stringLength, setStringLength] = useState(10);
@@ -64,30 +66,42 @@ const StringGeneratorFunc = () => {
         break;
     }
   };
-  let Success=false;
-  const Generate= async() =>{
-    if (Success){
-      let value={"value":"Test Case Generated Successfully!!!"}
+  const { user } = useUser();
+  let send=false;
+  const generateMail= async(valuesString) =>{
+    let email=user.primaryEmailAddress.emailAddress;
+    if (send){
+      const value={
+        "email": email,
+        "textcontent": valuesString,
+        "filename": "generated_values.txt",
+        "content":valuesString,
+        "value":"Test Case Generated Successfully!!!"
+      }
       try{
         await sendConfirmation(value);
       }
       catch(error){
+        toast.error("Couldn't send mail!!");
       }
     }
     else{
-      let value={"value":"Some Error Occured!!!"}
+      const value={
+        "email": email,
+        "value":"Couldn't generate testacases!!"
+      }
       try{
         await sendConfirmation(value);
       }
       catch(error){
-        console.log("ERROR")
+        toast.error("Couldn't send mail!!");
       }
     }
   }
   const handleGenerateStrings = async () => {
     setIsLoading(true); // set isLoading to true
     const errorOccurred = false; // add this flag variable
-
+    let newStrings = [];
     try {
       await toast.promise(
         new Promise((resolve, reject) => {
@@ -144,7 +158,7 @@ const StringGeneratorFunc = () => {
               });
             }
 
-            let newStrings = [];
+            
             for (let i = 0; i < numStrings; i++) {
               // Generate a random length for the current string
               const length =
@@ -196,7 +210,7 @@ const StringGeneratorFunc = () => {
         {
           loading: "Generating values...",
           success: (success)=>{
-            Success=true;
+            send=true;
             return "Values generated successfully and mail sent!";
           },
           error: (error) => {
@@ -212,8 +226,25 @@ const StringGeneratorFunc = () => {
     } catch (error) {
       toast.error(error.message);
     }
+    let valuesString = "";
+
+    if (advanceOptions.includes("Hide Length")) {
+      if (advanceOptions.includes("Hide Number of Strings")) {
+        valuesString = newStrings.join(", ");
+      } else {
+        valuesString = `${numStrings}\n${newStrings.join("\n")}`;
+      }
+    } else if (advanceOptions.includes("Hide Number of Strings")) {
+      valuesString = newStrings
+        .map((str) => `${str.length}\n${str}`)
+        .join("\n");
+    } else {
+      valuesString = `${numStrings}\n${newStrings
+        .map((str) => `${str.length}\n${str}`)
+        .join("\n")}`;
+    }
     setIsLoading(false); // set isLoading to false
-    await Generate();
+    await generateMail(valuesString);
   };
 
   const handleCopyStrings = () => {

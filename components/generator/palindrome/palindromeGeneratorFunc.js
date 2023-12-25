@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { sendConfirmation } from "@/lib/api";
 import toast from "react-hot-toast";
+"use client";
+import { useUser } from "@clerk/nextjs";
 
 const PalindromeGeneratorFunc = () => {
   const [length, setLength] = useState(2);
@@ -43,36 +45,47 @@ const PalindromeGeneratorFunc = () => {
     const { value } = event.target;
     setAdvanceOptions(value);
   };
-  let Success=false;
-  const Generate= async() =>{
-    if (Success){
-      let value={"value":"Test Case Generated Successfully!!!"}
+  const { user } = useUser();
+  let send=false;
+  const generateMail= async(valuesString) =>{
+    let email=user.primaryEmailAddress.emailAddress;
+    if (send){
+      const value={
+        "email": email,
+        "textcontent": valuesString,
+        "filename": "generated_values.txt",
+        "content":valuesString,
+        "value":"Test Case Generated Successfully!!!"
+      }
       try{
         await sendConfirmation(value);
       }
       catch(error){
+        toast.error("Couldn't send mail!!");
       }
     }
     else{
-      let value={"value":"Some Error Occured!!!"}
+      const value={
+        "email": email,
+        "value":"Couldn't generate testacases!!"
+      }
       try{
         await sendConfirmation(value);
       }
       catch(error){
-        console.log("ERROR")
+        toast.error("Couldn't send mail!!");
       }
     }
   }
   const handleGenerateValues = async () => {
     setIsLoading(true); // set isLoading to true
     const errorOccurred = false; // add this flag variable
-
+    let values=[];
     try {
       await toast.promise(
         new Promise((resolve, reject) => {
           // add reject parameter to the promise
           setTimeout(() => {
-            const values = [];
 
             const startTime = performance.now();
 
@@ -265,7 +278,7 @@ const PalindromeGeneratorFunc = () => {
         {
           loading: "Generating values...",
           success: (success)=>{
-            Success=true;
+            send=true;
             return "Values generated successfully and mail sent!";
           },
           error: (error) => {
@@ -281,8 +294,37 @@ const PalindromeGeneratorFunc = () => {
     } catch (error) {
       toast.error(error.message);
     }
+    let newvalues = "";
+    if (
+      advanceOptions.includes("Show Length") &&
+      advanceOptions.includes("Show Total Cases")
+    ) {
+      newvalues += `${values.length}\n`;
+      newvalues += values
+        .map(
+          (value) =>
+            `${value.length}\n${arrayPalindrome ? value.join("") : value}\n`
+        )
+        .join("");
+    } else if (advanceOptions.includes("Show Length")) {
+      newvalues = values
+        .map(
+          (value) =>
+            `${value.length}\n${arrayPalindrome ? value.join("") : value}\n`
+        )
+        .join("");
+    } else if (advanceOptions.includes("Show Total Cases")) {
+      newvalues += `${values.length}\n`;
+      newvalues += values
+        .map((value) => `${arrayPalindrome ? value.join("") : value}\n`)
+        .join("");
+    } else {
+      newvalues = values
+        .map((value) => `${arrayPalindrome ? value.join("") : value}\n`)
+        .join("");
+    }
     setIsLoading(false); // set isLoading to false
-    await Generate();
+    await generateMail(newvalues);
   };
 
   const handleCopyValues = () => {

@@ -7,8 +7,3 @@ export const transporter= nodemailer.createTransport({
     }
 
 });
-
-export const mailOptions={
-    from:"vivekkr694@gmail.com",
-    to:"vivekkr694@gmail.com",
-}

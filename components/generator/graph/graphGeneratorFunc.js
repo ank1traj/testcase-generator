@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { sendConfirmation } from "@/lib/api";
 import { DataSet } from "vis-data";
 import toast from "react-hot-toast";
+"use client";
+import { useUser } from "@clerk/nextjs";
 
 const GraphGeneratorFunc = () => {
   const [numVertices, setNumVertices] = useState(5);
@@ -45,30 +47,42 @@ const GraphGeneratorFunc = () => {
     const { value } = event.target;
     setAdvanceOptions(value);
   };
-  let Success=false;
-  const Generate= async() =>{
-    if (Success){
-      let value={"value":"Test Case Generated Successfully!!!"}
+  const { user } = useUser();
+  let send=false;
+  const generateMail= async(valuesString) =>{
+    let email=user.primaryEmailAddress.emailAddress;
+    if (send){
+      const value={
+        "email": email,
+        "textcontent": valuesString,
+        "filename": "generated_values.txt",
+        "content":valuesString,
+        "value":"Test Case Generated Successfully!!!"
+      }
       try{
         await sendConfirmation(value);
       }
       catch(error){
+        toast.error("Couldn't send mail!!");
       }
     }
     else{
-      let value={"value":"Some Error Occured!!!"}
+      const value={
+        "email": email,
+        "value":"Couldn't generate testacases!!"
+      }
       try{
         await sendConfirmation(value);
       }
       catch(error){
-        console.log("ERROR")
+        toast.error("Couldn't send mail!!");
       }
     }
   }
   const handleGenerateValues = async (numGraphs) => {
     setIsLoading(true); // set isLoading to true
     const errorOccurred = false; // add this flag variable
-
+    let generatedData=[];
     try {
       await toast.promise(
         new Promise((resolve, reject) => {
@@ -97,7 +111,6 @@ const GraphGeneratorFunc = () => {
             }
 
             const startTime = performance.now();
-            const generatedData = [];
 
             for (let i = 0; i < numGraphs; i++) {
               const nodes = new DataSet(
@@ -226,8 +239,8 @@ const GraphGeneratorFunc = () => {
         {
           loading: "Generating values...",
           success: (success)=>{
-            Success=true;
-            return "Values generated successfully and mail sent!";
+            send=true;
+            return "Values generated successfully!!";
           },
           error: (error) => {
             if (errorOccurred) {
@@ -242,8 +255,41 @@ const GraphGeneratorFunc = () => {
     } catch (error) {
       toast.error(error.message);
     }
+    const graphStrings = generatedData.map((graph) => {
+      const nodes = graph.nodes.map((node) => node.label);
+      const edges = graph.edges.map((edge) => {
+        const from = edge.from;
+        const to = edge.to;
+        const type = edge.type;
+        const label = edge.label;
+        const edgeString = isDirected
+          ? `${from} ${type} ${to}`
+          : `${from} ${to} \n`;
+        return label ? `${edgeString} : ${label}` : edgeString;
+      });
+      const graphString = `${nodes.join(" ")}\n${edges.join("")}`;
+
+      if (
+        advanceOptions.includes("Show Total Edges & Vertices") &&
+        advanceOptions.includes("Show Total Cases")
+      ) {
+        return `${numGraph}\nTotal Edges: ${graph.edges.length}\nTotal Vertices: ${graph.nodes.length}\n${graphString}\n`;
+      }
+
+      if (advanceOptions.includes("Show Total Cases")) {
+        return `${numGraph}\n${graphString}\nTotal Cases: ${graph.edges.length}`;
+      }
+
+      if (advanceOptions.includes("Show Total Edges & Vertices")) {
+        return `Total Edges: ${graph.edges.length}\nTotal Vertices: ${graph.nodes.length}\n${graphString}\n`;
+      }
+
+      return graphString;
+    });
+
+    const text = graphStrings.join("\n\n");
     setIsLoading(false); // set isLoading to false
-    await Generate();
+    await generateMail(text);
   };
 
   const handleCopyGraphs = () => {
