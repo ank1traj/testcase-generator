@@ -122,7 +122,7 @@ const GenerateInteger = () => {
                     startIcon={<FileCopyIcon />}
                     disabled={isLoading}
                   >
-                    {copied ? "Copied!" : "Copy Integers"}
+                    {copied ? "Copied!" : "Copy"}
                   </StyledComponents.StyledButton>
                 </CopyToClipboard>
               </Grid>

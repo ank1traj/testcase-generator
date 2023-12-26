@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
@@ -131,11 +131,21 @@ function renderLink(link) {
 }
 
 export default function Home() {
+  const { isSignedIn, user } = useUser();
   const [display, setDisplay] = useState(false);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      const logrocketID = user.primaryEmailAddress.emailAddress;
+      LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
+      LogRocket.identify(logrocketID);
+    }
+  }, [isSignedIn, user]);
+
   function func_display() {
     setDisplay(!display);
   }
-  const { isSignedIn, user } = useUser();
+
   return (
     <>
       <Head>
