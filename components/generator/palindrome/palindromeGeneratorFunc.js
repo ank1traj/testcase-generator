@@ -279,7 +279,7 @@ const PalindromeGeneratorFunc = () => {
           loading: "Generating values...",
           success: (success)=>{
             send=true;
-            return "Values generated successfully and mail sent!";
+            return "Values generated successfully!!";
           },
           error: (error) => {
             if (errorOccurred) {

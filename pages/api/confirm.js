@@ -16,6 +16,7 @@ export default async function handler(req, res) {
                 }
             ]
         })
+        return res.json({status: 200});
     }
     else{
         await transporter.sendMail({
@@ -24,5 +25,6 @@ export default async function handler(req, res) {
             subject: data.value,
             html: "<p>Couldn't Generate Test Cases due to some Error.",
         })
+        return res.json({status: 400});
     }
 }
