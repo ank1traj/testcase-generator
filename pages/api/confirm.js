@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     if (data.value=="Test Case Generated Successfully!!!"){
         await transporter.sendMail({
             from: data.email,
-            to:process.env.EMAIL,
+            to:process.env.EMAIL_SENDER,
             subject: data.value,
             html: "<strong>Test Cases has been generated successfully.</strong>",
             attachments:[
@@ -16,13 +16,15 @@ export default async function handler(req, res) {
                 }
             ]
         })
+        return res.json({status: 200});
     }
     else{
         await transporter.sendMail({
             from: data.email,
-            to:process.env.EMAIL,
+            to:process.env.EMAIL_SENDER,
             subject: data.value,
             html: "<p>Couldn't Generate Test Cases due to some Error.",
         })
+        return res.json({status: 400});
     }
 }
