@@ -301,7 +301,7 @@ const GenerateString = () => {
                     </CopyToClipboard>
                   }
                 >
-                  {copied ? "Copied" : "Copy to clipboard"}
+                  {copied ? "Copied" : "Copy"}
                 </StyledComponents.StyledButton>
               </Grid>
               <Grid item xs={6}>
