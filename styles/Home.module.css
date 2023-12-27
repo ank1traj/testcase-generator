@@ -5,7 +5,7 @@
   align-items: center;
   padding: 6rem;
   padding-top: 3rem;
-  padding-bottom: 0rem;
+  padding-top: 3rem;
   min-height: 100vh;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .button{
-  --button_radius: 0.4em;
+  --button_radius: 0.75em;
   --button_color: #e8e8e8;
   --button_outline_color: #000000;
   font-size: 17px;
@@ -72,7 +72,7 @@
   box-sizing: border-box;
   border: 2px solid var(--button_outline_color);
   border-radius: var(--button_radius);
-  padding: 0.4em 0.4em;
+  padding: 0.4em 1em;
   background: var(--button_color);
   color: var(--button_outline_color);
   transform: translateY(-0.2em);
@@ -103,9 +103,6 @@
     padding-right:20px;
     border-radius:10px;
     }
-  .nav a{
-    padding:15px;
-  }
   .hide{
     display: none;
   }
@@ -192,20 +189,9 @@
   grid-template-columns: repeat(4, minmax(25%, auto));
   width: var(--max-width);
   max-width: 100%;
-  place-items: center;
 }
 
 .card {
-  width: 200px;
-  height: 150px;
-  border-radius: var(--border-radius);
-  background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
-  margin-bottom: 10px;
-}
-.card2{
-  width: 200px;
-  height: 150px;
-  background-color: #1a1a1a;
   padding: 1rem 1.2rem;
 }
 
@@ -214,8 +200,6 @@
   border-radius: 20px;
   background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
   box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
-  transform: scale(0.98);
-  border-radius: 20px;
  }
 
 .card span {
@@ -245,13 +229,13 @@
   background: var(--secondary-glow);
   border-radius: 50%;
   width: 480px;
-  height: 100px;
+  height: 200px;
 }
 
 .center::after {
   background: var(--primary-glow);
   width: 240px;
-  height: 100px;
+  height: 180px;
   z-index: -1;
 }
 
@@ -276,6 +260,7 @@
   width: 75px;
   height: 75px;
   padding: 25px 10px;
+  margin-left: 16px;
   transform: translateZ(0);
   border-radius: var(--border-radius);
   overflow: hidden;
