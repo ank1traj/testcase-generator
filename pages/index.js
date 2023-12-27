@@ -18,6 +18,7 @@ import LogRocket from "logrocket";
 import { v4 as uuidv4 } from "uuid";
 "use client";
 import { useUser } from "@clerk/nextjs";
+import Footer from "./footer";
 const inter = Inter({ subsets: ["latin"] });
 
 Sentry.init({
@@ -250,6 +251,7 @@ export default function Home() {
           </ul>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
