@@ -433,7 +433,7 @@ const GenerateLinkedList = () => {
                       isLoading || doublyLinkedList || circularLinkedList
                     }
                   >
-                    {copied ? "Copied" : "Copy to clipboard"}
+                    {copied ? "Copied" : "Copy"}
                   </StyledComponents.StyledButton>
                 </CopyToClipboard>
               </Grid>

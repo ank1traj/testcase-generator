@@ -245,7 +245,7 @@ const PalindromeGenerator = () => {
                     onClick={handleCopyValues}
                     disabled={isLoading}
                   >
-                    {copied ? "Copied" : "Copy to clipboard"}
+                    {copied ? "Copied" : "Copy"}
                   </StyledComponents.StyledButton>
                 </CopyToClipboard>
               </Grid>

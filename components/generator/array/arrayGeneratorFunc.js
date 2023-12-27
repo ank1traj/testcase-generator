@@ -106,7 +106,7 @@ const ArrayGeneratorFunc = () => {
         await sendConfirmation(value);
       }
       catch(error){
-        toast.error("Couldn't send mail!!");
+        toast.error("Couldn't mail!!");
       }
     }
     else{
@@ -118,7 +118,7 @@ const ArrayGeneratorFunc = () => {
         await sendConfirmation(value);
       }
       catch(error){
-        toast.error("Couldn't send mail!!");
+        toast.error("Couldn't mail!!");
       }
     }
   }
