@@ -17,6 +17,8 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import { Toaster } from "react-hot-toast";
 
 import LinkedListGeneratorFunc from "components/generator/linkedList/linkedListGeneratorFunc";
+import Nav from "@/pages/nav";
+import Footer from "@/pages/footer";
 
 const options = ["Show Total List", "Show List Size"];
 
@@ -74,6 +76,8 @@ const GenerateLinkedList = () => {
   } = LinkedListGeneratorFunc();
 
   return (
+    <div>
+    <Nav />
     <StyledComponents.StyledGrid container>
       <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
@@ -592,6 +596,8 @@ const GenerateLinkedList = () => {
         </StyledComponents.StyledCard>
       </Grid>
     </StyledComponents.StyledGrid>
+    <Footer />
+    </div>
   );
 };
 

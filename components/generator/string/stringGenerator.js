@@ -19,6 +19,8 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import toast, { Toaster } from "react-hot-toast";
 
 import StringGeneratorFunc from "components/generator/string/stringGeneratorFunc";
+import Nav from "@/pages/nav";
+import Footer from "@/pages/footer";
 
 const options = [
   "Hide Length",
@@ -65,6 +67,8 @@ const GenerateString = () => {
   } = StringGeneratorFunc();
 
   return (
+    <div>
+    <Nav />
     <StyledComponents.StyledGrid container>
       <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
@@ -360,6 +364,8 @@ const GenerateString = () => {
         </StyledComponents.StyledCard>
       </Grid>
     </StyledComponents.StyledGrid>
+    <Footer />
+    </div>
   );
 };
 

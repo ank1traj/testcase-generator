@@ -17,10 +17,30 @@ const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: "12px",
   width: "100%",
   height: "100%",
-  margin: "50px",
+  margin: "50px auto",
   display: "flex",
   flexDirection: "column",
   overflow: "hidden",
+  [theme.breakpoints.up('md')]: {
+    // Media query styles for screens with width >= 900px
+    margin:"0px auto",
+    width:"80%"
+  },
+  [theme.breakpoints.down('md')]: {
+    // Media query styles for screens with width <900px
+    margin:"0px auto",
+    width:"100%"
+  },
+  [theme.breakpoints.down(700)]: {
+    // Media query styles for screens with width <700px
+    margin:"60px auto",
+    width:"100%"
+  },
+  [theme.breakpoints.down('sm')]: {
+    // Media query styles for screens with width <600px
+    margin:"120px auto",
+    width:"100%"
+  },
 }));
 
 const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
