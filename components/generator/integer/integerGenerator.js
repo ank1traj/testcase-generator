@@ -138,7 +138,7 @@ const GenerateInteger = () => {
                     onClick={handleResetValues}
                     disabled={isLoading}
                   >
-                    Reset
+                    {copied ? "Copied!" : "Copy"}
                   </StyledComponents.StyledButton>
                 </Grid>
                 <Grid item xs={12}>

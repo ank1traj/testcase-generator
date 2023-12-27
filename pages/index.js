@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { Roboto } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 
@@ -122,31 +121,32 @@ const links = [
 
 function renderLink(link) {
   return (
-    <Link
-      href={link.href}
-      className={styles.card}
-      rel="noopener noreferrer"
-      key={link.href}
-    >
-      <div className={styles.card2}>
-        <h2 className={inter.className}>
-          {link.title}{" "}
-          {React.createElement(link.iconType, {
-            style: { color: link.iconColor },
-          })}
-        </h2>
-        <p className={inter.className}>{link.description}</p>
-      </div>
+    <Link href={link.href} className={styles.card} rel="noopener noreferrer" key={link.href}>
+      <h2 className={inter.className}>
+        {link.title}{" "}
+        {React.createElement(link.iconType, { style: { color: link.iconColor } })}
+      </h2>
+      <p className={inter.className}>{link.description}</p>
     </Link>
   );
 }
 
 export default function Home() {
+  const { isSignedIn, user } = useUser();
   const [display, setDisplay] = useState(false);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      const logrocketID = user.primaryEmailAddress.emailAddress;
+      LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
+      LogRocket.identify(logrocketID);
+    }
+  }, [isSignedIn, user]);
+
   function func_display() {
     setDisplay(!display);
   }
-  const { isSignedIn, user } = useUser();
+
   return (
     <>
       <Head>
