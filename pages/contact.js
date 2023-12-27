@@ -2,7 +2,7 @@ import styles from "@/styles/Home.module.css";
 import {useState} from "react";
 import Nav from "./nav";
 import Footer from "./footer";
-export default function contact() {
+export default function Contact() {
     const [name, setName] = useState("");
     const [email, setMail] = useState("");
     const [subject, setSubject] = useState("");

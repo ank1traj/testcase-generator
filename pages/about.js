@@ -1,11 +1,11 @@
 import Link from "next/link";
 import styles from "@/styles/Home.module.css";
-"use client";
-import { useUser } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
 import Footer from "./footer";
-export default function contact() {
-const { isSignedIn, user } = useUser();
+"use client";
+import { useUser } from "@clerk/nextjs";
+export default function About() {
+    const { isSignedIn, user } = useUser();
 return (
 <>
     <div className={styles.contact}>
