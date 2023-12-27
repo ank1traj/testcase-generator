@@ -4,7 +4,7 @@ import styles from "@/styles/Home.module.css";
 import { useUser } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
 import Footer from "./footer";
-export default function contact() {
+export default function About() {
 const { isSignedIn, user } = useUser();
 return (
 <>
