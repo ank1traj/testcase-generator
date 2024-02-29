@@ -19,6 +19,8 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import toast, { Toaster } from "react-hot-toast";
 
 import StringGeneratorFunc from "components/generator/string/stringGeneratorFunc";
+import Nav from "@/pages/nav";
+import Footer from "@/pages/footer";
 
 const options = [
   "Hide Length",
@@ -65,6 +67,8 @@ const GenerateString = () => {
   } = StringGeneratorFunc();
 
   return (
+    <div>
+    <Nav />
     <StyledComponents.StyledGrid container>
       <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
@@ -110,7 +114,7 @@ const GenerateString = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
+              <Grid item xs={4}>
                 <Tooltip title="Check for random size">
                   <FormControlLabel
                     control={
@@ -124,8 +128,8 @@ const GenerateString = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={4}>
-                <Tooltip title="Select Advanced options">
+              <Grid item xs={8}>
+                <Tooltip title="Select Advanced options" style={{width:"100%", position:"relative"}}>
                   <StyledComponents.StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledComponents.StyledSelect
@@ -301,7 +305,7 @@ const GenerateString = () => {
                     </CopyToClipboard>
                   }
                 >
-                  {copied ? "Copied" : "Copy to clipboard"}
+                  {copied ? "Copied" : "Copy"}
                 </StyledComponents.StyledButton>
               </Grid>
               <Grid item xs={6}>
@@ -360,6 +364,8 @@ const GenerateString = () => {
         </StyledComponents.StyledCard>
       </Grid>
     </StyledComponents.StyledGrid>
+    <Footer />
+    </div>
   );
 };
 

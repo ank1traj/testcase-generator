@@ -13,13 +13,34 @@ import { styled } from "@mui/material/styles";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+  boxShadow: "0 3px 5px 2px black",
   borderRadius: "12px",
   width: "100%",
   height: "100%",
-  margin: "auto",
+  margin: "50px auto",
   display: "flex",
   flexDirection: "column",
+  overflow: "hidden",
+  [theme.breakpoints.up('md')]: {
+    // Media query styles for screens with width >= 900px
+    margin:"0px auto",
+    width:"80%"
+  },
+  [theme.breakpoints.down('md')]: {
+    // Media query styles for screens with width <900px
+    margin:"0px auto",
+    width:"100%"
+  },
+  [theme.breakpoints.down(700)]: {
+    // Media query styles for screens with width <700px
+    margin:"60px auto",
+    width:"100%"
+  },
+  [theme.breakpoints.down('sm')]: {
+    // Media query styles for screens with width <600px
+    margin:"120px auto",
+    width:"100%"
+  },
 }));
 
 const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
@@ -35,7 +56,8 @@ const StyledCardContent = styled(CardContent)(({ theme }) => ({
 }));
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
-  height: "100vh",
+  height: "100%",
+  overflow: "hidden",
 }));
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
@@ -68,7 +90,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  minWidth: "300px",
+  position: "relative",
+  width: "100%",
   "& .MuiSelect-select": {
     paddingRight: theme.spacing(4),
   },

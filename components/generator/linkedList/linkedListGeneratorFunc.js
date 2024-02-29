@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { sendConfirmation } from "@/lib/api";
+"use client";
+import { useUser } from "@clerk/nextjs";
 
 const LinkedListGeneratorFunc = () => {
   const [headValue, setHeadValue] = useState(0);
@@ -39,10 +42,43 @@ const LinkedListGeneratorFunc = () => {
     const { value } = event.target;
     setAdvanceOptions(value);
   };
-
+  const { user } = useUser();
+  let send=false;
+  const generateMail= async(valuesString) =>{
+    let email=user.primaryEmailAddress.emailAddress;
+    if (send){
+      const value={
+        "email": email,
+        "textcontent": valuesString,
+        "filename": "generated_values.txt",
+        "content":valuesString,
+        "value":"Test Case Generated Successfully!!!"
+      }
+      try{
+        await sendConfirmation(value);
+      }
+      catch(error){
+        toast.error("Couldn't send mail!!");
+      }
+    }
+    else{
+      const value={
+        "email": email,
+        "value":"Couldn't generate testacases!!"
+      }
+      try{
+        await sendConfirmation(value);
+      }
+      catch(error){
+        toast.error("Couldn't send mail!!");
+      }
+    }
+  }
   const handleUpdateGenerateValues = async () => {
     setIsLoading(true); // set isLoading to true
     const errorOccurred = false; // add this flag variable
+    // Initialize an array to hold the generated linked lists
+    let newGeneratedLists=[];
     try {
       await toast.promise(
         new Promise((resolve, reject) => {
@@ -56,9 +92,6 @@ const LinkedListGeneratorFunc = () => {
               );
               return;
             }
-            // Initialize an array to hold the generated linked lists
-            const newGeneratedLists = [];
-
             const startTime = performance.now();
 
             // Generate the requested number of linked lists
@@ -126,14 +159,16 @@ const LinkedListGeneratorFunc = () => {
               timeDiff < 1 ? "less than 1 ms" : `${timeDiff.toFixed(2)} ms`;
             setTimeTaken(formattedTime);
             // Update state with the concatenated string of all values
-            console.log(newGeneratedLists);
             setGeneratedLists(newGeneratedLists);
             resolve();
           }, 2000);
         }),
         {
           loading: "Generating values...",
-          success: "Values generated successfully!",
+          success: (success)=>{
+            send=true;
+            return "Values generated successfully!!";
+          },
           error: (error) => {
             if (errorOccurred) {
               // show toast error if flag variable is true
@@ -147,7 +182,38 @@ const LinkedListGeneratorFunc = () => {
     } catch (error) {
       toast.error(error.message);
     }
+    const totalLists = advanceOptions.includes("Show Total List")
+      ? `${numLists}\n`
+      : "";
+    const listsString = newGeneratedLists
+      .map((list) => {
+        const lengthString = advanceOptions.includes("Show List Size")
+          ? `${listSize}\n`
+          : "";
+        return (
+          totalLists +
+          lengthString +
+          (list
+            ? list.value +
+              (list.next
+                ? " " +
+                  (() => {
+                    let current = list.next;
+                    let result = "";
+                    while (current) {
+                      result += current.value + " ";
+                      current = current.next;
+                    }
+                    return result;
+                  })()
+                : "") +
+              "\n"
+            : "Empty List\n")
+        );
+      })
+      .join("\n");
     setIsLoading(false); // set isLoading to false
+    await generateMail(listsString);
   };
 
   const handleAddGenerateValues = async () => {

@@ -19,6 +19,8 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import toast, { Toaster } from "react-hot-toast";
 
 import ArrayGeneratorFunc from "components/generator/array/arrayGeneratorFunc";
+import Nav from "@/pages/nav";
+import Footer from "@/pages/footer";
 
 const options = [
   "Negative Outputs",
@@ -63,9 +65,9 @@ const GenerateArray = () => {
     random,
   } = ArrayGeneratorFunc();
 
-  console.log(isFloat);
-
   return (
+    <div>
+    <Nav />
     <StyledComponents.StyledGrid container>
       <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
@@ -133,7 +135,7 @@ const GenerateArray = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={3}>
+              <Grid item xs={6}>
                 <Tooltip title="Check to generate float values">
                   <FormControlLabel
                     control={
@@ -147,7 +149,7 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={6}>
                 <Tooltip title="Check to generate random size arry">
                   <FormControlLabel
                     control={
@@ -161,8 +163,8 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={4}>
-                <Tooltip title="Select Advanced options">
+              <Grid item xs={12}>
+                <Tooltip title="Select Advanced options" style={{width:"100%", position:"relative"}}>
                   <StyledComponents.StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledComponents.StyledSelect
@@ -181,7 +183,7 @@ const GenerateArray = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate any values">
                   <FormControlLabel
                     control={
@@ -197,7 +199,7 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate even values">
                   <FormControlLabel
                     control={
@@ -213,7 +215,7 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate odd values">
                   <FormControlLabel
                     control={
@@ -229,7 +231,7 @@ const GenerateArray = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate prime values">
                   <FormControlLabel
                     control={
@@ -316,7 +318,7 @@ const GenerateArray = () => {
                     startIcon={<FileCopyIcon />}
                     disabled={isLoading}
                   >
-                    {copied ? "Copied" : "Copy to clipboard"}
+                    {copied ? "Copied" : "Copy"}
                   </StyledComponents.StyledButton>
                 </CopyToClipboard>
               </Grid>
@@ -378,6 +380,8 @@ const GenerateArray = () => {
         </StyledComponents.StyledCard>
       </Grid>
     </StyledComponents.StyledGrid>
+    <Footer />
+    </div>
   );
 };
 

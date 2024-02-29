@@ -18,6 +18,8 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import toast, { Toaster } from "react-hot-toast";
 
 import PalindromeGeneratorFunc from "components/generator/palindrome/palindromeGeneratorFunc.js";
+import Nav from "@/pages/nav";
+import Footer from "@/pages/footer";
 
 const options = ["Show Total Cases", "Show Length"];
 
@@ -51,6 +53,8 @@ const PalindromeGenerator = () => {
   } = PalindromeGeneratorFunc();
 
   return (
+    <div>
+      <Nav />
     <StyledComponents.StyledGrid container>
       <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
@@ -98,7 +102,7 @@ const PalindromeGenerator = () => {
             </Grid>
 
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
+              <Grid item xs={6}>
                 <Tooltip title="Click to generate array palindromes">
                   <FormControlLabel
                     control={
@@ -119,7 +123,7 @@ const PalindromeGenerator = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={6}>
                 <Tooltip title="Click to generate string palindromes">
                   <FormControlLabel
                     control={
@@ -140,8 +144,8 @@ const PalindromeGenerator = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={4}>
-                <Tooltip title="Select Advanced options">
+              <Grid item xs={12}>
+                <Tooltip title="Select Advanced options" style={{width:"100%", position:"relative"}}>
                   <StyledComponents.StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledComponents.StyledSelect
@@ -165,7 +169,7 @@ const PalindromeGenerator = () => {
                   <Grid
                     key={option.value}
                     item
-                    xs={2}
+                    xs={3}
                     sx={{ display: "inline-block" }}
                   >
                     <FormControlLabel
@@ -241,7 +245,7 @@ const PalindromeGenerator = () => {
                     onClick={handleCopyValues}
                     disabled={isLoading}
                   >
-                    {copied ? "Copied" : "Copy to clipboard"}
+                    {copied ? "Copied" : "Copy"}
                   </StyledComponents.StyledButton>
                 </CopyToClipboard>
               </Grid>
@@ -332,6 +336,8 @@ const PalindromeGenerator = () => {
         </StyledComponents.StyledCard>
       </Grid>
     </StyledComponents.StyledGrid>
+    <Footer />
+    </div>
   );
 };
 

@@ -18,6 +18,8 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import toast, { Toaster } from "react-hot-toast";
 
 import GraphGeneratorFunc from "components/generator/graph/graphGeneratorFunc.js";
+import Nav from "@/pages/nav";
+import Footer from "@/pages/footer";
 
 const options = [
   "Show Total Cases",
@@ -67,6 +69,8 @@ const GenerateGraph = () => {
   } = GraphGeneratorFunc();
 
   return (
+    <div>
+    <Nav />
     <StyledComponents.StyledGrid container>
       <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
@@ -130,8 +134,8 @@ const GenerateGraph = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={4}>
-                <Tooltip title="Select Advanced options">
+              <Grid item xs={6}>
+                <Tooltip title="Select Advanced options" style={{width:"100%", position:"relative"}}>
                   <StyledComponents.StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledComponents.StyledSelect
@@ -160,7 +164,7 @@ const GenerateGraph = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Tooltip title="Select to generate Weighted Graph">
                   <FormControlLabel
                     control={
@@ -174,7 +178,7 @@ const GenerateGraph = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Tooltip title="Select for adding -> between edges">
                   <FormControlLabel
                     control={
@@ -188,7 +192,7 @@ const GenerateGraph = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Tooltip title="Select for adding : for weight">
                   <FormControlLabel
                     control={
@@ -203,7 +207,7 @@ const GenerateGraph = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <Tooltip title="Make Graph of chars">
                   <FormControlLabel
                     control={
@@ -438,6 +442,8 @@ const GenerateGraph = () => {
         </StyledComponents.StyledCard>
       </Grid>
     </StyledComponents.StyledGrid>
+    <Footer />
+    </div>
   );
 };
 

@@ -21,6 +21,8 @@ import {
 import GenerateIcon from "@mui/icons-material/PlayArrow";
 // import DownloadIcon from "@mui/icons-material/GetApp";
 import { styled } from "@mui/material/styles";
+import Nav from "@/pages/nav";
+import Footer from "@/pages/footer";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -359,6 +361,8 @@ const GenerateMatrix = () => {
   };
 
   return (
+    <div>
+    <Nav />
     <StyledGrid container>
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
         <StyledCard>
@@ -457,7 +461,7 @@ const GenerateMatrix = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate any values">
                   <FormControlLabel
                     control={
@@ -473,7 +477,7 @@ const GenerateMatrix = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate even values">
                   <FormControlLabel
                     control={
@@ -489,7 +493,7 @@ const GenerateMatrix = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate odd values">
                   <FormControlLabel
                     control={
@@ -505,7 +509,7 @@ const GenerateMatrix = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Check to generate prime values">
                   <FormControlLabel
                     control={
@@ -609,6 +613,8 @@ const GenerateMatrix = () => {
         </StyledCard>
       </Grid>
     </StyledGrid>
+    <Footer />
+    </div>
   );
 };
 

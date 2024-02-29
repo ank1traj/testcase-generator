@@ -17,6 +17,8 @@ import DownloadIcon from "@mui/icons-material/GetApp";
 import { Toaster } from "react-hot-toast";
 
 import LinkedListGeneratorFunc from "components/generator/linkedList/linkedListGeneratorFunc";
+import Nav from "@/pages/nav";
+import Footer from "@/pages/footer";
 
 const options = ["Show Total List", "Show List Size"];
 
@@ -74,6 +76,8 @@ const GenerateLinkedList = () => {
   } = LinkedListGeneratorFunc();
 
   return (
+    <div>
+    <Nav />
     <StyledComponents.StyledGrid container>
       <Toaster />
       <Grid item xs={12} sm={8} md={8} sx={{ margin: "auto" }}>
@@ -137,8 +141,8 @@ const GenerateLinkedList = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={4}>
-                <Tooltip title="Select Advanced options">
+              <Grid item xs={6}>
+                <Tooltip title="Select Advanced options" style={{width:"100%", position:"relative"}}>
                   <StyledComponents.StyledFormControl>
                     <InputLabel>Advanced Options</InputLabel>
                     <StyledComponents.StyledSelect
@@ -157,7 +161,7 @@ const GenerateLinkedList = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
+              <Grid item xs={4}>
                 <Tooltip title="Click to select the single linked list.">
                   <FormControlLabel
                     control={
@@ -175,7 +179,7 @@ const GenerateLinkedList = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={4}>
                 <Tooltip title="Click to select the doubly linked list.">
                   <FormControlLabel
                     control={
@@ -193,7 +197,7 @@ const GenerateLinkedList = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={4}>
                 <Tooltip title="Click to select the circular linked list.">
                   <FormControlLabel
                     control={
@@ -211,7 +215,7 @@ const GenerateLinkedList = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={4}>
                 <Tooltip title="Click to select to update node">
                   <FormControlLabel
                     control={
@@ -228,7 +232,7 @@ const GenerateLinkedList = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={4}>
                 <Tooltip title="Click to select to add node">
                   <FormControlLabel
                     control={
@@ -247,7 +251,7 @@ const GenerateLinkedList = () => {
               </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ marginTop: "1rem" }}>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Click to add the node at the start of the linked list.">
                   <FormControlLabel
                     control={
@@ -268,7 +272,7 @@ const GenerateLinkedList = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Click to add the node at the end of the linked list.">
                   <FormControlLabel
                     control={
@@ -289,7 +293,7 @@ const GenerateLinkedList = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Click to add the node at the middle of the linked list.">
                   <FormControlLabel
                     control={
@@ -310,7 +314,7 @@ const GenerateLinkedList = () => {
                   />
                 </Tooltip>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Tooltip title="Click to add the node at a random position in the linked list.">
                   <FormControlLabel
                     control={
@@ -429,7 +433,7 @@ const GenerateLinkedList = () => {
                       isLoading || doublyLinkedList || circularLinkedList
                     }
                   >
-                    {copied ? "Copied" : "Copy to clipboard"}
+                    {copied ? "Copied" : "Copy"}
                   </StyledComponents.StyledButton>
                 </CopyToClipboard>
               </Grid>
@@ -592,6 +596,8 @@ const GenerateLinkedList = () => {
         </StyledComponents.StyledCard>
       </Grid>
     </StyledComponents.StyledGrid>
+    <Footer />
+    </div>
   );
 };
 
