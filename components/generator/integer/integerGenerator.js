@@ -131,16 +131,16 @@ const GenerateInteger = () => {
                   </CopyToClipboard>
                 </Grid>
                 <Grid item xs={6}>
-                  <StyledComponents.StyledButton
-                    variant="contained"
-                    fullWidth
-                    startIcon={<RefreshIcon />}
-                    onClick={handleResetValues}
-                    disabled={isLoading}
-                  >
-                    {copied ? "Copied!" : "Copy"}
-                  </StyledComponents.StyledButton>
-                </Grid>
+                <StyledComponents.StyledButton
+                  variant="contained"
+                  fullWidth
+                  startIcon={<RefreshIcon />}
+                  onClick={handleResetValues}
+                  disabled={isLoading}
+                >
+                  Reset
+                </StyledComponents.StyledButton>
+              </Grid>
                 <Grid item xs={12}>
                   <StyledComponents.StyledButton
                     variant="contained"
