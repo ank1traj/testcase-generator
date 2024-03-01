@@ -13,13 +13,37 @@ import ErrorIcon from "@mui/icons-material/Error";
 import HourglassTopOutlinedIcon from "@mui/icons-material/HourglassTopOutlined";
 import { UserButton } from "@clerk/nextjs";
 import * as Sentry from "@sentry/browser";
-import { BrowserTracing } from "@sentry/tracing";
 import LogRocket from "logrocket";
 import { v4 as uuidv4 } from "uuid";
 "use client";
 import { useUser } from "@clerk/nextjs";
 import Footer from "./footer";
 const inter = Inter({ subsets: ["latin"] });
+
+Sentry.init({
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  tracesSampleRate: 1.0,
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
+  integrations: [
+    Sentry.feedbackIntegration({
+      buttonLabel: "Feedback",
+      submitButtonLabel: "Send Feedback",
+      formTitle: "Send Feedback",
+      colorScheme: "light",
+    }),
+    Sentry.replayIntegration({
+      maskAllText: true,
+      blockAllMedia: true,
+    }),
+  ],
+  beforeSend: (event) => {
+    if (event.exception) {
+      Sentry.showReportDialog({ eventId: userFeedback.event_id });
+    }
+    return event;
+  },
+});
 
 const links = [
   {
@@ -114,31 +138,6 @@ export default function Home() {
       email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
       comments: "I really like your App, thanks!",
     };
-
-    Sentry.init({
-      dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-      tracesSampleRate: 1.0,
-      replaysSessionSampleRate: 0.1,
-      replaysOnErrorSampleRate: 1.0,
-      integrations: [
-        Sentry.feedbackIntegration({
-          buttonLabel: "Feedback",
-          submitButtonLabel: "Send Feedback",
-          formTitle: "Send Feedback",
-          colorScheme: "light",
-        }),
-        Sentry.replayIntegration({
-          maskAllText: true,
-          blockAllMedia: true,
-        }),
-      ],
-      beforeSend: (event) => {
-        if (event.exception) {
-          Sentry.showReportDialog({ eventId: userFeedback.event_id });
-        }
-        return event;
-      },
-    });
 
     Sentry.captureMessage("User Feedback", {
       user: userFeedback,
