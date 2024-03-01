@@ -26,23 +26,11 @@ Sentry.init({
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
   integrations: [
-    Sentry.feedbackIntegration({
-      buttonLabel: "Feedback",
-      submitButtonLabel: "Send Feedback",
-      formTitle: "Send Feedback",
-      colorScheme: "light",
-    }),
     Sentry.replayIntegration({
       maskAllText: true,
       blockAllMedia: true,
     }),
-  ],
-  beforeSend: (event) => {
-    if (event.exception) {
-      Sentry.showReportDialog({ eventId: userFeedback.event_id });
-    }
-    return event;
-  },
+  ]
 });
 
 const links = [
@@ -138,6 +126,36 @@ export default function Home() {
       email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
       comments: "I really like your App, thanks!",
     };
+
+    Sentry.setUser({
+      id: userFeedback.event_id,
+      username: userFeedback.name,
+      email: userFeedback.email,
+    });
+
+    Sentry.init({
+      dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+      integrations: [
+        Sentry.feedbackIntegration({
+          buttonLabel: "Feedback",
+          submitButtonLabel: "Send Feedback",
+          formTitle: "Send Feedback",
+          emailPlaceholder: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
+          colorScheme: "system",
+          useSentryUser: {
+            email: "email",
+            name: "username",
+          },
+        }),
+      ],
+      beforeSend: (event) => {
+        if (event.exception) {
+          Sentry.showReportDialog({ eventId: userFeedback.event_id });
+        }
+        return event;
+      },
+    })
+
 
     Sentry.captureMessage("User Feedback", {
       user: userFeedback,
