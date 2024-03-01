@@ -97,51 +97,52 @@ export default function Home() {
   const [display, setDisplay] = useState(false);
 
   useEffect(() => {
-    if (isSignedIn) {
-      LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
+    LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
 
-      const logRocketID = user?.primaryEmailAddress?.emailAddress || "guest-" + uuidv4();
+    const logRocketID = isSignedIn
+      ? user?.primaryEmailAddress?.emailAddress || "guest-" + uuidv4()
+      : uuidv4();
 
-      LogRocket.identify(logRocketID, {
-        name: user?.fullName || "Guest",
-        email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
-      });
+    LogRocket.identify(logRocketID, {
+      name: isSignedIn ? user?.fullName || "Guest" : "Guest",
+      email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
+    });
 
-      const userFeedback = {
-        event_id: logRocketID,
-        name: user?.fullName || "Guest",
-        email: user?.primaryEmailAddress?.emailAddress || "guest@example.com",
-        comments: "I really like your App, thanks!",
-      };
+    const userFeedback = {
+      event_id: logRocketID,
+      name: isSignedIn ? user?.fullName || "Guest" : "Guest",
+      email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
+      comments: "I really like your App, thanks!",
+    };
 
-      Sentry.init({
-        dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-        tracesSampleRate: 1.0,
-        replaysSessionSampleRate: 0.1,
-        replaysOnErrorSampleRate: 1.0,
-        integrations: [
-          new Sentry.Feedback({
-            colorScheme: "light",
-          }),
-          new BrowserTracing(),
-          new Sentry.Replay({
-            maskAllText: true,
-            blockAllMedia: true,
-          }),
-        ],
-        beforeSend: (event) => {
-          if (event.exception) {
-            Sentry.showReportDialog({ eventId: userFeedback.event_id });
-          }
-          return event;
-        },
-      });
+    Sentry.init({
+      dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+      tracesSampleRate: 1.0,
+      replaysSessionSampleRate: 0.1,
+      replaysOnErrorSampleRate: 1.0,
+      integrations: [
+        Sentry.feedbackIntegration({
+          buttonLabel: "Feedback",
+          submitButtonLabel: "Send Feedback",
+          formTitle: "Send Feedback",
+          colorScheme: "light",
+        }),
+        Sentry.replayIntegration({
+          maskAllText: true,
+          blockAllMedia: true,
+        }),
+      ],
+      beforeSend: (event) => {
+        if (event.exception) {
+          Sentry.showReportDialog({ eventId: userFeedback.event_id });
+        }
+        return event;
+      },
+    });
 
-      // Now you can capture user feedback
-      Sentry.captureMessage("User Feedback", {
-        user: userFeedback,
-      });
-    }
+    Sentry.captureMessage("User Feedback", {
+      user: userFeedback,
+    });
   }, [isSignedIn, user]);
 
   function func_display() {
