@@ -26,10 +26,7 @@ Sentry.init({
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
   integrations: [
-    Sentry.replayIntegration({
-      maskAllText: true,
-      blockAllMedia: true,
-    }),
+    Sentry.replayIntegration()
   ]
 });
 
@@ -124,7 +121,6 @@ export default function Home() {
       event_id: logRocketID,
       name: isSignedIn ? user?.fullName || "Guest" : "Guest",
       email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
-      comments: "I really like your App, thanks!",
     };
 
     Sentry.setUser({
@@ -137,9 +133,6 @@ export default function Home() {
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
       integrations: [
         Sentry.feedbackIntegration({
-          buttonLabel: "Feedback",
-          submitButtonLabel: "Send Feedback",
-          formTitle: "Send Feedback",
           showBranding: false,
           emailPlaceholder: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
           colorScheme: "system",
@@ -147,14 +140,6 @@ export default function Home() {
             email: "email",
             name: "username",
           },
-          additionalFields: [
-            {
-              name: "feedbackType",
-              type: "select",
-              label: "Feedback Type",
-              options: ["General Feedback", "Bug Report"],
-            },
-          ],
         }),
       ],
       beforeSend: (event) => {
@@ -165,11 +150,11 @@ export default function Home() {
       },
     })
 
-
+    console.log(isSignedIn, user)
     Sentry.captureMessage("User Feedback", {
       user: userFeedback,
     });
-  }, [isSignedIn, user]);
+  }, [isSignedIn]);
 
   function func_display() {
     setDisplay(!display);
