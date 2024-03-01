@@ -141,7 +141,7 @@ export default function Home() {
     } else {
       LogRocket.identify(uuidv4());
     }
-  }, [isSignedIn, user]);  
+  }, [isSignedIn, user]);
 
   function func_display() {
     setDisplay(!display);
