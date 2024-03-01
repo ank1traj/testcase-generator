@@ -119,8 +119,8 @@ export default function Home() {
   
     const userFeedback = {
       event_id: logRocketID,
-      name: isSignedIn ? user?.fullName || "Guest" : "Guest",
-      email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
+      name: isSignedIn ? user?.fullName || "" : "",
+      email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "m" : "",
     };
   
     Sentry.setUser({
@@ -136,6 +136,8 @@ export default function Home() {
           showBranding: false,
           emailPlaceholder: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
           colorScheme: "system",
+          isNameRequired: true,
+          isEmailRequired: true,
           useSentryUser: {
             email: "email",
             name: "username",
