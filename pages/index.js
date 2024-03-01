@@ -106,29 +106,29 @@ export default function Home() {
   const [display, setDisplay] = useState(false);
 
   useEffect(() => {
-    LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
-
+    isSignedIn !== undefined && LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
+  
     const logRocketID = isSignedIn
       ? user?.primaryEmailAddress?.emailAddress || "guest-" + uuidv4()
       : uuidv4();
-
+  
     LogRocket.identify(logRocketID, {
       name: isSignedIn ? user?.fullName || "Guest" : "Guest",
       email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
     });
-
+  
     const userFeedback = {
       event_id: logRocketID,
       name: isSignedIn ? user?.fullName || "Guest" : "Guest",
       email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
     };
-
+  
     Sentry.setUser({
       id: userFeedback.event_id,
       username: userFeedback.name,
       email: userFeedback.email,
     });
-
+  
     Sentry.init({
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
       integrations: [
@@ -143,18 +143,16 @@ export default function Home() {
         }),
       ],
       beforeSend: (event) => {
-        if (event.exception) {
-          Sentry.showReportDialog({ eventId: userFeedback.event_id });
-        }
+        event.exception && Sentry.showReportDialog({ eventId: userFeedback.event_id });
         return event;
       },
-    })
-
-    console.log(isSignedIn, user)
+    });
+  
     Sentry.captureMessage("User Feedback", {
       user: userFeedback,
     });
   }, [isSignedIn]);
+  
 
   function func_display() {
     setDisplay(!display);
