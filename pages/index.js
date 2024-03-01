@@ -57,8 +57,6 @@ Sentry.init({
 });
 
 LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
-// import { useMediaQuery } from '@mui/material'
-LogRocket.identify(uuidv4());
 
 const links = [
   {
@@ -137,11 +135,13 @@ export default function Home() {
 
   useEffect(() => {
     if (isSignedIn) {
-      const logrocketID = user.primaryEmailAddress.emailAddress;
-      LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
+      const userEmail = user?.primaryEmailAddress?.emailAddress;
+      const logrocketID = userEmail || `guest-${uuidv4()}`;
       LogRocket.identify(logrocketID);
+    } else {
+      LogRocket.identify(uuidv4());
     }
-  }, [isSignedIn, user]);
+  }, [isSignedIn, user]);  
 
   function func_display() {
     setDisplay(!display);
