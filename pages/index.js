@@ -134,13 +134,14 @@ export default function Home() {
   const [display, setDisplay] = useState(false);
 
   useEffect(() => {
-    if (isSignedIn) {
-      const userEmail = user?.primaryEmailAddress?.emailAddress;
-      const logrocketID = userEmail || `guest-${uuidv4()}`;
-      LogRocket.identify(logrocketID);
-    } else {
-      LogRocket.identify(uuidv4());
-    }
+    const logRocketID = isSignedIn
+      ? user?.primaryEmailAddress?.emailAddress || "guest-" + uuidv4()
+      : uuidv4();
+
+    LogRocket.identify(logRocketID, {
+      name: isSignedIn ? user?.fullName : "Guest",
+      email: isSignedIn ? user?.primaryEmailAddress?.emailAddress : "guest@example.com",
+    });
   }, [isSignedIn, user]);
 
   function func_display() {
