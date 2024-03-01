@@ -120,7 +120,7 @@ export default function Home() {
     const userFeedback = {
       event_id: logRocketID,
       name: isSignedIn ? user?.fullName || "" : "",
-      email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "m" : "",
+      email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "" : "",
     };
   
     Sentry.setUser({
