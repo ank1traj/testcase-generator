@@ -140,12 +140,21 @@ export default function Home() {
           buttonLabel: "Feedback",
           submitButtonLabel: "Send Feedback",
           formTitle: "Send Feedback",
+          showBranding: false,
           emailPlaceholder: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
           colorScheme: "system",
           useSentryUser: {
             email: "email",
             name: "username",
           },
+          additionalFields: [
+            {
+              name: "feedbackType",
+              type: "select",
+              label: "Feedback Type",
+              options: ["General Feedback", "Bug Report"],
+            },
+          ],
         }),
       ],
       beforeSend: (event) => {
