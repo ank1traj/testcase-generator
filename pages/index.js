@@ -18,6 +18,7 @@ import LogRocket from "logrocket";
 import { v4 as uuidv4 } from "uuid";
 "use client";
 import { useUser } from "@clerk/nextjs";
+import { RedirectToSignIn } from '@clerk/nextjs'
 import Footer from "./footer";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -103,18 +104,10 @@ function renderLink(link) {
 export default function Home() {
   const { isSignedIn, user } = useUser();
   const [display, setDisplay] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
-    const signInRedirect = () => {
-      if (!isSignedIn) {
-        router.push('/sign-in');
-      }
-    };
-  
     const initializeLogRocket = () => {
       LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
-      console.log("logrocket");
     };
   
     const identifyLogRocket = () => {
@@ -166,8 +159,6 @@ export default function Home() {
         user: userFeedback,
       });
     };
-  
-    signInRedirect();
   
     if (isSignedIn !== undefined) {
       initializeLogRocket();

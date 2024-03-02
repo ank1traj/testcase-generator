@@ -1,5 +1,5 @@
 import '@/styles/globals.css'
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from '@clerk/nextjs'
 export default function App({ Component, pageProps }) {
   return <>
   <ClerkProvider
@@ -11,7 +11,12 @@ export default function App({ Component, pageProps }) {
         }
     }}
   >
-    <Component {...pageProps} /><br/><br/>
+    <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+      <SignedIn>
+        <Component {...pageProps} />
+      </SignedIn>
   </ClerkProvider>
   </>
 }
