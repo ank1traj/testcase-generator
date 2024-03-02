@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -25,9 +26,7 @@ Sentry.init({
   tracesSampleRate: 1.0,
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
-  integrations: [
-    Sentry.replayIntegration()
-  ]
+  integrations: [Sentry.replayIntegration()]
 });
 
 const links = [
@@ -104,31 +103,35 @@ function renderLink(link) {
 export default function Home() {
   const { isSignedIn, user } = useUser();
   const [display, setDisplay] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    isSignedIn !== undefined && LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
-  
+    isSignedIn !== undefined && (LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET) && console.log("yes"));
+    if (!isSignedIn) {
+      router.push('/sign-in');
+    }
+
     const logRocketID = isSignedIn
       ? user?.primaryEmailAddress?.emailAddress || "guest-" + uuidv4()
       : uuidv4();
-  
+
     LogRocket.identify(logRocketID, {
       name: isSignedIn ? user?.fullName || "Guest" : "Guest",
       email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
     });
-  
+
     const userFeedback = {
       event_id: logRocketID,
       name: isSignedIn ? user?.fullName || "" : "",
       email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "" : "",
     };
-  
+
     Sentry.setUser({
       id: userFeedback.event_id,
       username: userFeedback.name,
       email: userFeedback.email,
     });
-  
+
     Sentry.init({
       dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
       integrations: [
@@ -149,12 +152,11 @@ export default function Home() {
         return event;
       },
     });
-  
+
     Sentry.captureMessage("User Feedback", {
       user: userFeedback,
     });
   }, [isSignedIn]);
-  
 
   function func_display() {
     setDisplay(!display);
@@ -190,29 +192,8 @@ export default function Home() {
             <MenuIcon />
           </div>
           <div>
-            {!isSignedIn &&
-              <>
-              <Link
-              href="sign-in"
-              rel="noopener noreferrer"
-              >
-                <code className={styles.code}>Sign In</code>
-              </Link>
-              <Link
-                href="sign-up"
-                rel="noopener noreferrer"
-              >
-                <code className={styles.code}>Sign Up</code>
-              </Link>
-              </>
-            }  
-            {isSignedIn &&
-            <>
-              <UserButton afterSignOutUrl="/"/>
-              {/* <p>{user.primaryEmailAddress.emailAddress}</p> */}
-            </>
-            }
-            
+            <UserButton afterSignOutUrl="/" />
+            {/* <p>{user.primaryEmailAddress.emailAddress}</p> */}
           </div>
         </nav>
         <div className={styles.description}>
