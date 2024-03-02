@@ -106,57 +106,76 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    isSignedIn !== undefined && (LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET) && console.log("yes"));
-    if (!isSignedIn) {
-      router.push('/sign-in');
-    }
-
-    const logRocketID = isSignedIn
-      ? user?.primaryEmailAddress?.emailAddress || "guest-" + uuidv4()
-      : uuidv4();
-
-    LogRocket.identify(logRocketID, {
-      name: isSignedIn ? user?.fullName || "Guest" : "Guest",
-      email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
-    });
-
-    const userFeedback = {
-      event_id: logRocketID,
-      name: isSignedIn ? user?.fullName || "" : "",
-      email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "" : "",
+    const signInRedirect = () => {
+      if (!isSignedIn) {
+        router.push('/sign-in');
+      }
     };
-
-    Sentry.setUser({
-      id: userFeedback.event_id,
-      username: userFeedback.name,
-      email: userFeedback.email,
-    });
-
-    Sentry.init({
-      dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-      integrations: [
-        Sentry.feedbackIntegration({
-          showBranding: false,
-          emailPlaceholder: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
-          colorScheme: "system",
-          isNameRequired: true,
-          isEmailRequired: true,
-          useSentryUser: {
-            email: "email",
-            name: "username",
-          },
-        }),
-      ],
-      beforeSend: (event) => {
-        event.exception && Sentry.showReportDialog({ eventId: userFeedback.event_id });
-        return event;
-      },
-    });
-
-    Sentry.captureMessage("User Feedback", {
-      user: userFeedback,
-    });
-  }, [isSignedIn]);
+  
+    const initializeLogRocket = () => {
+      LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET);
+      console.log("logrocket");
+    };
+  
+    const identifyLogRocket = () => {
+      const logRocketID = isSignedIn
+        ? user?.primaryEmailAddress?.emailAddress || `guest-${uuidv4()}`
+        : uuidv4();
+    
+      LogRocket.identify(logRocketID, {
+        name: isSignedIn ? user?.fullName || "Guest" : "Anonymous User",
+        email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "Anonymous User" : uuidv4(),
+      });
+    };
+  
+    const initializeSentry = () => {
+      const userFeedback = {
+        event_id: uuidv4(),
+        name: isSignedIn ? user?.fullName || "" : "",
+        email: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "" : "",
+      };
+  
+      Sentry.setUser({
+        id: userFeedback.event_id,
+        username: userFeedback.name,
+        email: userFeedback.email,
+      });
+  
+      Sentry.init({
+        dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+        integrations: [
+          Sentry.feedbackIntegration({
+            showBranding: false,
+            emailPlaceholder: isSignedIn ? user?.primaryEmailAddress?.emailAddress || "guest@example.com" : "guest@example.com",
+            colorScheme: "system",
+            isNameRequired: true,
+            isEmailRequired: true,
+            useSentryUser: {
+              email: "email",
+              name: "username",
+            },
+          }),
+        ],
+        beforeSend: (event) => {
+          event.exception && Sentry.showReportDialog({ eventId: userFeedback.event_id });
+          return event;
+        },
+      });
+  
+      Sentry.captureMessage("User Feedback", {
+        user: userFeedback,
+      });
+    };
+  
+    signInRedirect();
+  
+    if (isSignedIn !== undefined) {
+      initializeLogRocket();
+      identifyLogRocket();
+      initializeSentry();
+    }
+  }, [isSignedIn, user]);
+  
 
   function func_display() {
     setDisplay(!display);
@@ -193,7 +212,6 @@ export default function Home() {
           </div>
           <div>
             <UserButton afterSignOutUrl="/" />
-            {/* <p>{user.primaryEmailAddress.emailAddress}</p> */}
           </div>
         </nav>
         <div className={styles.description}>
